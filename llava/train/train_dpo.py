@@ -342,6 +342,7 @@ def preprocess_multimodal(
     sources: Sequence[str],
     data_args: DataArguments
 ) -> Dict:
+    print("preprocess_multimodal...")
     is_multimodal = data_args.is_multimodal
     if not is_multimodal:
         return sources
@@ -454,6 +455,7 @@ def preprocess_v1(
     roles = {"user": conv.roles[0], "assistant": conv.roles[1]}
 
     # Apply prompt templates
+    print("Preprocess_v1")
     conversations = []
     prompts = []
     for i, source in enumerate(sources):
@@ -639,7 +641,7 @@ class LazySupervisedDataset(Dataset):
     def lengths(self):
         length_list = []
         for sample in self.list_data_dict:
-            img_tokens = 128 if 'image' in sample else 0
+            img_tokens = 128 if 'video' in sample else 0
             length_list.append(sum(len(conv['content'].split()) for conv in sample['chosen']) + img_tokens)
         return length_list
 
@@ -938,7 +940,7 @@ def train():
 
         model.config.image_aspect_ratio = data_args.image_aspect_ratio
         model.config.tokenizer_padding_side = tokenizer.padding_side
-        model.config.tokenizer_model_max_length = tokenizer.model_max_length
+        model.config.tokenizer_model_max_length = tokenizer.model_max_length    # 1048
 
         model.config.tune_mm_mlp_adapter = training_args.tune_mm_mlp_adapter = model_args.tune_mm_mlp_adapter
         if model_args.tune_mm_mlp_adapter:

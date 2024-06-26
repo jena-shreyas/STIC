@@ -34,3 +34,8 @@ serve_images/
 # Data
 playground
 data
+
+pert_vids/
+data/
+*cache_dir/
+Video-LLaVA/
