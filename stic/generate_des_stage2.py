@@ -1,8 +1,3 @@
-import argparse
-import torch
-import torchvision.transforms as T
-import warnings
-warnings.filterwarnings("ignore")
 import pandas as pd
 import random
 import json
@@ -31,6 +26,12 @@ import re
 import os
 
 from tqdm import tqdm 
+
+import argparse
+import torch
+import torchvision.transforms as T
+import warnings
+warnings.filterwarnings("ignore")
 
 
 def image_parser(args):

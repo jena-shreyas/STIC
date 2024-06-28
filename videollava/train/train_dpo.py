@@ -382,7 +382,7 @@ def preprocess_multimodal(
                     sentence['content'] = sentence['content'].replace(DEFAULT_VIDEO_TOKEN * VIDEO_TOKEN_NUM, DEFAULT_VIDEO_TOKEN * MAX_VIDEO_LENGTH).strip()
 
             # a <video> is treated as `num_frames * <image>`
-            print("Replacing video token with filler tokens...")
+            # print("Replacing video token with filler tokens...")
             replace_token, vid_replace_token = DEFAULT_IMAGE_TOKEN, DEFAULT_IMAGE_TOKEN * data_args.num_frames
             if data_args.mm_use_im_start_end:
                 replace_token = DEFAULT_IM_START_TOKEN + replace_token + DEFAULT_IM_END_TOKEN
@@ -889,7 +889,7 @@ class DataCollatorForSupervisedDataset(object):
         )
         rejected_input_ids, rejected_labels = tuple([instance[key] for instance in instances]
                                   for key in ("rejected_input_ids", "rejected_labels"))
-        rejected_input_ids = torch.nn.utilsinstances.rnn.pad_sequence(
+        rejected_input_ids = torch.nn.utils.rnn.pad_sequence(
             rejected_input_ids,
             batch_first=True,
             padding_value=self.tokenizer.pad_token_id)
@@ -921,7 +921,7 @@ def make_supervised_data_module(tokenizer: transformers.PreTrainedTokenizer,
                                 data_path=data_args.data_path,
                                 data_args=data_args)
     # print("Created train dataset, now creating Huggingface dataset...")
-    # train_dataset = datasets.Dataset.from_list(train_dataset)       # Stuck here, creating dataset step by step prolly
+    # train_dataset = datasets.Dataset.from_generator(train_dataset)       # Stuck here, creating dataset step by step prolly
     print("Creating data collator...")
     data_collator = DataCollatorForSupervisedDataset(tokenizer=tokenizer)
     return dict(train_dataset=train_dataset,
@@ -941,6 +941,7 @@ def train():
     bnb_model_from_pretrained_args = {}
     if training_args.bits in [4, 8]:
         from transformers import BitsAndBytesConfig
+        print("Initializing bits and bytes config...")
         bnb_model_from_pretrained_args.update(dict(
             device_map={"": training_args.device},
             load_in_4bit=training_args.bits == 4,
@@ -986,10 +987,10 @@ def train():
     if model_args.freeze_backbone:
         model.model.requires_grad_(False)
 
-
     if training_args.bits in [4, 8]:
         from peft import prepare_model_for_kbit_training
         model.config.torch_dtype=(torch.float32 if training_args.fp16 else (torch.bfloat16 if training_args.bf16 else torch.float32))
+        print(f"Preparing model for k-bit training with gradient checkpointing : {training_args.gradient_checkpointing}")
         model = prepare_model_for_kbit_training(model, use_gradient_checkpointing=training_args.gradient_checkpointing)
 
     if training_args.gradient_checkpointing:
@@ -1032,7 +1033,7 @@ def train():
         tokenizer = transformers.AutoTokenizer.from_pretrained(
             model_args.model_name_or_path,
             cache_dir=training_args.cache_dir,
-            model_max_length=training_args.model_max_length,    # 1048
+            model_max_length=training_args.model_max_length,    # 1100
             padding_side="right",
             use_fast=False,
         )

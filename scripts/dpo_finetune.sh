@@ -3,14 +3,15 @@
 
 SCRATCH="/mnt/51eb0667-f71d-4fe0-a83e-beaff24c04fb"
 VIDEO_FOLDER="${SCRATCH}/shreyas/STIC/data/NExT-QA/videos"
-OUTPUT_DIR="${SCRATCH}/shreyas/STIC/checkpoints/videollava_dpo_finetune"
+TIME=$(date +"%Y-%m-%d_%H-%M-%S")
+OUTPUT_DIR="${SCRATCH}/shreyas/STIC/checkpoints/videollava_stic_stage1_${TIME}"
 
-deepspeed --master_port=25641 --include=localhost:0,1 videollava/train/train_dpo.py \
+deepspeed --master_port=25641 --include=localhost:1 videollava/train/train_dpo.py \
     --lora_enable True --lora_r 128 --lora_alpha 256 --mm_projector_lr 2e-5 \
     --deepspeed scripts/zero2.json \
     --model_name_or_path LanguageBind/Video-LLaVA-7B \
     --version v1 \
-    --data_path ./outputs/data_pref_NExT-QA.json \
+    --data_path ./outputs/data_pref_NExT-QA_sample.json \
     --video_folder $VIDEO_FOLDER \
     --video_tower LanguageBind/LanguageBind_Video_merge \
     --mm_projector_type mlp2x_gelu \
@@ -20,11 +21,12 @@ deepspeed --master_port=25641 --include=localhost:0,1 videollava/train/train_dpo
     --image_aspect_ratio pad \
     --group_by_modality_length True \
     --bf16 False \
+    --bits 8 \
     --output_dir $OUTPUT_DIR \
     --num_train_epochs 1 \
     --per_device_train_batch_size 1 \
     --per_device_eval_batch_size 1 \
-    --gradient_accumulation_steps 2 \
+    --gradient_accumulation_steps 8 \
     --evaluation_strategy "no" \
     --save_strategy "steps" \
     --save_steps 5000 \
@@ -34,4 +36,7 @@ deepspeed --master_port=25641 --include=localhost:0,1 videollava/train/train_dpo
     --warmup_ratio 0.03 \
     --lr_scheduler_type "cosine" \
     --logging_steps 1 \
-    --report_to wandb 
+    --report_to wandb \
+    --model_max_length 1090 \
+
+        # --gradient_checkpointing True \

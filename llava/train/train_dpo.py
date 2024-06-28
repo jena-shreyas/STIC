@@ -817,6 +817,7 @@ def train():
 
     bnb_model_from_pretrained_args = {}
     if training_args.bits in [4, 8]:
+        print("Loading in 4/8-bit mode...")
         from transformers import BitsAndBytesConfig
         bnb_model_from_pretrained_args.update(dict(
             device_map={"": training_args.device},
@@ -864,6 +865,7 @@ def train():
     if training_args.bits in [4, 8]:
         from peft import prepare_model_for_kbit_training
         model.config.torch_dtype=(torch.float32 if training_args.fp16 else (torch.bfloat16 if training_args.bf16 else torch.float32))
+        print("Preparing model for k-bit training...")
         model = prepare_model_for_kbit_training(model, use_gradient_checkpointing=training_args.gradient_checkpointing)
 
     if training_args.gradient_checkpointing:
