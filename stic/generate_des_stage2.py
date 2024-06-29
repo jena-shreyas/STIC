@@ -1,143 +1,97 @@
-import pandas as pd
 import random
 import json
 
-from llava.constants import (
+from videollava.constants import (
     IMAGE_TOKEN_INDEX,
     DEFAULT_IMAGE_TOKEN,
-    DEFAULT_IM_START_TOKEN,
-    DEFAULT_IM_END_TOKEN,
-    IMAGE_PLACEHOLDER,
+    DEFAULT_VID_START_TOKEN,
+    DEFAULT_VID_END_TOKEN
 )
-from llava.conversation import conv_templates, SeparatorStyle
-from llava.model.builder import load_pretrained_model
-from llava.utils import disable_torch_init
-from llava.mm_utils import (
-    process_images,
+from videollava.conversation import conv_templates, SeparatorStyle
+from videollava.model.builder import load_pretrained_model
+from videollava.utils import disable_torch_init
+from videollava.mm_utils import (
     tokenizer_image_token,
     get_model_name_from_path,
+    KeywordsStoppingCriteria
 )
-from llava.eval.run_llava import eval_model
-
-import requests
-from PIL import Image
-from io import BytesIO
-import re
-import os
 
 from tqdm import tqdm 
+from peft import PeftModel
 
 import argparse
 import torch
-import torchvision.transforms as T
 import warnings
 warnings.filterwarnings("ignore")
 
 
-def image_parser(args):
-    out = args.image_file.split(args.sep)
-    return out
+def find_all_linear_names(model):
+    cls = torch.nn.Linear
+    lora_module_names = set()
+    multimodal_keywords = ['mm_projector', 'vision_tower', 'vision_resampler']
+    for name, module in model.named_modules():
+        if any(mm_keyword in name for mm_keyword in multimodal_keywords):
+            continue
+        if isinstance(module, cls):
+            names = name.split('.')
+            lora_module_names.add(names[0] if len(names) == 1 else names[-1])
+
+    if 'lm_head' in lora_module_names: # needed for 16-bit
+        lora_module_names.remove('lm_head')
+    return list(lora_module_names)
 
 
-def load_image(image_file):
-    if image_file.startswith("http") or image_file.startswith("https"):
-        response = requests.get(image_file)
-        image = Image.open(BytesIO(response.content)).convert("RGB")
-    else:
-        image = Image.open(image_file).convert("RGB")
-
-    return image
-
-
-def load_images(image_files):
-    out = []
-    for image_file in image_files:
-        image = load_image(image_file)
-        out.append(image)
-    return out
-
-
-def eval_model(args):
+def get_model_output(args):
 
     qs = args.query
-    image_token_se = DEFAULT_IM_START_TOKEN + DEFAULT_IMAGE_TOKEN + DEFAULT_IM_END_TOKEN
-    if IMAGE_PLACEHOLDER in qs:
-        if model.config.mm_use_im_start_end:
-            qs = re.sub(IMAGE_PLACEHOLDER, image_token_se, qs)
-        else:
-            qs = re.sub(IMAGE_PLACEHOLDER, DEFAULT_IMAGE_TOKEN, qs)
+    if model.config.mm_use_im_start_end:
+        qs = DEFAULT_VID_START_TOKEN + ''.join([DEFAULT_IMAGE_TOKEN]*8) + DEFAULT_VID_END_TOKEN + '\n' + qs
     else:
-        if model.config.mm_use_im_start_end:
-            qs = image_token_se + "\n" + qs
-        else:
-            qs = DEFAULT_IMAGE_TOKEN + "\n" + qs
+        qs = ''.join([DEFAULT_IMAGE_TOKEN]*8) + '\n' + qs
 
-    if "llama-2" in model_name.lower():
-        conv_mode = "llava_llama_2"
-    elif "mistral" in model_name.lower():
-        conv_mode = "mistral_instruct"
-    elif "v1.6-34b" in model_name.lower():
-        conv_mode = "chatml_direct"
-    elif "v1" in model_name.lower():
-        conv_mode = "llava_v1"
-    elif "mpt" in model_name.lower():
-        conv_mode = "mpt"
-    else:
-        conv_mode = "llava_v0"
-
-    if args.conv_mode is not None and conv_mode != args.conv_mode:
-        print(
-            "[WARNING] the auto inferred conversation mode is {}, while `--conv-mode` is {}, using {}".format(
-                conv_mode, args.conv_mode, args.conv_mode
-            )
-        )
-    else:
-        args.conv_mode = conv_mode
+    conv_mode = "llava_v1"
+    args.conv_mode = conv_mode
 
     conv = conv_templates[args.conv_mode].copy()
     conv.append_message(conv.roles[0], qs)
     conv.append_message(conv.roles[1], None)
     prompt = conv.get_prompt()
 
-    image_files = args.image_file 
-    images = load_images([image_files])
-    image_sizes = [x.size for x in images]
-    images_tensor = process_images(
-        images,
-        image_processor,
-        model.config
-    ).to(model.device, dtype=torch.float16)
+    video_tensor = video_processor(args.video_file, return_tensors='pt')['pixel_values'][0].half().to("cuda")
+    input_ids = tokenizer_image_token(prompt, tokenizer, IMAGE_TOKEN_INDEX, return_tensors='pt').unsqueeze(0).to("cuda")
 
-    input_ids = (
-        tokenizer_image_token(prompt, tokenizer, IMAGE_TOKEN_INDEX, return_tensors="pt")
-        .unsqueeze(0)
-        .cuda()
-    )
+    stop_str = conv.sep if conv.sep_style != SeparatorStyle.TWO else conv.sep2
+    keywords = [stop_str]
+    stopping_criteria = KeywordsStoppingCriteria(keywords, tokenizer, input_ids)
 
     with torch.inference_mode():
         output_ids = model.generate(
             input_ids,
-            images=images_tensor,
-            image_sizes=image_sizes,
-            do_sample=True if args.temperature > 0 else False,
-            temperature=args.temperature,
-            top_p=args.top_p,
-            num_beams=args.num_beams,
-            max_new_tokens=args.max_new_tokens,
+            images=[video_tensor],
+            do_sample=True,
+            temperature=0.1,
+            max_new_tokens=1024,
             use_cache=True,
-            pad_token_id=tokenizer.eos_token_id,
-        )
+            stopping_criteria=[stopping_criteria])
 
-    outputs = tokenizer.batch_decode(output_ids, skip_special_tokens=True)[0].strip()
+    input_token_len = input_ids.shape[1]
+    n_diff_input_output = (input_ids != output_ids[:, :input_token_len]).sum().item()
+    if n_diff_input_output > 0:
+        print(f'[Warning] {n_diff_input_output} output_ids are not the same as the input_ids')
+    outputs = tokenizer.batch_decode(output_ids[:, input_token_len:], skip_special_tokens=True)[0]
+    outputs = outputs.strip()
+    if outputs.endswith(stop_str):
+        outputs = outputs[:-len(stop_str)]
+    outputs = outputs.strip()
     return outputs
 
 
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model-path", type=str, default="liuhaotian/llava-v1.6-mistral-7b")
+    parser.add_argument("--model-path", type=str, default="LanguageBind/Video-LLaVA-7B")
     parser.add_argument("--model-base", type=str, default=None)
-    parser.add_argument("--image-file", type=str, default="/data/yihe/COCO/val2014/COCO_val2014_000000033958.jpg")
+    parser.add_argument("--video-file", type=str, default="/data/yihe/COCO/val2014/COCO_val2014_000000033958.jpg")
     parser.add_argument("--query", type=str, default="Describe the image.")
     parser.add_argument("--conv-mode", type=str, default=None)
     parser.add_argument("--sep", type=str, default=",")
@@ -146,7 +100,7 @@ if __name__ == "__main__":
     parser.add_argument("--num_beams", type=int, default=1)
     parser.add_argument("--max_new_tokens", type=int, default=1024)
 
-    parser.add_argument("--image-dir", type=str, default="/data1/yihedeng/image_data/")
+    parser.add_argument("--video-dir", type=str, default="/data1/yihedeng/image_data/")
     parser.add_argument("--save-dir", type=str, default="image_description.jsonl")
     parser.add_argument("--adapter-path", type=str, default=None)
     args = parser.parse_args()
@@ -154,39 +108,53 @@ if __name__ == "__main__":
     disable_torch_init()
 
     model_name = get_model_name_from_path(args.model_path)
-    tokenizer, model, image_processor, context_len = load_pretrained_model(
+    tokenizer, model, processor, context_len = load_pretrained_model(
         args.model_path, args.model_base, model_name
     )
+    video_processor = processor['video']
+    
     if args.adapter_path is not None:
-        model.load_adapter(args.adapter_path)
+        
+        adapter = PeftModel.from_pretrained(
+            model, 
+            args.adapter_path,
+            device_map="cpu",
+            offload_folder="offload"
+            )
+        
+        model = adapter.merge_and_unload()
+        # model.load_adapter(args.adapter_path)
         print("adapter loaded!")
     
-    prompt_list = ["Illustrate the details of the picture.",
+    prompt_list = ["Illustrate the details of the video.",
                    "Summarize the visual content presented.",
-                   "Explain what is depicted in the photograph.",
-                   "Outline the key elements captured in the image.",
-                   "Detail the composition and subjects within the frame.",
+                   "Explain what is depicted in the video.",
+                   "Outline the key elements captured in the video.",
+                   "Detail the composition and subjects within the various video frames.",
                    "Convey the atmosphere and mood represented in the snapshot.",
-                   "Interpret the scene shown in the image.",
+                   "Interpret the scene shown in the video.",
                    "Identify and describe the main focal points in the visual."]
 
-    directory = args.image_dir
-    with open('data/mixed_5k.json', 'r') as f:
-       coco = json.load(f)
+    directory = args.video_dir
+    with open('outputs/data_pref_NExT-QA_sample.json', 'r') as f:
+        data_pref = json.load(f)
+       
+    with open("outputs/video_description_dict.json", 'r') as f:
+        desc = json.load(f)
 
-    image_names = [x['image'] for x in coco]
-    print(len(image_names), image_names[0])
+    video_names = [x['video'] for x in data_pref]
+    print(len(video_names), video_names[0])
 
     # parallelize the task on multiple gpus to speed up the process
-    for i in tqdm(range(len(image_names))):
-        args.image_file = f"{directory}/{image_names[i]}"
-        args.query = random.choice(prompt_list)
-        output = eval_model(args)
+    for i in tqdm(range(len(video_names))):
+        args.video_file = f"{directory}/{video_names[i]}.mp4"
+        args.query = desc[video_names[i]]["prompt"]
+        output = get_model_output(args)
 
-        d = {"image": args.image_file, 
-            "prompt":args.query,
-            "description":output}
+        d = {"video": args.video_file, 
+            "prompt": args.query,
+            "description": output}
         
         with open(args.save_dir,"a") as f:
             f.write(json.dumps(d))
-            f.write("\n")
+            f.write(",\n")

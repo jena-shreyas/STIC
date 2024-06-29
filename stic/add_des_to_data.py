@@ -18,8 +18,8 @@ for json_str in json_list:
 with open("data/mixed_5k.json", "r") as f:
     sft_data = json.load(f)
 
-for i in range(len(data)):
-    cap = data[i]["description"]
+for i in range(len(des)):
+    cap = des[i]["description"]
 
     if "<image>\n" in sft_data[i]["conversations"][0]["value"]:
         sft_data[i]["conversations"][0]["value"] = sft_data[i]["conversations"][0]["value"].replace("<image>\n","<image>\nImage description:\n"+cap+"\n\n")
