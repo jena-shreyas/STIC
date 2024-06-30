@@ -39,15 +39,15 @@ video_name = "4346954399.mp4"
 video_path = os.path.join(video_dir, video_name)
 
 description = "The video features a man and a child sitting at a table with a laptop and a keyboard. The man is seen playing with the child and holding him in his lap. The child is also seen playing with a toy keyboard and a toy laptop. The video captures the playful interaction between the man and the child, with the man holding the child in his lap and the child playing with the toys."
-question = "why does the man keep looking at the child throughout the video"
-options = ["wants to play with baby", \
-            "sleeping", \
-            "trying ot open bottle", \
-            "playing guitar", \
-            "interacting with him"
+question = "why is the man and child looking at the screen"
+options = ["listening to music", \
+            "see what s there", \
+            "to see if it works", \
+            "interacting with baby", \
+            "zoom focus"
 ]
 
-ans = 4
+ans = 1
 
 idx2opt = {
     0: 'A',
@@ -57,7 +57,7 @@ idx2opt = {
     4: 'E'
 }
 
-qs = "Video description:\n" + description + "\n\n" + "Instruction: Answer the following question by responding with only the letter (out of A, B, C, D, E) corresponding to the option which most appropriately answers it.\n\nQuestion:\n" + question \
+qs = "Video description:\n" + description + "\n\n" + "Instruction: Answer the following question by choosing the most appropriate option (out of A, B, C, E).\n\nQuestion:\n" + question \
     + "?\n\nOptions:\n" \
     + '\n'.join([f'{idx2opt[i]}. {options[i]}' for i in range(len(idx2opt))]) \
     + "\n\nAnswer: "
@@ -80,7 +80,7 @@ stop_str = conv.sep if conv.sep_style != SeparatorStyle.TWO else conv.sep2
 keywords = [stop_str]
 stopping_criteria = KeywordsStoppingCriteria(keywords, tokenizer, input_ids)
 
-print(input_ids.get_device(), video_tensor.get_device(), model.device)
+# print(input_ids.get_device(), video_tensor.get_device(), model.device)
 
 with torch.inference_mode():
     output_ids = model.generate(

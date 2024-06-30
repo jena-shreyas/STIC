@@ -138,9 +138,6 @@ if __name__ == "__main__":
     directory = args.video_dir
     with open('outputs/data_pref_NExT-QA_sample.json', 'r') as f:
         data_pref = json.load(f)
-       
-    with open("outputs/video_description_dict.json", 'r') as f:
-        desc = json.load(f)
 
     video_names = [x['video'] for x in data_pref]
     print(len(video_names), video_names[0])
@@ -148,7 +145,7 @@ if __name__ == "__main__":
     # parallelize the task on multiple gpus to speed up the process
     for i in tqdm(range(len(video_names))):
         args.video_file = f"{directory}/{video_names[i]}.mp4"
-        args.query = desc[video_names[i]]["prompt"]
+        args.query = random.choice(prompt_list)
         output = get_model_output(args)
 
         d = {"video": args.video_file, 
