@@ -39,9 +39,11 @@ from videollava.mm_utils import tokenizer_image_token
 
 from PIL import Image
 from videollava.utils import order_pick_k
+import wandb
 
 local_rank = None
 
+wandb.login(key="34ab85a686d42f11a4d00d1dda46bd4d0d24800f")
 
 def rank0_print(*args):
     if local_rank == 0:
@@ -927,8 +929,7 @@ def train(attn_implementation=None):
     else:
         model = transformers.LlamaForCausalLM.from_pretrained(
             model_args.model_name_or_path,
-            cache_dir=training_args.cache_dir,
-            attn_implementation=attn_implementation,
+            cache_dir=training_args.cache_dir,                  # attn_implementation=attn_implementation,
             **bnb_model_from_pretrained_args
         )
     model.config.use_cache = False
@@ -1031,13 +1032,13 @@ def train(attn_implementation=None):
         # =============================================================================================================
         
         model.config.tune_mm_mlp_adapter = training_args.tune_mm_mlp_adapter = model_args.tune_mm_mlp_adapter
-        if model_args.tune_mm_mlp_adapter:
+        if model_args.tune_mm_mlp_adapter:      # False
             model.requires_grad_(False)
             for p in model.get_model().mm_projector.parameters():
                 p.requires_grad = True
 
         model.config.freeze_mm_mlp_adapter = training_args.freeze_mm_mlp_adapter
-        if training_args.freeze_mm_mlp_adapter:
+        if training_args.freeze_mm_mlp_adapter:     # Fakse
             for p in model.get_model().mm_projector.parameters():
                 p.requires_grad = False
 
@@ -1068,21 +1069,27 @@ def train(attn_implementation=None):
     
     ### Training from existing lora
     if training_args.load_peft is not None:
-        from peft import PeftModel
+        # from peft import PeftModel
         
-        # model.load_adapter(training_args.load_peft, adapter_name='self')
-        # model.set_adapter("self")
-        # model.delete_adapter("default")
-        # print("adapter weight loaded and will be saved to 'self'.")
+        model.load_adapter(training_args.load_peft, adapter_name='self')
+        model.set_adapter("self")
+        model.delete_adapter("default")
+        print("adapter weight loaded and will be saved to 'self'.")
         
-        adapter = PeftModel.from_pretrained(
-            model, 
-            training_args.load_peft,
-            device_map="cpu",
-            offload_folder="offload"
-            )
+        # Set LoRA parameters as trainable
+        print("Setting LoRA parameters as trainable...")
+        for n, p in model.named_parameters():
+            if 'lora' in n:
+                p.requires_grad = True
         
-        model = adapter.merge_and_unload()
+        # adapter = PeftModel.from_pretrained(
+        #     model, 
+        #     training_args.load_peft,
+        #     device_map="cpu",
+        #     offload_folder="offload"
+        #     )
+        
+        # model = adapter.merge_and_unload()
         print("adapter loaded!")
     ### 
     

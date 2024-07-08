@@ -154,15 +154,18 @@ class LLaVATrainer(Trainer):
         We provide a reasonable default that works well. If you want to use something else, you can pass a tuple in the
         Trainer's init through `optimizers`, or subclass and override this method in a subclass.
         """
+        print("Inside llavatrainer create_optimizer")
         if is_sagemaker_mp_enabled():
             return super().create_optimizer()
 
         opt_model = self.model
 
         if self.optimizer is None:
+            print("Inside llavatrainer create_optimizer | optimizer is None")
             decay_parameters = get_parameter_names(opt_model, ALL_LAYERNORM_LAYERS)
             decay_parameters = [name for name in decay_parameters if "bias" not in name]
-            if self.args.mm_projector_lr is not None:
+            print("Inside create_optimizer | Decay parameters : ", decay_parameters)
+            if self.args.mm_projector_lr is not None:       # 2e-5
                 projector_parameters = [name for name, _ in opt_model.named_parameters() if "mm_projector" in name]
                 optimizer_grouped_parameters = [
                     {
@@ -192,6 +195,7 @@ class LLaVATrainer(Trainer):
                         "lr": self.args.mm_projector_lr,
                     },
                 ]
+                print("Inside create_optimizer | Optimizer grouped parameters [0] : ", optimizer_grouped_parameters[0])
             else:
                 optimizer_grouped_parameters = [
                     {

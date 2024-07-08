@@ -84,7 +84,7 @@ for (_, row) in tqdm(train.iterrows(), total=len(train)):
     
         qtype = row['type']
         video_conv = {
-            "id": idx,
+            "id": str(idx),
             "type": qtype,
             "video": video_path,
             "conversations": conversation

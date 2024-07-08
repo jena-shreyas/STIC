@@ -164,10 +164,17 @@ class LLaVATrainer(DPOTrainer):
         opt_model = self.model
 
         if self.optimizer is None:
+            print("Inside llavatrainer create_optimizer | optimizer is None")
             decay_parameters = get_parameter_names(opt_model, ALL_LAYERNORM_LAYERS)
             decay_parameters = [name for name in decay_parameters if "bias" not in name]
-            if self.args.mm_projector_lr is not None:
+            print("Inside create_optimizer | Decay parameters : \n", decay_parameters)
+            if self.args.mm_projector_lr is not None:       # 2e-5
                 projector_parameters = [name for name, _ in opt_model.named_parameters() if "mm_projector" in name]
+                print("Inside create_optimizer | Projector parameters : \n", projector_parameters)
+                print("Checking requires_grad of decay parameters : \n\n")
+                for name, param in opt_model.named_parameters():
+                    if name in decay_parameters:
+                        print(name, " : ", param.requires_grad)
                 optimizer_grouped_parameters = [
                     {
                         "params": [
@@ -196,6 +203,9 @@ class LLaVATrainer(DPOTrainer):
                         "lr": self.args.mm_projector_lr,
                     },
                 ]
+                # print("Inside create_optimizer | Optimizer grouped parameters [0] : ", optimizer_grouped_parameters[0]['params'])
+                print("Exiting")
+                exit(0)
             else:
                 optimizer_grouped_parameters = [
                     {
@@ -214,13 +224,6 @@ class LLaVATrainer(DPOTrainer):
 
             optimizer_cls, optimizer_kwargs = Trainer.get_optimizer_cls_and_kwargs(self.args)
 
-            # if self.sharded_ddp == ShardedDDPOption.SIMPLE:
-            #     self.optimizer = OSS(
-            #         params=optimizer_grouped_parameters,
-            #         optim=optimizer_cls,
-            #         **optimizer_kwargs,
-            #     )
-            # else:
             self.optimizer = optimizer_cls(optimizer_grouped_parameters, **optimizer_kwargs)
             if optimizer_cls.__name__ == "Adam8bit":
                 import bitsandbytes
@@ -256,7 +259,7 @@ class LLaVATrainer(DPOTrainer):
             if self.args.local_rank == 0 or self.args.local_rank == -1:
                 self.model.config.save_pretrained(output_dir)
                 torch.save(weight_to_save, os.path.join(output_dir, f'mm_projector.bin'))
-        else:
+        else:        
             super(LLaVATrainer, self)._save_checkpoint(model, trial, metrics)
 
     def _save(self, output_dir: Optional[str] = None, state_dict=None):

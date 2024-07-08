@@ -29,7 +29,7 @@ from torchvision import transforms
 from videollava.constants import IGNORE_INDEX, IMAGE_TOKEN_INDEX, DEFAULT_IMAGE_TOKEN, DEFAULT_IM_START_TOKEN, \
     DEFAULT_IM_END_TOKEN, DEFAULT_VIDEO_TOKEN, DEFAULT_VID_START_TOKEN, DEFAULT_VID_END_TOKEN, MAX_IMAGE_LENGTH, \
     MAX_VIDEO_LENGTH
-from llava.train.llava_trainer import LLaVATrainer
+from videollava.train.llava_trainer import LLaVATrainer
 from videollava import conversation as conversation_lib
 from videollava.model import *
 from videollava.mm_utils import tokenizer_image_token

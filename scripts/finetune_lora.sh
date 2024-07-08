@@ -6,9 +6,10 @@ CKPT_FOLDER="${SCRATCH}/shreyas/STIC/checkpoints/videollava_stic_stage1_2024-06-
 TIME=$(date +"%Y-%m-%d_%H-%M-%S")
 OUTPUT_DIR="${SCRATCH}/shreyas/STIC/checkpoints/videollava_stic_stage2_${TIME}"
 
+
 # export HF_HOME="/data1/yihedeng"
-deepspeed --include=localhost:0 videollava/train/train_mem.py \
-    --deepspeed ./scripts/zero2.json \
+deepspeed --include=localhost:0 Video-LLaVA/videollava/train/train_mem.py \
+    --deepspeed scripts/zero2.json \
     --lora_enable True --lora_r 128 --lora_alpha 256 --mm_projector_lr 2e-5 \
     --model_name_or_path LanguageBind/Video-LLaVA-7B \
     --load_peft $CKPT_FOLDER \
@@ -23,11 +24,13 @@ deepspeed --include=localhost:0 videollava/train/train_mem.py \
     --image_aspect_ratio pad \
     --group_by_modality_length True \
     --bf16 False \
+    --bits 16 \
     --output_dir $OUTPUT_DIR  \
     --num_train_epochs 1 \
     --per_device_train_batch_size 2 \
     --per_device_eval_batch_size 2 \
     --gradient_accumulation_steps 8 \
+    --gradient_checkpointing True \
     --evaluation_strategy "no" \
     --save_strategy "steps" \
     --save_steps 1000 \
@@ -37,9 +40,11 @@ deepspeed --include=localhost:0 videollava/train/train_mem.py \
     --warmup_ratio 0.03 \
     --lr_scheduler_type "cosine" \
     --logging_steps 1 \
-    --tf32 False \
     --model_max_length 2048 \
-    --gradient_checkpointing True \
-    --lazy_preprocess True \
     --dataloader_num_workers 4 \
     --report_to wandb
+
+    # True
+    # True
+
+    # --tf32 False \
