@@ -135,11 +135,11 @@ if __name__ == "__main__":
                    "Interpret the scene shown in the video.",
                    "Identify and describe the main focal points in the visual."]
 
-    directory = args.video_dir
-    with open('outputs/data_pref_NExT-QA_sample.json', 'r') as f:
-        data_pref = json.load(f)
+    with open('outputs/sft_data_desc_ft_NExT-QA.json', 'r') as f:
+        data_sft = json.load(f)
 
-    video_names = [x['video'] for x in data_pref]
+    directory = args.video_dir
+    video_names = list(set([x['video'].split('/')[-1].split('.')[0] for x in data_sft]))
     print(len(video_names), video_names[0])
 
     # parallelize the task on multiple gpus to speed up the process

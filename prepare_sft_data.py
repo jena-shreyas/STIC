@@ -1,26 +1,31 @@
+import os
 import pandas as pd
 import json
+import random
 from tqdm import tqdm
 
 # Load the data
-train = pd.read_csv("data/NExT-QA/nextqa/train.csv")
+ROOT_DIR = '/home/shreyasjena/BTP/datasets/NExT-QA/data'
+train = pd.read_csv(ROOT_DIR + "/nextqa/train.csv")
 
-with open("outputs/video_description.json", 'r') as f:
-    desc = json.load(f)
+with open("outputs/data_pref_NExT-QA_sample.json", 'r') as f:
+    pref = json.load(f)
     
-NUM_QUESTIONS = 6000
-QUESTIONS_PER_VIDEO = NUM_QUESTIONS // len(desc)        # 3
+pref_vids = [int(d['video']) for d in pref]
+train_vids = [idx for idx in list(set(train['video']))]
+reqd_vids = sorted(list(set(train_vids) - set(pref_vids)))
+print("No. of allowed vids : ", len(reqd_vids))
 
-desc_dict = {}
+NUM_QUESTIONS = 3000
+QUESTIONS_PER_VIDEO = 2
+VIDEO_FOLDER = ROOT_DIR + '/videos'
+
+pref_dict = {}
 # convert list to dict
-for vid_dir in desc:
-    vid = vid_dir['video'].split('/')[-1].split('.')[0]
-    desc_dict[vid] = vid_dir
+for vid_dir in pref:
+    vid = vid_dir['video']
+    pref_dict[vid] = vid_dir
     
-# Get the common video ids
-reqd_vids = sorted([int(vid) for vid in list(desc_dict.keys())])
-assert len(reqd_vids) == 2000
-
 idx2opt = {
     0: 'A',
     1: 'B',
@@ -46,14 +51,14 @@ def bsearch_reqd_ids(vid):
 def prepare_conversation(vid, row):
     conversation = []
     
-    description = desc_dict[str(vid)]['description']
+    description_token = "<description>"
     question = row['question']
     ans = row['answer']
     options = [row[f'a{i}'] for i in range(len(idx2opt))]
     answer = row[f'a{ans}']
     
     # Prepare human query
-    human_query = "<video>\nVideo description:\n" + description + "\n\n" + "Instruction: Answer the following question by choosing the most appropriate option (out of A, B, C, E).\n\nQuestion:\n" + question \
+    human_query = "<video>\nVideo description:\n" + description_token + "\n\n" + "Instruction: Answer the following question by choosing the most appropriate option (out of A, B, C, E).\n\nQuestion:\n" + question \
     + "?\n\nOptions:\n" \
     + '\n'.join([f'{idx2opt[i]}. {options[i]}' for i in range(len(idx2opt))]) \
     + "\n\nAnswer: "
@@ -80,7 +85,7 @@ for (_, row) in tqdm(train.iterrows(), total=len(train)):
     if bsearch_reqd_ids(vid) is not None and (str(vid) not in sft_data or len(sft_data[str(vid)]) < QUESTIONS_PER_VIDEO):
         # Add the data to the sft_data
         conversation = prepare_conversation(vid, row)
-        video_path = desc_dict[str(vid)]['video']
+        video_path = os.path.join(VIDEO_FOLDER, f'{vid}.mp4')
     
         qtype = row['type']
         video_conv = {
@@ -104,5 +109,5 @@ sft_data_list = []
 for vid in sft_data:
     sft_data_list.extend(sft_data[vid])
     
-with open("outputs/sft_data_NExT-QA.json", 'w') as f:
+with open("outputs/sft_data_desc_ft_NExT-QA.json", 'w') as f:
     json.dump(sft_data_list, f, indent=4)

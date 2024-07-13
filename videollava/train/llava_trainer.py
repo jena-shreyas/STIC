@@ -204,8 +204,8 @@ class LLaVATrainer(DPOTrainer):
                     },
                 ]
                 # print("Inside create_optimizer | Optimizer grouped parameters [0] : ", optimizer_grouped_parameters[0]['params'])
-                print("Exiting")
-                exit(0)
+                # print("Exiting")
+                # exit(0)
             else:
                 optimizer_grouped_parameters = [
                     {

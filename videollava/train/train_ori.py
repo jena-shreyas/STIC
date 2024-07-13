@@ -889,7 +889,8 @@ def train(attn_implementation=None):
     model_args, data_args, training_args = parser.parse_args_into_dataclasses()
     local_rank = training_args.local_rank
     compute_dtype = (torch.float16 if training_args.fp16 else (torch.bfloat16 if training_args.bf16 else torch.float32))
-
+    print(f"Training with {training_args.bits}-bit quantization, {compute_dtype} compute dtype, and {training_args.quant_type} quant type.")
+    
     bnb_model_from_pretrained_args = {}
     if training_args.bits in [4, 8]:
         from transformers import BitsAndBytesConfig
@@ -924,12 +925,16 @@ def train(attn_implementation=None):
             model = LlavaLlamaForCausalLM.from_pretrained(
                 model_args.model_name_or_path,
                 cache_dir=training_args.cache_dir,
+                attn_implementation=attn_implementation,
+                torch_dtype=(torch.bfloat16 if training_args.bf16 else None),
                 **bnb_model_from_pretrained_args
             )
     else:
         model = transformers.LlamaForCausalLM.from_pretrained(
             model_args.model_name_or_path,
             cache_dir=training_args.cache_dir,                  # attn_implementation=attn_implementation,
+            attn_implementation=attn_implementation,
+            torch_dtype=(torch.bfloat16 if training_args.bf16 else None),
             **bnb_model_from_pretrained_args
         )
     model.config.use_cache = False
@@ -1049,6 +1054,7 @@ def train(attn_implementation=None):
         model.config.mm_projector_lr = training_args.mm_projector_lr
         training_args.use_im_start_end = model_args.mm_use_im_start_end
         model.config.mm_use_im_patch_token = model_args.mm_use_im_patch_token
+        print("Initialize vision tokenizer...")
         model.initialize_vision_tokenizer(model_args, tokenizer=tokenizer)
 
     if training_args.bits in [4, 8]:
@@ -1076,11 +1082,15 @@ def train(attn_implementation=None):
         model.delete_adapter("default")
         print("adapter weight loaded and will be saved to 'self'.")
         
-        # Set LoRA parameters as trainable
-        print("Setting LoRA parameters as trainable...")
-        for n, p in model.named_parameters():
-            if 'lora' in n:
-                p.requires_grad = True
+        #### MY ADDITION, BUT NOT IN ORIGINAL SCRIPT SO LET IT BE COMMENTED
+
+        # # Set LoRA parameters as trainable
+        # print("Setting LoRA parameters as trainable...")
+        # for n, p in model.named_parameters():
+        #     if 'lora' in n:
+        #         p.requires_grad = True
+
+        ####
         
         # adapter = PeftModel.from_pretrained(
         #     model, 
@@ -1093,11 +1103,13 @@ def train(attn_implementation=None):
         print("adapter loaded!")
     ### 
     
+    print("Initialize trainer...")
     trainer = LLaVATrainer(model=model,
                     tokenizer=tokenizer,
                     args=training_args,
                     **data_module)
 
+    print("Starting trainer...")
     if list(pathlib.Path(training_args.output_dir).glob("checkpoint-*")):
         trainer.train(resume_from_checkpoint=True)
     else:

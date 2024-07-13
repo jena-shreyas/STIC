@@ -925,12 +925,16 @@ def train(attn_implementation=None):
             model = LlavaLlamaForCausalLM.from_pretrained(
                 model_args.model_name_or_path,
                 cache_dir=training_args.cache_dir,
+                attn_implementation=attn_implementation,
+                torch_dtype=(torch.bfloat16 if training_args.bf16 else None),
                 **bnb_model_from_pretrained_args
             )
     else:
         model = transformers.LlamaForCausalLM.from_pretrained(
             model_args.model_name_or_path,
             cache_dir=training_args.cache_dir,                  # attn_implementation=attn_implementation,
+            attn_implementation=attn_implementation,
+            torch_dtype=(torch.bfloat16 if training_args.bf16 else None),
             **bnb_model_from_pretrained_args
         )
     model.config.use_cache = False
@@ -1078,11 +1082,15 @@ def train(attn_implementation=None):
         model.delete_adapter("default")
         print("adapter weight loaded and will be saved to 'self'.")
         
-        # Set LoRA parameters as trainable
-        print("Setting LoRA parameters as trainable...")
-        for n, p in model.named_parameters():
-            if 'lora' in n:
-                p.requires_grad = True
+        #### MY ADDITION, BUT NOT IN ORIGINAL SCRIPT SO LET IT BE COMMENTED
+
+        # # Set LoRA parameters as trainable
+        # print("Setting LoRA parameters as trainable...")
+        # for n, p in model.named_parameters():
+        #     if 'lora' in n:
+        #         p.requires_grad = True
+
+        ####
         
         # adapter = PeftModel.from_pretrained(
         #     model, 

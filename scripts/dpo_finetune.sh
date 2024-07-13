@@ -1,12 +1,12 @@
 # conda env 
 # export HF_HOME="/data1/yihedeng"
 
-SCRATCH="/mnt/51eb0667-f71d-4fe0-a83e-beaff24c04fb"
-VIDEO_FOLDER="${SCRATCH}/shreyas/STIC/data/NExT-QA/videos"
+SCRATCH="/home/shreyasjena/BTP"
+VIDEO_FOLDER="${SCRATCH}/datasets/NExT-QA/data/videos"
 TIME=$(date +"%Y-%m-%d_%H-%M-%S")
-OUTPUT_DIR="${SCRATCH}/shreyas/STIC/checkpoints/videollava_stic_stage1_${TIME}"
+OUTPUT_DIR="${SCRATCH}/models/STIC/checkpoints/videollava_stic_stage1_${TIME}"
 
-deepspeed --master_port=25641 --include=localhost:1 videollava/train/train_dpo.py \
+deepspeed --master_port=25641 --include=localhost:0 videollava/train/train_dpo.py \
     --lora_enable True --lora_r 128 --lora_alpha 256 --mm_projector_lr 2e-5 \
     --deepspeed scripts/zero2.json \
     --model_name_or_path LanguageBind/Video-LLaVA-7B \
@@ -20,7 +20,7 @@ deepspeed --master_port=25641 --include=localhost:1 videollava/train/train_dpo.p
     --mm_use_im_patch_token False \
     --image_aspect_ratio pad \
     --group_by_modality_length True \
-    --bf16 False \
+    --bf16 True \
     --output_dir $OUTPUT_DIR \
     --num_train_epochs 1 \
     --per_device_train_batch_size 1 \
