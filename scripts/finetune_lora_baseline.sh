@@ -2,9 +2,9 @@
 DATASET='NExT-QA'
 SCRATCH=/home/shreyasjena/BTP
 VIDEO_FOLDER="${SCRATCH}/datasets/NExT-QA/data/videos"
-CKPT_FOLDER="${SCRATCH}/models/STIC/checkpoints/videollava_stic_stage1_2024-07-11_20-55-54"
+# CKPT_FOLDER="${SCRATCH}/models/STIC/checkpoints/videollava_stic_stage1_2024-07-11_20-55-54"
 TIME=$(date +"%Y-%m-%d_%H-%M-%S")
-OUTPUT_DIR="${SCRATCH}/models/STIC/checkpoints/videollava_stic_stage2_${TIME}"
+OUTPUT_DIR="${SCRATCH}/models/STIC/checkpoints/videollava_baseline_ft_${TIME}"
 
 
 # export HF_HOME="/data1/yihedeng"
@@ -12,9 +12,8 @@ deepspeed --include=localhost:0 VideoLLaVA/videollava/train/train_mem.py \
     --deepspeed scripts/zero2.json \
     --lora_enable True --lora_r 128 --lora_alpha 256 --mm_projector_lr 2e-5 \
     --model_name_or_path LanguageBind/Video-LLaVA-7B \
-    --load_peft $CKPT_FOLDER \
     --version v1 \
-    --data_path outputs/sft_data_desc_ft_NExT-QA.json \
+    --data_path outputs/sft_data_desc_ft_NExT-QA_baseline.json \
     --video_folder $VIDEO_FOLDER \
     --video_tower LanguageBind/LanguageBind_Video_merge \
     --mm_projector_type mlp2x_gelu \
@@ -45,6 +44,7 @@ deepspeed --include=localhost:0 VideoLLaVA/videollava/train/train_mem.py \
     --lazy_preprocess True \
     --report_to wandb
 
+    # --load_peft $CKPT_FOLDER \
     # True
     # True
     # $CKPT_FOLDER

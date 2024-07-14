@@ -1,0 +1,81 @@
+nohup: ignoring input
+Number of questions:  4996
+completed_files: 0
+incomplete_files: 4996
+completed_files: 4996
+incomplete_files: 0
+All evaluation completed!
+
+  0%|          | 0/4996 [00:00<?, ?it/s]
+100%|██████████| 4996/4996 [00:00<00:00, 708672.69it/s]
+Number of fails: 0
+Yes count: 2029
+No count: 2967
+Accuracy: 0.40612489991993594
+Average score: 3.2978382706164933
+{'CH': {'total': 683, 'yes': 305, 'no': 378, 'score_sum': 2362, 'accuracy': 0.4465592972181552, 'average_score': 3.458272327964861}, 'TC': {'total': 663, 'yes': 263, 'no': 400, 'score_sum': 2145, 'accuracy': 0.39668174962292607, 'average_score': 3.235294117647059}, 'CW': {'total': 1924, 'yes': 787, 'no': 1137, 'score_sum': 6441, 'accuracy': 0.409043659043659, 'average_score': 3.3477130977130978}, 'TN': {'total': 895, 'yes': 360, 'no': 535, 'score_sum': 2954, 'accuracy': 0.4022346368715084, 'average_score': 3.3005586592178773}, 'DC': {'total': 177, 'yes': 57, 'no': 120, 'score_sum': 557, 'accuracy': 0.3220338983050847, 'average_score': 3.146892655367232}, 'DO': {'total': 305, 'yes': 150, 'no': 155, 'score_sum': 1044, 'accuracy': 0.4918032786885246, 'average_score': 3.422950819672131}, 'DL': {'total': 295, 'yes': 86, 'no': 209, 'score_sum': 799, 'accuracy': 0.29152542372881357, 'average_score': 2.7084745762711866}, 'TP': {'total': 54, 'yes': 21, 'no': 33, 'score_sum': 174, 'accuracy': 0.3888888888888889, 'average_score': 3.2222222222222223}}
+CATEGORY-WISE RESULTS -------------------
+Category: CH  (Causal [How])
+Total: 683
+Yes: 305
+No: 378
+Accuracy: 0.4465592972181552
+Average Score: 3.458272327964861
+
+
+Category: TC  (Temporal [Current])
+Total: 663
+Yes: 263
+No: 400
+Accuracy: 0.39668174962292607
+Average Score: 3.235294117647059
+
+
+Category: CW   (Causal [Why])
+Total: 1924
+Yes: 787
+No: 1137
+Accuracy: 0.409043659043659
+Average Score: 3.3477130977130978
+
+
+Category: TN  (Temporal [Next])
+Total: 895
+Yes: 360
+No: 535
+Accuracy: 0.4022346368715084
+Average Score: 3.3005586592178773
+
+
+Category: DC  (Descriptive [Counting])
+Total: 177
+Yes: 57
+No: 120
+Accuracy: 0.3220338983050847
+Average Score: 3.146892655367232
+
+
+Category: DO  (Open-form)
+Total: 305
+Yes: 150
+No: 155
+Accuracy: 0.4918032786885246
+Average Score: 3.422950819672131
+
+
+Category: DL  (Descriptive [Location])
+Total: 295
+Yes: 86
+No: 209
+Accuracy: 0.29152542372881357
+Average Score: 2.7084745762711866
+
+
+Category: TP  (Temporal [Previous])
+Total: 54
+Yes: 21
+No: 33
+Accuracy: 0.3888888888888889
+Average Score: 3.2222222222222223
+
+

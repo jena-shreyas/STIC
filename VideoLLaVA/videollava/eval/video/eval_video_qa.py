@@ -11,8 +11,10 @@ def parse_args():
     parser.add_argument("--pred_path", default=r'', help="The path to file containing prediction.")
     parser.add_argument("--output_dir", default=r'', help="The path to save annotation json files.")
     parser.add_argument("--output_json", default=r'', help="The path to save annotation final combined json file.")
+    parser.add_argument("--api_type", default="chat", help="OpenAI API type.")                        
     parser.add_argument("--api_key", default="", help="OpenAI API key.")
     parser.add_argument("--api_base", default="", type=str, help="OpenAI API base.")
+    parser.add_argument("--api_version", default="2020-05-03", help="OpenAI API")
     parser.add_argument("--num_tasks", default=1, type=int, help="Number of splits.")
     args = parser.parse_args()
     return args
@@ -25,8 +27,11 @@ def annotate(prediction_set, caption_files, output_dir, args):
     """
     # Set the OpenAI API key.
     openai.api_key = args.api_key
-    if args.api_base is not None:
-        openai.api_base = args.api_base
+    openai.api_base = args.api_base
+    if args.api_type is not None:
+        openai.api_type = args.api_type
+    if args.api_version is not None:
+        openai.api_version = args.api_version
     for file in caption_files:
         key = file[:-5] # Strip file extension
         qa_set = prediction_set[key]
@@ -36,7 +41,7 @@ def annotate(prediction_set, caption_files, output_dir, args):
         try:
             # Compute the correctness score
             completion = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
+                engine="gpt35tdec23",
                 messages=[
                     {
                         "role": "system",
@@ -61,12 +66,22 @@ def annotate(prediction_set, caption_files, output_dir, args):
                             "DO NOT PROVIDE ANY OTHER OUTPUT TEXT OR EXPLANATION. Only provide the Python dictionary string. "
                             "For example, your response should look like this: {'pred': 'yes', 'score': 4.8}."
                     }
-                ]
+                ],
+                temperature=0.1,
+                max_tokens=40,
+                top_p=0.5,
+                frequency_penalty=0,
+                presence_penalty=0,
+                stop=None
             )
             # Convert response to a Python dictionary.
             response_message = completion["choices"][0]["message"]["content"]
+            # print(response_message)
             response_dict = ast.literal_eval(response_message)
+            # print(response_dict)
             result_qa_pair = [response_dict, qa_set]
+            # print(result_qa_pair)
+            # exit(0)
 
             # Save the question-answer pairs to a json file.
             with open(f"{output_dir}/{key}.json", "w") as f:
@@ -85,6 +100,9 @@ def main():
 
     file = open(args.pred_path)
     new_pred_contents = [eval(i.strip()) for i in file.readlines()]
+
+    print("Number of questions: ", len(new_pred_contents))
+    # new_pred_contents = new_pred_contents[:10]
 
     '''
     # Dictionary to store the count of occurrences for each video_id
@@ -120,7 +138,8 @@ def main():
         question = sample['question']
         answer = sample['answer']
         pred = sample['pred']
-        qa_set = {"q": question, "a": answer, "pred": pred}
+        qtype = sample['type']
+        qa_set = {"q": question, "a": answer, "pred": pred, "type": qtype}
         prediction_set[id] = qa_set
 
     num_tasks = args.num_tasks
@@ -176,29 +195,66 @@ def main():
     count = 0
     yes_count = 0
     no_count = 0
+    fails = 0
+    cat_acc = {}
     for key, result in tqdm(combined_contents.items()):
+        if key == args.output_json.split('/')[-1][:-5]:     # results_json
+            continue
         try:
             # Computing score
+            qtype = result[1]['type']
+            if qtype not in cat_acc:
+                cat_acc[qtype] = {
+                    'total': 0,
+                    'yes': 0,
+                    'no': 0,
+                    'score_sum': 0,
+                    'accuracy': 0.0,
+                    'average_score': 0.0
+                }
+
             count += 1
+            cat_acc[qtype]['total'] += 1
             score_match = result[0]['score']
             score = int(score_match)
             score_sum += score
+            cat_acc[qtype]['score_sum'] += score
 
             # Computing accuracy
             pred = result[0]['pred']
             if "yes" in pred.lower():
                 yes_count += 1
+                cat_acc[qtype]['yes'] += 1
             elif "no" in pred.lower():
                 no_count += 1
-        except:
-            print(result)
+                cat_acc[qtype]['no'] += 1
+            
+            cat_acc[qtype]['accuracy'] = cat_acc[qtype]['yes'] / (cat_acc[qtype]['yes'] + cat_acc[qtype]['no'])
+            cat_acc[qtype]['average_score'] = cat_acc[qtype]['score_sum'] / cat_acc[qtype]['total']
+        except Exception as e:
+            print("Key : ", key)
+            print("Exception : ", e)
+            print()
+            fails += 1
 
     average_score = score_sum / count
     accuracy = yes_count / (yes_count + no_count)
+    print("Number of fails:", fails)
     print("Yes count:", yes_count)
     print("No count:", no_count)
     print("Accuracy:", accuracy)
     print("Average score:", average_score)
+
+    print(cat_acc)
+    print("CATEGORY-WISE RESULTS -------------------")
+    for key, value in cat_acc.items():
+        print(f"Category: {key}")
+        print(f"Total: {value['total']}")
+        print(f"Yes: {value['yes']}")
+        print(f"No: {value['no']}")
+        print(f"Accuracy: {value['accuracy']}")
+        print(f"Average Score: {value['average_score']}")
+        print("\n")
 
 
 if __name__ == "__main__":

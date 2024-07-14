@@ -58,7 +58,7 @@ def prepare_conversation(vid, row):
     answer = row[f'a{ans}']
     
     # Prepare human query
-    human_query = "<video>\nVideo description:\n" + description_token + "\n\n" + "Instruction: Answer the following question by choosing the most appropriate option (out of A, B, C, E).\n\nQuestion:\n" + question \
+    human_query = "<video>\nVideo description:\n" + description_token + "\n\n" + "Instruction: Answer the following question by choosing the most appropriate option (out of A, B, C, D, E).\n\nQuestion:\n" + question \
     + "?\n\nOptions:\n" \
     + '\n'.join([f'{idx2opt[i]}. {options[i]}' for i in range(len(idx2opt))]) \
     + "\n\nAnswer: "
