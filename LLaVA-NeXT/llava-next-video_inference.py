@@ -72,7 +72,7 @@ prompt = processor.apply_chat_template(conversation, add_generation_prompt=True)
 # video_name = "stock-footage-husband-and-wife-admire-the-view-from-their-terrace-balcony-of-new-house-apartment-and-the"
 video_dir = "/home/shreyasjena/BTP/models/STIC/pert_vids/frame_noise"
 # "stock-footage-hyperlaspe-pov-driving-on-off-road-tracks-in-the-puntas-de-calnegre-natural-park-on-the-coast-in"
-video_name = "stock-footage-hyperlaspe-pov-driving-on-off-road-tracks-in-the-puntas-de-calnegre-natural-park-on-the-coast-in"
+video_name = "stock-footage-a-cute-dog-lies-on-grass-and-dozes"
 video_path = os.path.join(video_dir, video_name + ".mp4")
 container = av.open(video_path)     # INPUT FRAME RATE : 30 fps
 

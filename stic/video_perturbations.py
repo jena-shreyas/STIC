@@ -47,7 +47,8 @@ def perturb_video(sample_perturbation, video_path, video_corruption_dir):
         # hue_factor = -0.5
         print("Hue : ", hue_factor)
     elif sample_perturbation == "frame_noise":
-        amount = np.random.uniform(0.7, 0.8)    # Strong noise needed since videos are high-quality and model is good at handling noise
+        amount = np.random.uniform(0.4, 0.6)    # Strong noise needed since videos are high-quality and model is good at handling noise
+        # amount = 0.6
         print("Noise : ", amount)
 
     container = av.open(video_path)
@@ -102,7 +103,7 @@ def perturb_video(sample_perturbation, video_path, video_corruption_dir):
         
 
 if __name__ == "__main__":
-    video_path = "/home/shreyasjena/BTP/datasets/WebVid/videos/stock-footage-hyperlaspe-pov-driving-on-off-road-tracks-in-the-puntas-de-calnegre-natural-park-on-the-coast-in.mp4"
+    video_path = "/home/shreyasjena/BTP/datasets/WebVid/videos/stock-footage-a-cute-dog-lies-on-grass-and-dozes.mp4"
     video_filename = video_path.split("/")[-1]
     video_corruption_dir = "/home/shreyasjena/BTP/models/STIC/pert_vids"
     sample_perturbation = random.choice(list(video_perturbations.keys()))
