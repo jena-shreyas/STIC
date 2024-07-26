@@ -19,5 +19,3 @@ for d in tqdm(data):
 
 with open("outputs/sft_data_desc_ft_NExT-QA_baseline.json", 'w') as f:
     json.dump(baseline_data, f, indent=4)
-
-

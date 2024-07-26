@@ -1,0 +1,39 @@
+nohup: ignoring input
+Number of questions:  3935
+completed_files: 0
+incomplete_files: 3935
+completed_files: 3889
+incomplete_files: 0
+All evaluation completed!
+  0%|          | 0/3889 [00:00<?, ?it/s]100%|██████████| 3889/3889 [00:00<00:00, 704211.38it/s]
+Number of fails: 0
+Yes count: 2057
+No count: 1832
+Accuracy: 0.5289277449215737
+Average score: 4.085883260478272
+{'Time': {'total': 1305, 'yes': 732, 'no': 573, 'score_sum': 5444, 'accuracy': 0.5609195402298851, 'average_score': 4.171647509578544}, 'Physical': {'total': 1305, 'yes': 663, 'no': 642, 'score_sum': 5325, 'accuracy': 0.5080459770114942, 'average_score': 4.080459770114943}, 'Social': {'total': 1279, 'yes': 662, 'no': 617, 'score_sum': 5121, 'accuracy': 0.5175918686473807, 'average_score': 4.003909304143862}}
+CATEGORY-WISE RESULTS -------------------
+Category: Time
+Total: 1305
+Yes: 732
+No: 573
+Accuracy: 0.5609195402298851
+Average Score: 4.171647509578544
+
+
+Category: Physical
+Total: 1305
+Yes: 663
+No: 642
+Accuracy: 0.5080459770114942
+Average Score: 4.080459770114943
+
+
+Category: Social
+Total: 1279
+Yes: 662
+No: 617
+Accuracy: 0.5175918686473807
+Average Score: 4.003909304143862
+
+

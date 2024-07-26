@@ -14,7 +14,7 @@ IDX=0
 
 # --load_peft ${peft_path} \
 
-CUDA_VISIBLE_DEVICES=0 python3 VideoLLaVA/videollava/eval/video/run_inference_nextqa.py \
+CUDA_VISIBLE_DEVICES=0 python3 VideoLLaVA/videollava/eval/video/run_inference_videoqa_stic.py \
     --model_path ${model_path} \
     --load_peft ${peft_path} \
     --cache_dir ${cache_dir} \
