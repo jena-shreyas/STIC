@@ -181,8 +181,8 @@ if __name__ == "__main__":
     If applicable, provide interpretations of what the image might represent or communicate."""
     
     hallu_prompt_list = ["Describe the image with imaginative objects that may exist in the scene.",
-                         "Enrich the description by adding hypothetical objects or characters that could be part of the scene.",
-                         "Suggest and detail practical items or people that could logically inhabit the image's setting.",
+                         "Enrich the description by adding hypothetical objects or characters that could be part of the scene.",    # NO
+                         "Suggest and detail practical items or people that could logically inhabit the image's setting.",      # YES
                          "Incorporate elements that, though absent, would seamlessly fit into the context of the picture.",
                          "Imagine and describe additional everyday objects or activities taking place just out of frame.",
                          "Augment the scene with details of potential events or items that are plausible.",

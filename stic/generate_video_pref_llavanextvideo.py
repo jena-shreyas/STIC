@@ -89,6 +89,7 @@ def generate_pref(args):
         model_id, 
         torch_dtype=torch.float16, 
         low_cpu_mem_usage=True, 
+        attn_implementation="flash_attention_2",
             ).to(0)
     
     processor = LlavaNextVideoProcessor.from_pretrained(model_id)
@@ -132,6 +133,12 @@ def generate_pref(args):
         os.makedirs(args.output_dir)
     
     video_filenames = os.listdir(args.video_dir)
+
+    with open("/home/shreyasjena/BTP/datasets/WebVid/inf_left_vids.txt", 'r') as f:
+        video_filenames = f.readlines()
+        video_filenames = [vid.strip() + ".mp4" for vid in video_filenames]
+
+    print("Total number of videos: ", len(video_filenames))
     
     # # Split the video files between the two GPUs
     # device_id = int(args.device_id)

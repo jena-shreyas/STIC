@@ -7,7 +7,7 @@ import numpy as np
 from torchvision.transforms.functional import adjust_hue
 
 
-def noise(frame_pil, amount=0.7):
+def noise(frame_pil, amount=0.4):
     # frame_rgb = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB)
     frame_norm = np.array(frame_pil)/255.0
     noise_frame = skimage.util.random_noise(frame_norm, "s&p", amount=amount)

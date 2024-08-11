@@ -30,9 +30,12 @@ serve_images/
 # Data
 playground
 
+pert_imgs/
 pert_vids/
 data/
 *.zip
 *cache_dir/
 src/
 results/eval/NExT-QA/*
+sample_images/
+tmp.py
