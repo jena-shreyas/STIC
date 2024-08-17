@@ -14,12 +14,30 @@ model = LlavaNextVideoForConditionalGeneration.from_pretrained("llava-hf/LLaVA-N
                                                                )
 processor = LlavaNextVideoProcessor.from_pretrained("llava-hf/LLaVA-NeXT-Video-7B-hf")
 
+def read_video_pyav(container, indices):
+    '''
+    Decode the video with PyAV decoder.
+    Args:
+        container (`av.container.input.InputContainer`): PyAV container.
+        indices (`List[int]`): List of frame indices to decode.
+    Returns:
+        result (np.ndarray): np array of decoded frames of shape (num_frames, height, width, 3).
+    '''
+    frames = []
+    container.seek(0)
+    start_index = indices[0]
+    end_index = indices[-1]
+    for i, frame in enumerate(container.decode(video=0)):
+        if i > end_index:
+            break
+        if i >= start_index and i in indices:
+            frames.append(frame)
+    return np.stack([x.to_ndarray(format="rgb24") for x in frames])
+
 # Generate from image and video mixed inputs
 # Load and image and write a new prompt
 # url = "http://images.cocodataset.org/val2017/000000039769.jpg"
 # image = Image.open(requests.get(url, stream=True).raw)
-img_path = "interlaken.jpeg"
-image = Image.open(img_path)
 
 full_prompt = """Please provide a detailed description of the image, focusing on the following. 
     Describe the image and vividly detail the natural elements in the scene.
@@ -31,6 +49,9 @@ full_prompt = """Please provide a detailed description of the image, focusing on
     If applicable, provide interpretations of what the image might represent or communicate."""
 hallu_prompt = ""
 
+img_path = "samples/sample_images/interlaken.jpeg"
+image = Image.open(img_path)
+
 conversation = [
     {
 
@@ -41,6 +62,24 @@ conversation = [
             ],
     }
 ]
+
+# video_path = "samples/sample_videos/friends_ross_ben.mp4"
+# container = av.open(video_path)
+# total_frames = container.streams.video[0].frames
+# num_frames = 16
+# indices = np.arange(0, total_frames, total_frames / num_frames).astype(int)
+# clip = read_video_pyav(container, indices)
+
+# conversation = [
+#     {
+
+#         "role": "user",
+#         "content": [
+#             {"type": "text", "text": full_prompt},
+#             {"type": "video"},
+#             ],
+#     }
+# ]
 
 # ,
 #     {

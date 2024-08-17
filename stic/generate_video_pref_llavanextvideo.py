@@ -68,16 +68,15 @@ def get_model_output(model, processor, video_path, qs, video_corruption=False):
 
     container = av.open(video_path)
 
-    # sample uniformly 8 frames from the video, can sample more for longer videos
+    # sample uniformly 16 frames from the video, can sample more for longer videos
     total_frames = container.streams.video[0].frames
     num_frames = 16
     indices = np.arange(0, total_frames, total_frames / num_frames).astype(int)
     clip = read_video_pyav(container, indices)
     inputs_video = processor(text=processed_prompt, videos=clip, padding=True, return_tensors="pt").to(model.device)
 
-    output = model.generate(**inputs_video, max_new_tokens=1024, do_sample=False)
-    output_conv = processor.decode(output[0][2:], skip_special_tokens=True)
-
+    output = model.generate(**inputs_video, max_length=1024)
+    output_conv = processor.batch_decode(output, skip_special_tokens=True, clean_up_tokenization_spaces=True)
     # parse output_conv so that the text after "ASSISTANT:" is returned
     return output_conv.split("ASSISTANT:")[1].strip()
 

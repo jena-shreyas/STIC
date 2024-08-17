@@ -32,7 +32,7 @@ def annotate(prediction_set, caption_files, output_dir, args):
         openai.api_type = args.api_type
     if args.api_version is not None:
         openai.api_version = args.api_version
-    for file in caption_files:
+    for file in tqdm(caption_files):
         key = file[:-5] # Strip file extension
         qa_set = prediction_set[key]
         question = qa_set['q']

@@ -14,7 +14,7 @@ The new model achieves the best open-source performance in several video benchma
 - **Model Card**: [LLaVA-NeXT-Video-32B-Qwen on Hugging Face](https://huggingface.co/lmms-lab/LLaVA-NeXT-Video-32B-Qwen)
 - **Inference Script**:
   ```bash
-  bash scripts/video/demo/video_demo.sh lmms-lab/LLaVA-NeXT-Video-32B-Qwen qwen_1_5 32 2 average after grid True playground/demo/xU25MMA2N4aVtYay.mp4
+  bash scripts/video/demo/video_demo.sh lmms-lab/LLaVA-NeXT-Video-32B-Qwen qwen_1_5 32 2 average grid True playground/demo/xU25MMA2N4aVtYay.mp4
   ```
 
 ### Evaluation Results
@@ -38,13 +38,5 @@ _*Results are reproduced by [lmms-eval](https://github.com/EvolvingLMMs-Lab/lmms
   url={https://llava-vl.github.io/blog/2024-04-30-llava-next-video/},
   author={Zhang, Yuanhan and Li, Bo and Liu, haotian and Lee, Yong jae and Gui, Liangke and Fu, Di and Feng, Jiashi and Liu, Ziwei and Li, Chunyuan},
   month={April},
-  year={2024}
-}
-
-@misc{li2024llavanext-interleave,
-  title={LLaVA-NeXT: Tackling Multi-image, Video, and 3D in Large Multimodal Models},
-  url={https://llava-vl.github.io/blog/2024-06-16-llava-next-interleave/},
-  author={Li, Feng and Zhang, Renrui and Zhang, Hao and Zhang, Yuanhan and Li, Bo and Li, Wei and Ma, Zejun and Li, Chunyuan},
-  month={June},
   year={2024}
 }

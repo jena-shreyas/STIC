@@ -1,0 +1,79 @@
+Number of questions:  191
+completed_files: 0
+incomplete_files: 191
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:01<00:00,  1.47s/it]
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████| 95/95 [00:45<00:00,  2.08it/s]
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████| 95/95 [00:46<00:00,  2.06it/s]
+completed_files: 191
+incomplete_files: 0
+All evaluation completed!
+100%|███████████████████████████████████████████████████████████████████████████████████████████████| 191/191 [00:00<00:00, 462535.83it/s]
+Number of fails: 0
+Yes count: 120
+No count: 71
+Accuracy: 0.6282722513089005
+Average score: 3.607329842931937
+{'CW': {'total': 72, 'yes': 49, 'no': 23, 'score_sum': 281, 'accuracy': 0.6805555555555556, 'average_score': 3.9027777777777777}, 'DC': {'total': 6, 'yes': 4, 'no': 2, 'score_sum': 20, 'accuracy': 0.6666666666666666, 'average_score': 3.3333333333333335}, 'TC': {'total': 23, 'yes': 16, 'no': 7, 'score_sum': 88, 'accuracy': 0.6956521739130435, 'average_score': 3.8260869565217392}, 'CH': {'total': 23, 'yes': 16, 'no': 7, 'score_sum': 90, 'accuracy': 0.6956521739130435, 'average_score': 3.9130434782608696}, 'TN': {'total': 43, 'yes': 16, 'no': 27, 'score_sum': 109, 'accuracy': 0.37209302325581395, 'average_score': 2.5348837209302326}, 'DO': {'total': 10, 'yes': 7, 'no': 3, 'score_sum': 39, 'accuracy': 0.7, 'average_score': 3.9}, 'DL': {'total': 11, 'yes': 11, 'no': 0, 'score_sum': 55, 'accuracy': 1.0, 'average_score': 5.0}, 'TP': {'total': 3, 'yes': 1, 'no': 2, 'score_sum': 7, 'accuracy': 0.3333333333333333, 'average_score': 2.3333333333333335}}
+CATEGORY-WISE RESULTS -------------------
+Category: CW
+Total: 72
+Yes: 49
+No: 23
+Accuracy: 0.6805555555555556
+Average Score: 3.9027777777777777
+
+
+Category: DC
+Total: 6
+Yes: 4
+No: 2
+Accuracy: 0.6666666666666666
+Average Score: 3.3333333333333335
+
+
+Category: TC
+Total: 23
+Yes: 16
+No: 7
+Accuracy: 0.6956521739130435
+Average Score: 3.8260869565217392
+
+
+Category: CH
+Total: 23
+Yes: 16
+No: 7
+Accuracy: 0.6956521739130435
+Average Score: 3.9130434782608696
+
+
+Category: TN
+Total: 43
+Yes: 16
+No: 27
+Accuracy: 0.37209302325581395
+Average Score: 2.5348837209302326
+
+
+Category: DO
+Total: 10
+Yes: 7
+No: 3
+Accuracy: 0.7
+Average Score: 3.9
+
+
+Category: DL
+Total: 11
+Yes: 11
+No: 0
+Accuracy: 1.0
+Average Score: 5.0
+
+
+Category: TP
+Total: 3
+Yes: 1
+No: 2
+Accuracy: 0.3333333333333333
+Average Score: 2.3333333333333335

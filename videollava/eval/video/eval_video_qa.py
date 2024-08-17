@@ -6,6 +6,7 @@ import ast
 from multiprocessing.pool import Pool
 from tqdm import tqdm
 
+
 def parse_args():
     parser = argparse.ArgumentParser(description="question-answer-generation-using-gpt-3")
     parser.add_argument("--pred_path", default=r'', help="The path to file containing prediction.")

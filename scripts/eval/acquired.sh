@@ -1,11 +1,11 @@
 SCRATCH="/home/shreyasjena/BTP"
 DATASET="ACQUIRED"
-MODEL="Video-LLaVA"
-type=$1
-output_dir="${SCRATCH}/models/STIC/results/eval/${DATASET}/${MODEL}/${type}"
-pred_path="${SCRATCH}/models/STIC/results/inference/${DATASET}/${MODEL}/acquired_videollava_${type}.jsonl"
+MODEL="LLaVA-NExT-Video"
+type="sample"
+output_dir="${SCRATCH}/models/STIC/results/eval/${DATASET}/${MODEL}"
+pred_path="${SCRATCH}/models/STIC/results/acquired_llavanextvideo_responses.jsonl"
 # output_dir="${GPT_Zero_Shot_QA}/MSRVTT_Zero_Shot_QA/${output_name}/gpt"
-output_json="${SCRATCH}/models/STIC/results/eval/results_acquired_videollava_${type}.json"
+output_json="${SCRATCH}/models/STIC/results/eval/results_acquired_llavanextvideo_${type}.json"
 
 api_type="azure"
 api_base="https://gpt35newdec23.openai.azure.com/"

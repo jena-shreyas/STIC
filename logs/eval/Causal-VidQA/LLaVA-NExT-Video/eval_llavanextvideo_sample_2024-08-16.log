@@ -1,0 +1,46 @@
+Number of questions:  800
+completed_files: 200
+incomplete_files: 600
+100%|███████████████████████████████████████████████████████████████████████████████████████| 300/300 [02:25<00:00,  2.07it/s]
+100%|███████████████████████████████████████████████████████████████████████████████████████| 300/300 [02:25<00:00,  2.07it/s]
+completed_files: 800
+incomplete_files: 0
+All evaluation completed!
+100%|███████████████████████████████████████████████████████████████████████████████████| 800/800 [00:00<00:00, 677730.40it/s]
+Number of fails: 0
+Yes count: 406
+No count: 394
+Accuracy: 0.5075
+Average score: 3.44
+{'counterfactual': {'total': 200, 'yes': 95, 'no': 105, 'score_sum': 686, 'accuracy': 0.475, 'average_score': 3.43}, 'descriptive': {'total': 200, 'yes': 108, 'no': 92, 'score_sum': 651, 'accuracy': 0.54, 'average_score': 3.255}, 'explanatory': {'total': 200, 'yes': 116, 'no': 84, 'score_sum': 739, 'accuracy': 0.58, 'average_score': 3.695}, 'predictive': {'total': 200, 'yes': 87, 'no': 113, 'score_sum': 676, 'accuracy': 0.435, 'average_score': 3.38}}
+CATEGORY-WISE RESULTS -------------------
+Category: counterfactual
+Total: 200
+Yes: 95
+No: 105
+Accuracy: 0.475
+Average Score: 3.43
+
+
+Category: descriptive
+Total: 200
+Yes: 108
+No: 92
+Accuracy: 0.54
+Average Score: 3.255
+
+
+Category: explanatory
+Total: 200
+Yes: 116
+No: 84
+Accuracy: 0.58
+Average Score: 3.695
+
+
+Category: predictive
+Total: 200
+Yes: 87
+No: 113
+Accuracy: 0.435
+Average Score: 3.38
