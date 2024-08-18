@@ -102,7 +102,7 @@ class LlavaMetaModel:
         else:
             # In case it is frozen by LoRA
             for p in self.mm_projector.parameters():
-                print(p.dtype)
+                # print(p.dtype)
                 p.requires_grad = True
 
         if pretrain_mm_mlp_adapter is not None:
@@ -185,6 +185,8 @@ class LlavaMetaForCausalLM(ABC):
     def encode_images(self, images):
         image_features = self.get_model().get_vision_tower()(images)
         # image_features = self.get_model().vision_resampler(image_features, images=images)
+        # print("MM Projector device : ", self.get_model().mm_projector.device)
+        print("Image features device : ", image_features.device)
         image_features = self.get_model().mm_projector(image_features)
         return image_features
     

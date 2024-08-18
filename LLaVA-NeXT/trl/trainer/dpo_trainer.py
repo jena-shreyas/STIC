@@ -1017,6 +1017,7 @@ class DPOTrainer(Trainer):
         compute_loss_context_manager = torch.cuda.amp.autocast if self._peft_has_been_casted_to_bf16 else nullcontext
 
         with compute_loss_context_manager():
+            # print("Input dtype in compute_loss: ", inputs["prompt_input_ids"].dtype)
             loss, metrics = self.get_batch_loss_metrics(model, inputs, train_eval="train")
 
         # force log the metrics

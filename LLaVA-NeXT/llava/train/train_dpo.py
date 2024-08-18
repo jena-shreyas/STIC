@@ -49,6 +49,9 @@ from llava.utils import rank0_print
 from transformers import AutoConfig
 import pickle
 
+from accelerate import dispatch_model, infer_auto_device_map
+from accelerate.utils import get_balanced_memory
+
 from trl.trainer.utils import DPODataCollatorWithPadding
 from PIL import Image, ImageFile
 from decord import VideoReader, cpu
@@ -1311,6 +1314,26 @@ def make_dpo_data_module(tokenizer: transformers.PreTrainedTokenizer, data_args)
     return train_dataset
 
 
+# def safe_model_dispatch(model):
+#     max_memory = get_balanced_memory(
+#         model,
+#         max_memory=None,
+#         no_split_module_classes=["DecoderLayer", "Attention", "MLP", "LayerNorm", "Linear"],
+#         dtype='float16',
+#         low_zero=False,
+#     )
+
+#     device_map = infer_auto_device_map(
+#         model,
+#         max_memory=max_memory,
+#         no_split_module_classes=["DecoderLayer", "Attention", "MLP", "LayerNorm", "Linear"],
+#         dtype='float16'
+#     )
+
+#     model = dispatch_model(model, device_map=device_map)
+#     return model
+
+
 def get_model(model_args, training_args, bnb_model_from_pretrained_args):
     assert training_args.attn_implementation
     if training_args.attn_implementation == "sdpa" and torch.__version__ < "2.1.2":
@@ -1367,6 +1390,8 @@ def get_model(model_args, training_args, bnb_model_from_pretrained_args):
 
     ######################### Finish Overwrite ###########################
 
+    # print("Customized kwargs:", customized_kwargs)
+
     ref_model = None
     if model_args.model_class_name is not None:
         actual_model_class_name = f"{model_args.model_class_name}ForCausalLM"
@@ -1420,6 +1445,8 @@ def get_model(model_args, training_args, bnb_model_from_pretrained_args):
                 **customized_kwargs,
             )
 
+            # model = safe_model_dispatch(model)
+
             if "zero3" in training_args.deepspeed:
                 rank0_print("#### Initialize reference model #####")
                 ref_model = LlavaLlamaForCausalLM.from_pretrained(
@@ -1430,6 +1457,12 @@ def get_model(model_args, training_args, bnb_model_from_pretrained_args):
                     low_cpu_mem_usage=True,     # False for Zero-3 (maybe?)
                     **customized_kwargs,
                 )
+
+            # ADDED !!!
+
+            # model = safe_model_dispatch(model)
+            # ref_model = safe_model_dispatch(ref_model)
+
 
         elif "qwen" in model_args.model_name_or_path.lower() or "quyen" in model_args.model_name_or_path.lower():
             if "moe" in model_args.model_name_or_path.lower():
@@ -1506,9 +1539,9 @@ def train(attn_implementation=None):
         print("Training args device : ", training_args.device)
         bnb_model_from_pretrained_args.update(
             dict(
-                device_map={"": training_args.device},
-                # load_in_4bit=training_args.bits == 4,
-                # load_in_8bit=training_args.bits == 8,
+                device_map= {"": training_args.device},        # instead of "auto"
+                load_in_4bit=training_args.bits == 4,
+                load_in_8bit=training_args.bits == 8,
                 quantization_config=BitsAndBytesConfig(
                     load_in_4bit=training_args.bits == 4,
                     load_in_8bit=training_args.bits == 8,
@@ -1683,13 +1716,6 @@ def train(attn_implementation=None):
                 for name, param in model.named_parameters():
                     if "vision_tower" in name:
                         param.requires_grad_(True)
-            print("Parameters : \n\n")
-            for name, param in model.named_parameters():
-                print(name, " ", param.dtype, " ", param.requires_grad)
-
-            # print("Modules : \n\n")
-            # for name, module in model.named_modules():
-            #     print(name, " ", module.dtype)
 
             if "mm_language_model" in tunable_parts:
                 for name, param in model.named_parameters():
@@ -1701,6 +1727,11 @@ def train(attn_implementation=None):
                         '''
                         if param.dtype not in [torch.int8, torch.uint8]:       # skip the quantized layers (seems like this code doesn't support quantized fine-tuning properly)
                             param.requires_grad_(True)
+
+        # print("Train parameters : \n\n")
+        # for name, param in model.named_parameters():
+        #     if param.requires_grad:
+        #         print(name, " ", param.dtype, " ", param.requires_grad)
 
         total_params = sum(p.ds_numel if hasattr(p, "ds_numel") else p.numel() for p in model.parameters())
         trainable_params = sum(p.ds_numel if hasattr(p, "ds_numel") else p.numel() for p in model.parameters() if p.requires_grad)

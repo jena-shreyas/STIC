@@ -1,4 +1,4 @@
-export OMP_NUM_THREADS=8
+export OMP_NUM_THREADS=16
 # export NCCL_IB_DISABLE=0
 # export NCCL_IB_GID_INDEX=3
 # export NCCL_IB_HCA=${ARNOLD_RDMA_DEVICE}
@@ -25,11 +25,11 @@ VISION_MODEL_VERSION="openai/clip-vit-large-patch14-336"
 
 LR=5e-7
 BATCH_SIZE=1
-GRAD_ACCUM=8
+GRAD_ACCUM=16
 NUM_EPOCHS=1
 NUM_NODES=1
-NUM_GPUS=1
-BITS=4
+NUM_GPUS=2
+BITS=16
 MASTER_PORT=29500
 MODEL_MAX_LENGTH=32768
 
@@ -38,13 +38,13 @@ export WANDB_API_KEY="34ab85a686d42f11a4d00d1dda46bd4d0d24800f"
 wandb login $WANDB_API_KEY
 export WANDB_NAME=$PROJECT_NAME--$MODEL_NAME
 export WANDB_PROJECT=$PROJECT_NAME
-# export WANDB_MODE=online
+export WANDB_MODE=online
 MID_RUN_NAME="LLaVA_NeXT_Video_7B_dpo_finetune_mixed"
-# wandb online
+wandb online
 
 
 #torchrun --nproc_per_node="${ARNOLD_WORKER_GPU}" --nnodes="${ARNOLD_WORKER_NUM}" --node_rank="${ARNOLD_ID}" --master_addr="${METIS_WORKER_0_HOST}" --master_port="${port_in_cmd}" \
-ACCELERATE_CPU_AFFINITY=1 CUDA_VISIBLE_DEVICES=0 torchrun --nproc_per_node ${NUM_GPUS} --nnodes ${NUM_NODES} --master_port ${MASTER_PORT} \
+CUDA_VISIBLE_DEVICES=0,1 torchrun --nproc_per_node ${NUM_GPUS} --nnodes ${NUM_NODES} --master_port ${MASTER_PORT} \
     LLaVA-NeXT/llava/train/train_dpo.py \
     --lora_enable True --lora_r 128 --lora_alpha 256 --mm_projector_lr 2e-5 \
     --deepspeed scripts/zero2.json \
@@ -88,7 +88,7 @@ ACCELERATE_CPU_AFFINITY=1 CUDA_VISIBLE_DEVICES=0 torchrun --nproc_per_node ${NUM
     --tf32 True \
     --model_max_length $MODEL_MAX_LENGTH \
     --gradient_checkpointing True \
-    --dataloader_num_workers 8 \
+    --dataloader_num_workers 16 \
     --lazy_preprocess True \
     --report_to wandb \
     --torch_compile True \
