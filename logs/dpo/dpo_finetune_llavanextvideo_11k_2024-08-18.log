@@ -1,0 +1,1316 @@
+nohup: ignoring input
+wandb: Appending key for api.wandb.ai to your netrc file: /home/shreyasj/.netrc
+[2024-08-18 07:45:50,908] [INFO] [real_accelerator.py:158:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+/home/shreyasj/anaconda3/envs/stic/lib/python3.10/site-packages/transformers/training_args.py:1494: FutureWarning: `evaluation_strategy` is deprecated and will be removed in version 4.46 of 🤗 Transformers. Use `eval_strategy` instead
+  warnings.warn(
+[2024-08-18 07:45:53,884] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-08-18 07:45:53,884] [INFO] [comm.py:668:init_distributed] Initializing TorchBackend in DeepSpeed with backend nccl
+Rank 0:  Inspecting experiment hyperparameters:
+
+Rank 0:  model_args = {'model_name_or_path': 'lmms-lab/LLaVA-NeXT-Video-7B', 'model_class_name': None, 'mm_tunable_parts': 'mm_vision_tower,mm_mlp_adapter,mm_language_model', 'version': 'v1', 'freeze_backbone': False, 'tune_mm_mlp_adapter': False, 'tune_mm_vision_resampler': False, 'vision_tower': 'openai/clip-vit-large-patch14-336', 'vision_tower_pretrained': None, 'unfreeze_mm_vision_tower': False, 'unfreeze_language_model': False, 'mm_vision_select_layer': -2, 'pretrain_mm_mlp_adapter': None, 'mm_projector_type': 'mlp2x_gelu', 'mm_use_im_start_end': False, 'mm_use_im_patch_token': False, 'mm_patch_merge_type': 'spatial_unpad', 'mm_vision_select_feature': 'patch', 'mm_resampler_type': 'spatial_pool', 'mm_mask_drop_mode': 'fixed', 'mm_mask_drop_skip_percentage': 0.0, 'mm_mask_drop_ratio': 0.25, 'mm_mask_drop_ratio_upper': None, 'mm_mask_drop_ratio_lower': None, 'mm_spatial_pool_stride': 2, 'mm_spatial_pool_mode': 'average', 'mm_spatial_pool_out_channels': 1024, 'mm_perceiver_depth': 3, 'mm_perceiver_latents': 32, 'mm_perceiver_ff_mult': 4, 'mm_perceiver_pretrained': None, 'mm_qformer_depth': 3, 'mm_qformer_latents': 32, 'mm_qformer_pretrained': None, 'rope_scaling_factor': None, 'rope_scaling_type': None, 's2': False, 's2_scales': '336,672,1008'}
+
+
+Rank 0:  data_args = {'data_path': 'data/data_pref_merged.jsonl', 'lazy_preprocess': True, 'is_multimodal': False, 'image_folder': '/home/shreyasj/BTP/datasets/COCO/pref_images', 'video_folder': '/home/shreyasj/BTP/datasets/WebVid/videos', 'video_fps': 1, 'image_aspect_ratio': 'anyres', 'image_grid_pinpoints': '[(336, 672), (672, 336), (672, 672), (1008, 336), (336, 1008)]', 'image_crop_resolution': 384, 'image_split_resolution': 384, 'input_prompt': None, 'refine_prompt': False, 'frames_upbound': 0, 'num_sample': None}
+
+
+Rank 0:  training_args = {'output_dir': 'checkpoints/LLaVA_NeXT_Video_7B_dpo_finetune_mixed', 'overwrite_output_dir': False, 'do_train': False, 'do_eval': False, 'do_predict': False, 'eval_strategy': <IntervalStrategy.NO: 'no'>, 'prediction_loss_only': False, 'per_device_train_batch_size': 1, 'per_device_eval_batch_size': 1, 'per_gpu_train_batch_size': None, 'per_gpu_eval_batch_size': None, 'gradient_accumulation_steps': 8, 'eval_accumulation_steps': None, 'eval_delay': 0, 'learning_rate': 5e-07, 'weight_decay': 0.0, 'adam_beta1': 0.9, 'adam_beta2': 0.999, 'adam_epsilon': 1e-08, 'max_grad_norm': 1.0, 'num_train_epochs': 1.0, 'max_steps': -1, 'lr_scheduler_type': <SchedulerType.LINEAR: 'linear'>, 'lr_scheduler_kwargs': {}, 'warmup_ratio': 0.1, 'warmup_steps': 0, 'log_level': 'passive', 'log_level_replica': 'warning', 'log_on_each_node': True, 'logging_dir': 'checkpoints/LLaVA_NeXT_Video_7B_dpo_finetune_mixed/runs/Aug18_07-45-53_admins', 'logging_strategy': <IntervalStrategy.STEPS: 'steps'>, 'logging_first_step': False, 'logging_steps': 1.0, 'logging_nan_inf_filter': True, 'save_strategy': <IntervalStrategy.STEPS: 'steps'>, 'save_steps': 3000, 'save_total_limit': 1, 'save_safetensors': True, 'save_on_each_node': False, 'save_only_model': False, 'restore_callback_states_from_checkpoint': False, 'no_cuda': False, 'use_cpu': False, 'use_mps_device': False, 'seed': 42, 'data_seed': None, 'jit_mode_eval': False, 'use_ipex': False, 'bf16': True, 'fp16': False, 'fp16_opt_level': 'O1', 'half_precision_backend': 'auto', 'bf16_full_eval': False, 'fp16_full_eval': False, 'tf32': True, 'local_rank': 0, 'ddp_backend': None, 'tpu_num_cores': None, 'tpu_metrics_debug': False, 'debug': [], 'dataloader_drop_last': True, 'eval_steps': None, 'dataloader_num_workers': 8, 'dataloader_prefetch_factor': None, 'past_index': -1, 'run_name': 'LLaVA_NeXT_Video_7B_dpo_finetune_mixed', 'disable_tqdm': False, 'remove_unused_columns': False, 'label_names': None, 'load_best_model_at_end': False, 'metric_for_best_model': None, 'greater_is_better': None, 'ignore_data_skip': False, 'fsdp': [], 'fsdp_min_num_params': 0, 'fsdp_config': {'min_num_params': 0, 'xla': False, 'xla_fsdp_v2': False, 'xla_fsdp_grad_ckpt': False}, 'fsdp_transformer_layer_cls_to_wrap': None, 'accelerator_config': AcceleratorConfig(split_batches=False, dispatch_batches=None, even_batches=True, use_seedable_sampler=True, non_blocking=False, gradient_accumulation_kwargs=None, use_configured_state=False), 'deepspeed': 'scripts/zero2.json', 'label_smoothing_factor': 0.0, 'optim': <OptimizerNames.ADAMW_TORCH: 'adamw_torch'>, 'optim_args': None, 'adafactor': False, 'group_by_length': False, 'length_column_name': 'length', 'report_to': ['wandb'], 'ddp_find_unused_parameters': None, 'ddp_bucket_cap_mb': None, 'ddp_broadcast_buffers': None, 'dataloader_pin_memory': True, 'dataloader_persistent_workers': False, 'skip_memory_metrics': True, 'use_legacy_prediction_loop': False, 'push_to_hub': False, 'resume_from_checkpoint': None, 'hub_model_id': None, 'hub_strategy': <HubStrategy.EVERY_SAVE: 'every_save'>, 'hub_token': None, 'hub_private_repo': False, 'hub_always_push': False, 'gradient_checkpointing': True, 'gradient_checkpointing_kwargs': None, 'include_inputs_for_metrics': False, 'eval_do_concat_batches': True, 'fp16_backend': 'auto', 'evaluation_strategy': 'no', 'push_to_hub_model_id': None, 'push_to_hub_organization': None, 'push_to_hub_token': None, 'mp_parameters': '', 'auto_find_batch_size': False, 'full_determinism': False, 'torchdynamo': None, 'ray_scope': 'last', 'ddp_timeout': 1800, 'torch_compile': True, 'torch_compile_backend': 'inductor', 'torch_compile_mode': None, 'dispatch_batches': None, 'split_batches': None, 'include_tokens_per_second': False, 'include_num_input_tokens_seen': False, 'neftune_noise_alpha': None, 'optim_target_modules': None, 'batch_eval_metrics': False, 'eval_on_start': False, 'cache_dir': None, 'freeze_mm_mlp_adapter': False, 'freeze_mm_vision_resampler': False, 'mpt_attn_impl': 'triton', 'model_max_length': 32768, 'double_quant': True, 'quant_type': 'nf4', 'bits': 4, 'lora_enable': True, 'lora_r': 128, 'lora_alpha': 256, 'lora_dropout': 0.05, 'lora_weight_path': '', 'lora_bias': 'none', 'mm_projector_lr': 2e-05, 'mm_vision_tower_lr': None, 'group_by_varlen': False, 'group_by_modality_length': True, 'group_by_modality_length_auto': False, 'verbose_logging': True, 'attn_implementation': 'flash_attention_2', 'dpo_alpha': 1.0, 'beta': 0.1, 'gamma': 0.0, 'generate_during_eval': False, 'precompute_ref_log_probs': False, 'distributed_state': Distributed environment: DEEPSPEED  Backend: nccl
+Num processes: 1
+Process index: 0
+Local process index: 0
+Device: cuda:0
+, '_n_gpu': 1, '__cached__setup_devices': device(type='cuda', index=0), 'deepspeed_plugin': DeepSpeedPlugin(hf_ds_config=<transformers.integrations.deepspeed.HfTrainerDeepSpeedConfig object at 0x7f08cefcf1c0>, gradient_accumulation_steps=8, gradient_clipping='auto', zero_stage=2, is_train_batch_min=True, offload_optimizer_device='none', offload_param_device='none', offload_optimizer_nvme_path='none', offload_param_nvme_path='none', zero3_init_flag=False, zero3_save_16bit_model=False, transformer_moe_cls_names=None), 'hf_deepspeed_config': <transformers.integrations.deepspeed.HfTrainerDeepSpeedConfig object at 0x7f08cefcf1c0>}
+
+
+Training args device :  cuda:0
+You are using a model of type llava to instantiate a model of type llava_llama. This is not supported for all configurations of models and can yield errors.
+Rank 0:  Overwriting config with {'mm_resampler_type': 'spatial_pool', 'mm_spatial_pool_stride': 2, 'mm_spatial_pool_out_channels': 1024, 'mm_spatial_pool_mode': 'average'}
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:02<00:04,  2.11s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:03<00:01,  1.93s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:05<00:00,  1.68s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:05<00:00,  1.77s/it]
+Some weights of the model checkpoint at lmms-lab/LLaVA-NeXT-Video-7B were not used when initializing LlavaLlamaForCausalLM: ['model.vision_tower.vision_tower.vision_model.embeddings.class_embedding', 'model.vision_tower.vision_tower.vision_model.embeddings.patch_embedding.weight', 'model.vision_tower.vision_tower.vision_model.embeddings.position_embedding.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.post_layernorm.bias', 'model.vision_tower.vision_tower.vision_model.post_layernorm.weight', 'model.vision_tower.vision_tower.vision_model.pre_layrnorm.bias', 'model.vision_tower.vision_tower.vision_model.pre_layrnorm.weight']
+- This IS expected if you are initializing LlavaLlamaForCausalLM from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing LlavaLlamaForCausalLM from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Rank 0:  Adding LoRA adapters...
+Rank 0:  Prompt version: v1
+/home/shreyasj/anaconda3/envs/stic/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+torch.float32
+torch.float32
+torch.float32
+torch.float32
+Rank 0:  Using mm_tunable_parts: mm_vision_tower,mm_mlp_adapter,mm_language_model
+Parameters : 
+
+
+base_model.model.model.image_newline   torch.float32   False
+base_model.model.model.embed_tokens.weight   torch.float32   False
+base_model.model.model.layers.0.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.0.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.0.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.0.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.0.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.0.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.0.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.0.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.0.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.0.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.0.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.0.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.0.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.0.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.0.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.0.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.0.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.0.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.0.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.0.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.0.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.0.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.0.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.1.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.1.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.1.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.1.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.1.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.1.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.1.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.1.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.1.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.1.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.1.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.1.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.1.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.1.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.1.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.1.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.1.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.1.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.1.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.1.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.1.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.1.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.1.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.2.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.2.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.2.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.2.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.2.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.2.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.2.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.2.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.2.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.2.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.2.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.2.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.2.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.2.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.2.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.2.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.2.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.2.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.2.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.2.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.2.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.2.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.2.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.3.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.3.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.3.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.3.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.3.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.3.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.3.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.3.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.3.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.3.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.3.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.3.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.3.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.3.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.3.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.3.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.3.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.3.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.3.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.3.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.3.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.3.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.3.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.4.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.4.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.4.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.4.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.4.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.4.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.4.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.4.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.4.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.4.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.4.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.4.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.4.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.4.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.4.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.4.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.4.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.4.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.4.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.4.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.4.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.4.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.4.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.5.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.5.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.5.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.5.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.5.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.5.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.5.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.5.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.5.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.5.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.5.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.5.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.5.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.5.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.5.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.5.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.5.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.5.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.5.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.5.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.5.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.5.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.5.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.6.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.6.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.6.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.6.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.6.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.6.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.6.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.6.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.6.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.6.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.6.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.6.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.6.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.6.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.6.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.6.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.6.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.6.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.6.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.6.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.6.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.6.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.6.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.7.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.7.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.7.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.7.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.7.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.7.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.7.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.7.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.7.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.7.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.7.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.7.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.7.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.7.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.7.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.7.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.7.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.7.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.7.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.7.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.7.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.7.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.7.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.8.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.8.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.8.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.8.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.8.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.8.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.8.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.8.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.8.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.8.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.8.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.8.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.8.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.8.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.8.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.8.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.8.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.8.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.8.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.8.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.8.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.8.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.8.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.9.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.9.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.9.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.9.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.9.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.9.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.9.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.9.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.9.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.9.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.9.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.9.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.9.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.9.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.9.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.9.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.9.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.9.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.9.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.9.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.9.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.9.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.9.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.10.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.10.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.10.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.10.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.10.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.10.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.10.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.10.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.10.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.10.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.10.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.10.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.10.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.10.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.10.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.10.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.10.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.10.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.10.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.10.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.10.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.10.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.10.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.11.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.11.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.11.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.11.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.11.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.11.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.11.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.11.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.11.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.11.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.11.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.11.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.11.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.11.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.11.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.11.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.11.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.11.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.11.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.11.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.11.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.11.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.11.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.12.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.12.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.12.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.12.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.12.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.12.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.12.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.12.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.12.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.12.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.12.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.12.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.12.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.12.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.12.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.12.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.12.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.12.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.12.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.12.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.12.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.12.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.12.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.13.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.13.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.13.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.13.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.13.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.13.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.13.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.13.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.13.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.13.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.13.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.13.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.13.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.13.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.13.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.13.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.13.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.13.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.13.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.13.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.13.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.13.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.13.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.14.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.14.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.14.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.14.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.14.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.14.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.14.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.14.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.14.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.14.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.14.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.14.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.14.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.14.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.14.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.14.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.14.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.14.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.14.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.14.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.14.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.14.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.14.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.15.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.15.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.15.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.15.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.15.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.15.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.15.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.15.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.15.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.15.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.15.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.15.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.15.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.15.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.15.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.15.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.15.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.15.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.15.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.15.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.15.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.15.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.15.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.16.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.16.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.16.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.16.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.16.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.16.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.16.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.16.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.16.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.16.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.16.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.16.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.16.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.16.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.16.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.16.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.16.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.16.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.16.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.16.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.16.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.16.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.16.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.17.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.17.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.17.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.17.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.17.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.17.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.17.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.17.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.17.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.17.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.17.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.17.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.17.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.17.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.17.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.17.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.17.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.17.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.17.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.17.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.17.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.17.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.17.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.18.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.18.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.18.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.18.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.18.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.18.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.18.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.18.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.18.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.18.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.18.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.18.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.18.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.18.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.18.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.18.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.18.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.18.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.18.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.18.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.18.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.18.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.18.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.19.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.19.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.19.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.19.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.19.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.19.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.19.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.19.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.19.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.19.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.19.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.19.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.19.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.19.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.19.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.19.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.19.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.19.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.19.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.19.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.19.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.19.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.19.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.20.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.20.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.20.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.20.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.20.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.20.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.20.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.20.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.20.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.20.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.20.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.20.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.20.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.20.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.20.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.20.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.20.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.20.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.20.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.20.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.20.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.20.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.20.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.21.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.21.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.21.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.21.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.21.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.21.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.21.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.21.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.21.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.21.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.21.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.21.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.21.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.21.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.21.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.21.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.21.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.21.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.21.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.21.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.21.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.21.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.21.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.22.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.22.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.22.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.22.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.22.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.22.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.22.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.22.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.22.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.22.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.22.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.22.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.22.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.22.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.22.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.22.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.22.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.22.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.22.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.22.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.22.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.22.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.22.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.23.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.23.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.23.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.23.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.23.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.23.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.23.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.23.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.23.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.23.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.23.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.23.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.23.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.23.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.23.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.23.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.23.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.23.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.23.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.23.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.23.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.23.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.23.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.24.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.24.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.24.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.24.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.24.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.24.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.24.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.24.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.24.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.24.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.24.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.24.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.24.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.24.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.24.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.24.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.24.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.24.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.24.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.24.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.24.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.24.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.24.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.25.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.25.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.25.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.25.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.25.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.25.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.25.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.25.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.25.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.25.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.25.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.25.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.25.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.25.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.25.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.25.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.25.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.25.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.25.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.25.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.25.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.25.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.25.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.26.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.26.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.26.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.26.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.26.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.26.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.26.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.26.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.26.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.26.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.26.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.26.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.26.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.26.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.26.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.26.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.26.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.26.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.26.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.26.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.26.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.26.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.26.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.27.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.27.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.27.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.27.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.27.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.27.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.27.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.27.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.27.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.27.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.27.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.27.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.27.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.27.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.27.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.27.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.27.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.27.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.27.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.27.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.27.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.27.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.27.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.28.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.28.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.28.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.28.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.28.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.28.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.28.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.28.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.28.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.28.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.28.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.28.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.28.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.28.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.28.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.28.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.28.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.28.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.28.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.28.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.28.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.28.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.28.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.29.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.29.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.29.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.29.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.29.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.29.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.29.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.29.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.29.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.29.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.29.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.29.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.29.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.29.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.29.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.29.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.29.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.29.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.29.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.29.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.29.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.29.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.29.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.30.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.30.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.30.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.30.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.30.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.30.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.30.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.30.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.30.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.30.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.30.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.30.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.30.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.30.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.30.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.30.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.30.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.30.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.30.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.30.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.30.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.30.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.30.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.layers.31.self_attn.q_proj.weight   torch.uint8   False
+base_model.model.model.layers.31.self_attn.q_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.31.self_attn.q_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.31.self_attn.k_proj.weight   torch.uint8   False
+base_model.model.model.layers.31.self_attn.k_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.31.self_attn.k_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.31.self_attn.v_proj.weight   torch.uint8   False
+base_model.model.model.layers.31.self_attn.v_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.31.self_attn.v_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.31.self_attn.o_proj.weight   torch.uint8   False
+base_model.model.model.layers.31.self_attn.o_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.31.self_attn.o_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.31.mlp.gate_proj.weight   torch.uint8   False
+base_model.model.model.layers.31.mlp.gate_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.31.mlp.gate_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.31.mlp.up_proj.weight   torch.uint8   False
+base_model.model.model.layers.31.mlp.up_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.31.mlp.up_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.31.mlp.down_proj.weight   torch.uint8   False
+base_model.model.model.layers.31.mlp.down_proj.lora_A.default.weight   torch.float32   False
+base_model.model.model.layers.31.mlp.down_proj.lora_B.default.weight   torch.float32   False
+base_model.model.model.layers.31.input_layernorm.weight   torch.float32   False
+base_model.model.model.layers.31.post_attention_layernorm.weight   torch.float32   False
+base_model.model.model.norm.weight   torch.float32   False
+base_model.model.model.vision_tower.vision_tower.vision_model.embeddings.class_embedding   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.embeddings.patch_embedding.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.embeddings.position_embedding.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.pre_layrnorm.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.pre_layrnorm.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.0.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.0.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.0.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.0.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.0.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.0.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.0.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.0.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.1.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.1.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.1.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.1.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.1.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.1.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.1.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.1.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.2.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.2.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.2.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.2.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.2.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.2.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.2.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.2.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.3.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.3.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.3.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.3.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.3.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.3.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.3.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.3.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.4.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.4.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.4.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.4.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.4.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.4.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.4.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.4.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.5.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.5.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.5.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.5.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.5.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.5.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.5.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.5.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.6.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.6.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.6.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.6.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.6.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.6.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.6.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.6.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.7.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.7.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.7.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.7.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.7.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.7.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.7.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.7.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.8.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.8.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.8.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.8.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.8.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.8.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.8.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.8.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.9.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.9.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.9.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.9.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.9.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.9.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.9.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.9.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.10.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.10.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.10.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.10.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.10.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.10.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.10.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.10.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.11.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.11.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.11.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.11.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.11.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.11.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.11.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.11.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.12.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.12.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.12.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.12.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.12.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.12.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.12.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.12.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.13.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.13.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.13.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.13.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.13.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.13.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.13.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.13.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.14.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.14.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.14.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.14.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.14.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.14.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.14.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.14.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.15.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.15.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.15.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.15.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.15.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.15.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.15.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.15.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.16.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.16.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.16.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.16.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.16.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.16.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.16.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.16.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.17.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.17.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.17.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.17.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.17.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.17.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.17.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.17.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.18.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.18.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.18.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.18.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.18.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.18.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.18.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.18.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.19.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.19.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.19.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.19.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.19.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.19.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.19.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.19.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.20.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.20.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.20.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.20.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.20.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.20.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.20.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.20.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.21.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.21.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.21.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.21.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.21.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.21.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.21.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.21.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.22.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.22.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.22.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.22.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.22.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.22.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.22.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.22.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.k_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.k_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.v_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.v_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.q_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.q_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.out_proj.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.out_proj.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.23.layer_norm1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.23.layer_norm1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.23.mlp.fc1.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.23.mlp.fc1.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.23.mlp.fc2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.23.mlp.fc2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.23.layer_norm2.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.encoder.layers.23.layer_norm2.bias   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.post_layernorm.weight   torch.bfloat16   True
+base_model.model.model.vision_tower.vision_tower.vision_model.post_layernorm.bias   torch.bfloat16   True
+base_model.model.model.mm_projector.0.weight   torch.float32   True
+base_model.model.model.mm_projector.0.bias   torch.float32   True
+base_model.model.model.mm_projector.2.weight   torch.float32   True
+base_model.model.model.mm_projector.2.bias   torch.float32   True
+base_model.model.lm_head.weight   torch.uint8   False
+Rank 0:  Total parameters: ~4079.18 MB)
+Rank 0:  Trainable parameters: ~775.65 MB)
+Rank 0:  Loading data/data_pref_merged.jsonl
+Rank 0:  Loaded 11198 samples from data/data_pref_merged.jsonl
+Rank 0:  Formatting inputs...Skip in lazy mode
+/home/shreyasj/BTP/models/STIC/LLaVA-NeXT/trl/trainer/dpo_trainer.py:239: UserWarning: `max_prompt_length` is not set in the DPOTrainer's init it will default to `128` by default, but you should do it yourself in the future.
+  warnings.warn(
+admins:948206:948206 [0] NCCL INFO Bootstrap : Using eno8303:10.5.30.61<0>
+admins:948206:948206 [0] NCCL INFO NET/Plugin: No plugin found (libnccl-net.so)
+admins:948206:948206 [0] NCCL INFO NET/Plugin: Plugin load returned 2 : libnccl-net.so: cannot open shared object file: No such file or directory : when loading libnccl-net.so
+admins:948206:948206 [0] NCCL INFO NET/Plugin: Using internal network plugin.
+admins:948206:948206 [0] NCCL INFO cudaDriverVersion 12040
+NCCL version 2.21.5+cuda11.0
+admins:948206:948346 [0] NCCL INFO Failed to open libibverbs.so[.1]
+admins:948206:948346 [0] NCCL INFO NET/Socket : Using [0]eno8303:10.5.30.61<0>
+admins:948206:948346 [0] NCCL INFO Using non-device net plugin version 0
+admins:948206:948346 [0] NCCL INFO Using network Socket
+admins:948206:948346 [0] NCCL INFO ncclCommInitRank comm 0x402ab770 rank 0 nranks 1 cudaDev 0 nvmlDev 0 busId 17000 commId 0x65bc89c41be7b877 - Init START
+admins:948206:948346 [0] NCCL INFO Setting affinity for GPU 0 to 55555555
+admins:948206:948346 [0] NCCL INFO comm 0x402ab770 rank 0 nRanks 1 nNodes 1 localRanks 1 localRank 0 MNNVL 0
+admins:948206:948346 [0] NCCL INFO Channel 00/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 01/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 02/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 03/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 04/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 05/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 06/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 07/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 08/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 09/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 10/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 11/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 12/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 13/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 14/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 15/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 16/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 17/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 18/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 19/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 20/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 21/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 22/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 23/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 24/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 25/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 26/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 27/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 28/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 29/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 30/32 :    0
+admins:948206:948346 [0] NCCL INFO Channel 31/32 :    0
+admins:948206:948346 [0] NCCL INFO Trees [0] -1/-1/-1->0->-1 [1] -1/-1/-1->0->-1 [2] -1/-1/-1->0->-1 [3] -1/-1/-1->0->-1 [4] -1/-1/-1->0->-1 [5] -1/-1/-1->0->-1 [6] -1/-1/-1->0->-1 [7] -1/-1/-1->0->-1 [8] -1/-1/-1->0->-1 [9] -1/-1/-1->0->-1 [10] -1/-1/-1->0->-1 [11] -1/-1/-1->0->-1 [12] -1/-1/-1->0->-1 [13] -1/-1/-1->0->-1 [14] -1/-1/-1->0->-1 [15] -1/-1/-1->0->-1 [16] -1/-1/-1->0->-1 [17] -1/-1/-1->0->-1 [18] -1/-1/-1->0->-1 [19] -1/-1/-1->0->-1 [20] -1/-1/-1->0->-1 [21] -1/-1/-1->0->-1 [22] -1/-1/-1->0->-1 [23] -1/-1/-1->0->-1 [24] -1/-1/-1->0->-1 [25] -1/-1/-1->0->-1 [26] -1/-1/-1->0->-1 [27] -1/-1/-1->0->-1 [28] -1/-1/-1->0->-1 [29] -1/-1/-1->0->-1 [30] -1/-1/-1->0->-1 [31] -1/-1/-1->0->-1
+admins:948206:948346 [0] NCCL INFO P2P Chunksize set to 131072
+admins:948206:948346 [0] NCCL INFO Connected all rings
+admins:948206:948346 [0] NCCL INFO Connected all trees
+admins:948206:948346 [0] NCCL INFO 32 coll channels, 32 collnet channels, 0 nvls channels, 32 p2p channels, 32 p2p channels per peer
+admins:948206:948346 [0] NCCL INFO TUNER/Plugin: Plugin load returned 2 : libnccl-net.so: cannot open shared object file: No such file or directory : when loading libnccl-tuner.so
+admins:948206:948346 [0] NCCL INFO TUNER/Plugin: Using internal tuner plugin.
+admins:948206:948346 [0] NCCL INFO ncclCommInitRank comm 0x402ab770 rank 0 nranks 1 cudaDev 0 nvmlDev 0 busId 17000 commId 0x65bc89c41be7b877 - Init COMPLETE
+wandb: Currently logged in as: jenashreyas. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.16.5
+wandb: Run data is saved locally in /home/shreyasj/BTP/models/STIC/wandb/run-20240818_074647-cyjxsuru
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run LLaVA_NeXT_Video_7B_dpo_finetune_mixed
+wandb: ⭐️ View project at https://wandb.ai/jenashreyas/LLaVA-NeXT-Video
+wandb: 🚀 View run at https://wandb.ai/jenashreyas/LLaVA-NeXT-Video/runs/cyjxsuru/workspace
+  0%|          | 0/1399 [00:00<?, ?it/s]/home/shreyasj/BTP/models/STIC/LLaVA-NeXT/trl/trainer/dpo_trainer.py:1012: UserWarning: compute_loss is only implemented for DPODataCollatorWithPadding, and you passed a datacollator that is different than DPODataCollatorWithPadding - you might see unexpected behavior. Alternatively, you can implement your own prediction_step method if you are using a custom data collator
+  warnings.warn(
+/home/shreyasj/anaconda3/envs/stic/lib/python3.10/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+/home/shreyasj/anaconda3/envs/stic/lib/python3.10/site-packages/torch/utils/checkpoint.py:61: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+admins:948206:949168 [0] NCCL INFO Using non-device net plugin version 0
+admins:948206:949168 [0] NCCL INFO Using network Socket
+admins:948206:949168 [0] NCCL INFO ncclCommInitRank comm 0xab27e980 rank 0 nranks 1 cudaDev 0 nvmlDev 0 busId 17000 commId 0x4baa8122a1a92751 - Init START
+admins:948206:949168 [0] NCCL INFO Setting affinity for GPU 0 to 55555555
+admins:948206:949168 [0] NCCL INFO comm 0xab27e980 rank 0 nRanks 1 nNodes 1 localRanks 1 localRank 0 MNNVL 0
+admins:948206:949168 [0] NCCL INFO Channel 00/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 01/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 02/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 03/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 04/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 05/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 06/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 07/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 08/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 09/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 10/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 11/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 12/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 13/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 14/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 15/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 16/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 17/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 18/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 19/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 20/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 21/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 22/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 23/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 24/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 25/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 26/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 27/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 28/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 29/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 30/32 :    0
+admins:948206:949168 [0] NCCL INFO Channel 31/32 :    0
+admins:948206:949168 [0] NCCL INFO Trees [0] -1/-1/-1->0->-1 [1] -1/-1/-1->0->-1 [2] -1/-1/-1->0->-1 [3] -1/-1/-1->0->-1 [4] -1/-1/-1->0->-1 [5] -1/-1/-1->0->-1 [6] -1/-1/-1->0->-1 [7] -1/-1/-1->0->-1 [8] -1/-1/-1->0->-1 [9] -1/-1/-1->0->-1 [10] -1/-1/-1->0->-1 [11] -1/-1/-1->0->-1 [12] -1/-1/-1->0->-1 [13] -1/-1/-1->0->-1 [14] -1/-1/-1->0->-1 [15] -1/-1/-1->0->-1 [16] -1/-1/-1->0->-1 [17] -1/-1/-1->0->-1 [18] -1/-1/-1->0->-1 [19] -1/-1/-1->0->-1 [20] -1/-1/-1->0->-1 [21] -1/-1/-1->0->-1 [22] -1/-1/-1->0->-1 [23] -1/-1/-1->0->-1 [24] -1/-1/-1->0->-1 [25] -1/-1/-1->0->-1 [26] -1/-1/-1->0->-1 [27] -1/-1/-1->0->-1 [28] -1/-1/-1->0->-1 [29] -1/-1/-1->0->-1 [30] -1/-1/-1->0->-1 [31] -1/-1/-1->0->-1
+admins:948206:949168 [0] NCCL INFO P2P Chunksize set to 131072
+admins:948206:949168 [0] NCCL INFO Connected all rings
+admins:948206:949168 [0] NCCL INFO Connected all trees
+admins:948206:949168 [0] NCCL INFO 32 coll channels, 32 collnet channels, 0 nvls channels, 32 p2p channels, 32 p2p channels per peer
+admins:948206:949168 [0] NCCL INFO ncclCommInitRank comm 0xab27e980 rank 0 nranks 1 cudaDev 0 nvmlDev 0 busId 17000 commId 0x4baa8122a1a92751 - Init COMPLETE
+Could not estimate the number of tokens of the input, floating-point operations will not be computed
+/home/shreyasj/anaconda3/envs/stic/lib/python3.10/site-packages/deepspeed/runtime/zero/stage_1_and_2.py:1586: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at ../torch/csrc/tensor/python_tensor.cpp:83.)
+  total_norm_cuda = get_accelerator().FloatTensor([float(total_norm)])
+  0%|          | 1/1399 [00:44<17:16:03, 44.47s/it]                                                   {'loss': 0.6931, 'grad_norm': 296.59938236411483, 'learning_rate': 3.571428571428571e-09, 'losses/dpo': 0.6931471824645996, 'losses/sft': 0.8278871774673462, 'losses/total': 0.6931471824645996, 'rewards/chosen': 0.0, 'rewards/rejected': 0.0, 'rewards/accuracies': 0.0, 'rewards/margins': 0.0, 'logps/rejected': -193.93524169921875, 'logps/chosen': -261.59130859375, 'ref_logps/rejected': -193.93524169921875, 'ref_logps/chosen': -261.59130859375, 'epoch': 0.0}
+  0%|          | 1/1399 [00:44<17:16:03, 44.47s/it]  0%|          | 2/1399 [01:37<19:10:44, 49.42s/it]                                                   {'loss': 0.6931, 'grad_norm': 135.53942522755372, 'learning_rate': 7.142857142857142e-09, 'losses/dpo': 0.6931471824645996, 'losses/sft': 0.9899146556854248, 'losses/total': 0.6931471824645996, 'rewards/chosen': 0.0, 'rewards/rejected': 0.0, 'rewards/accuracies': 0.0, 'rewards/margins': 0.0, 'logps/rejected': -164.61163330078125, 'logps/chosen': -235.88275146484375, 'ref_logps/rejected': -164.61163330078125, 'ref_logps/chosen': -235.88275146484375, 'epoch': 0.0}
+  0%|          | 2/1399 [01:37<19:10:44, 49.42s/it]  0%|          | 3/1399 [02:32<20:05:38, 51.82s/it]                                                   {'loss': 0.6931, 'grad_norm': 615.4268926963675, 'learning_rate': 1.0714285714285715e-08, 'losses/dpo': 0.6930516362190247, 'losses/sft': 2.115483045578003, 'losses/total': 0.6930516362190247, 'rewards/chosen': 0.033971212804317474, 'rewards/rejected': 0.033225059509277344, 'rewards/accuracies': 0.25, 'rewards/margins': 0.0007461537607014179, 'logps/rejected': -494.42742919921875, 'logps/chosen': -486.1946716308594, 'ref_logps/rejected': -494.7596740722656, 'ref_logps/chosen': -486.5343933105469, 'epoch': 0.0}
+  0%|          | 3/1399 [02:32<20:05:38, 51.82s/it]  0%|          | 4/1399 [03:20<19:30:22, 50.34s/it]                                                   {'loss': 0.7103, 'grad_norm': 117.4220438353847, 'learning_rate': 1.4285714285714284e-08, 'losses/dpo': 0.7103190422058105, 'losses/sft': 0.8569240570068359, 'losses/total': 0.7103190422058105, 'rewards/chosen': -0.020927241072058678, 'rewards/rejected': 0.01261129416525364, 'rewards/accuracies': 0.25, 'rewards/margins': -0.03353853151202202, 'logps/rejected': -224.39248657226562, 'logps/chosen': -223.15567016601562, 'ref_logps/rejected': -224.51861572265625, 'ref_logps/chosen': -222.94638061523438, 'epoch': 0.0}
+  0%|          | 4/1399 [03:20<19:30:22, 50.34s/it]  0%|          | 5/1399 [04:23<21:15:59, 54.92s/it]                                                   {'loss': 0.7343, 'grad_norm': 3263.7414394516227, 'learning_rate': 1.7857142857142856e-08, 'losses/dpo': 0.734250009059906, 'losses/sft': 2.3752927780151367, 'losses/total': 0.734250009059906, 'rewards/chosen': 0.06060514599084854, 'rewards/rejected': 0.12386485189199448, 'rewards/accuracies': 0.625, 'rewards/margins': -0.06325969845056534, 'logps/rejected': -1421.9830322265625, 'logps/chosen': -589.5201416015625, 'ref_logps/rejected': -1423.2215576171875, 'ref_logps/chosen': -590.126220703125, 'epoch': 0.0}
+  0%|          | 5/1399 [04:23<21:15:59, 54.92s/it]  0%|          | 6/1399 [05:24<22:02:32, 56.96s/it]                                                   {'loss': 0.7308, 'grad_norm': 7242.004640895365, 'learning_rate': 2.142857142857143e-08, 'losses/dpo': 0.7308135032653809, 'losses/sft': 3.0713753700256348, 'losses/total': 0.7308135032653809, 'rewards/chosen': -0.002373883267864585, 'rewards/rejected': 0.0647897720336914, 'rewards/accuracies': 0.5, 'rewards/margins': -0.06716366112232208, 'logps/rejected': -1451.5069580078125, 'logps/chosen': -810.561767578125, 'ref_logps/rejected': -1452.154541015625, 'ref_logps/chosen': -810.5380249023438, 'epoch': 0.0}
+  0%|          | 6/1399 [05:24<22:02:32, 56.96s/it]  1%|          | 7/1399 [06:11<20:49:32, 53.86s/it]                                                   {'loss': 0.6915, 'grad_norm': 393.5387222645706, 'learning_rate': 2.5e-08, 'losses/dpo': 0.6915120482444763, 'losses/sft': 0.8917786478996277, 'losses/total': 0.6915120482444763, 'rewards/chosen': -0.0013710018247365952, 'rewards/rejected': -0.005370331462472677, 'rewards/accuracies': 0.625, 'rewards/margins': 0.003999329172074795, 'logps/rejected': -153.8767852783203, 'logps/chosen': -211.56350708007812, 'ref_logps/rejected': -153.8230743408203, 'ref_logps/chosen': -211.5498046875, 'epoch': 0.01}
+  1%|          | 7/1399 [06:11<20:49:32, 53.86s/it]  1%|          | 8/1399 [07:08<21:14:38, 54.98s/it]                                                   {'loss': 0.7012, 'grad_norm': 571.4838711656187, 'learning_rate': 2.857142857142857e-08, 'losses/dpo': 0.701184093952179, 'losses/sft': 1.4509330987930298, 'losses/total': 0.701184093952179, 'rewards/chosen': -0.005591392517089844, 'rewards/rejected': 0.00924530066549778, 'rewards/accuracies': 0.375, 'rewards/margins': -0.014836693182587624, 'logps/rejected': -229.13552856445312, 'logps/chosen': -313.86639404296875, 'ref_logps/rejected': -229.22799682617188, 'ref_logps/chosen': -313.8104553222656, 'epoch': 0.01}
+  1%|          | 8/1399 [07:08<21:14:38, 54.98s/it]  1%|          | 9/1399 [08:02<21:06:57, 54.69s/it]                                                   {'loss': 0.7009, 'grad_norm': 4630.712761096423, 'learning_rate': 3.214285714285714e-08, 'losses/dpo': 0.7009092569351196, 'losses/sft': 1.8785147666931152, 'losses/total': 0.7009092569351196, 'rewards/chosen': 0.037819862365722656, 'rewards/rejected': 0.05004072189331055, 'rewards/accuracies': 0.375, 'rewards/margins': -0.012220857664942741, 'logps/rejected': -1278.09912109375, 'logps/chosen': -393.3420104980469, 'ref_logps/rejected': -1278.599609375, 'ref_logps/chosen': -393.72021484375, 'epoch': 0.01}
+  1%|          | 9/1399 [08:02<21:06:57, 54.69s/it]  1%|          | 10/1399 [08:45<19:41:18, 51.03s/it]                                                    {'loss': 0.6837, 'grad_norm': 116.22743941397613, 'learning_rate': 3.571428571428571e-08, 'losses/dpo': 0.6837446689605713, 'losses/sft': 0.9274253845214844, 'losses/total': 0.6837446689605713, 'rewards/chosen': -0.01168079487979412, 'rewards/rejected': -0.031130697578191757, 'rewards/accuracies': 0.625, 'rewards/margins': 0.019449900835752487, 'logps/rejected': -160.31085205078125, 'logps/chosen': -264.3028869628906, 'ref_logps/rejected': -159.99954223632812, 'ref_logps/chosen': -264.1860656738281, 'epoch': 0.01}
+  1%|          | 10/1399 [08:45<19:41:18, 51.03s/it]  1%|          | 11/1399 [09:36<19:38:41, 50.95s/it]                                                    {'loss': 0.6995, 'grad_norm': 184.97819650370337, 'learning_rate': 3.9285714285714285e-08, 'losses/dpo': 0.6994849443435669, 'losses/sft': 1.1545342206954956, 'losses/total': 0.6994849443435669, 'rewards/chosen': -0.011815548874437809, 'rewards/rejected': 0.0006775851361453533, 'rewards/accuracies': 0.25, 'rewards/margins': -0.012493133544921875, 'logps/rejected': -144.15728759765625, 'logps/chosen': -257.2547912597656, 'ref_logps/rejected': -144.16404724121094, 'ref_logps/chosen': -257.1366271972656, 'epoch': 0.01}
+  1%|          | 11/1399 [09:36<19:38:41, 50.95s/it]  1%|          | 12/1399 [10:23<19:07:15, 49.63s/it]                                                    {'loss': 0.6746, 'grad_norm': 519.353392253215, 'learning_rate': 4.285714285714286e-08, 'losses/dpo': 0.6745560765266418, 'losses/sft': 0.9685426950454712, 'losses/total': 0.6745560765266418, 'rewards/chosen': 0.04588641971349716, 'rewards/rejected': 0.005605983082205057, 'rewards/accuracies': 0.75, 'rewards/margins': 0.04028043895959854, 'logps/rejected': -202.64056396484375, 'logps/chosen': -323.8216247558594, 'ref_logps/rejected': -202.69662475585938, 'ref_logps/chosen': -324.280517578125, 'epoch': 0.01}
+  1%|          | 12/1399 [10:23<19:07:15, 49.63s/it]  1%|          | 13/1399 [11:15<19:27:29, 50.54s/it]                                                    {'loss': 0.7023, 'grad_norm': 180.27937763185398, 'learning_rate': 4.642857142857143e-08, 'losses/dpo': 0.7022563815116882, 'losses/sft': 1.2055861949920654, 'losses/total': 0.7022563815116882, 'rewards/chosen': -0.008829879574477673, 'rewards/rejected': 0.008374501951038837, 'rewards/accuracies': 0.25, 'rewards/margins': -0.01720437966287136, 'logps/rejected': -190.47900390625, 'logps/chosen': -308.5919189453125, 'ref_logps/rejected': -190.562744140625, 'ref_logps/chosen': -308.50360107421875, 'epoch': 0.01}
+  1%|          | 13/1399 [11:15<19:27:29, 50.54s/it]  1%|          | 14/1399 [11:58<18:29:28, 48.06s/it]                                                    {'loss': 0.7114, 'grad_norm': 232.5539117471398, 'learning_rate': 5e-08, 'losses/dpo': 0.7113686203956604, 'losses/sft': 0.7896832823753357, 'losses/total': 0.7113686203956604, 'rewards/chosen': -0.023488808423280716, 'rewards/rejected': 0.012011813931167126, 'rewards/accuracies': 0.25, 'rewards/margins': -0.035500623285770416, 'logps/rejected': -214.96218872070312, 'logps/chosen': -227.102783203125, 'ref_logps/rejected': -215.08233642578125, 'ref_logps/chosen': -226.86790466308594, 'epoch': 0.01}
+  1%|          | 14/1399 [11:58<18:29:28, 48.06s/it]  1%|          | 15/1399 [13:02<20:24:14, 53.07s/it]                                                    {'loss': 0.6886, 'grad_norm': 339.92997720750793, 'learning_rate': 5.3571428571428564e-08, 'losses/dpo': 0.6885817646980286, 'losses/sft': 2.1456172466278076, 'losses/total': 0.6885817646980286, 'rewards/chosen': 0.0022426596842706203, 'rewards/rejected': -0.007574844174087048, 'rewards/accuracies': 0.625, 'rewards/margins': 0.009817506186664104, 'logps/rejected': -490.809814453125, 'logps/chosen': -487.1162414550781, 'ref_logps/rejected': -490.7340393066406, 'ref_logps/chosen': -487.138671875, 'epoch': 0.01}
+  1%|          | 15/1399 [13:02<20:24:14, 53.07s/it]  1%|          | 16/1399 [13:59<20:45:03, 54.02s/it]                                                    {'loss': 0.6793, 'grad_norm': 1186.8484374084612, 'learning_rate': 5.714285714285714e-08, 'losses/dpo': 0.6793121099472046, 'losses/sft': 1.858540654182434, 'losses/total': 0.6793121099472046, 'rewards/chosen': 0.007309150416404009, 'rewards/rejected': -0.02100505866110325, 'rewards/accuracies': 0.75, 'rewards/margins': 0.02831420861184597, 'logps/rejected': -524.9136352539062, 'logps/chosen': -448.5028991699219, 'ref_logps/rejected': -524.70361328125, 'ref_logps/chosen': -448.5760498046875, 'epoch': 0.01}
+  1%|          | 16/1399 [13:59<20:45:03, 54.02s/it]  1%|          | 17/1399 [14:44<19:44:35, 51.43s/it]                                                    {'loss': 0.6944, 'grad_norm': 201.8301798571256, 'learning_rate': 6.071428571428572e-08, 'losses/dpo': 0.6943525671958923, 'losses/sft': 0.8851157426834106, 'losses/total': 0.6943525671958923, 'rewards/chosen': -0.024357033893465996, 'rewards/rejected': -0.022693157196044922, 'rewards/accuracies': 0.5, 'rewards/margins': -0.001663876697421074, 'logps/rejected': -172.1918487548828, 'logps/chosen': -225.4058837890625, 'ref_logps/rejected': -171.96490478515625, 'ref_logps/chosen': -225.16232299804688, 'epoch': 0.01}
+  1%|          | 17/1399 [14:44<19:44:35, 51.43s/it]  1%|▏         | 18/1399 [15:26<18:41:31, 48.73s/it]                                                    {'loss': 0.6899, 'grad_norm': 399.0521468119726, 'learning_rate': 6.428571428571428e-08, 'losses/dpo': 0.6899033188819885, 'losses/sft': 0.9207857847213745, 'losses/total': 0.6899033188819885, 'rewards/chosen': -0.012972640804946423, 'rewards/rejected': -0.020389365032315254, 'rewards/accuracies': 0.625, 'rewards/margins': 0.007416724693030119, 'logps/rejected': -224.7949981689453, 'logps/chosen': -264.6526184082031, 'ref_logps/rejected': -224.5911102294922, 'ref_logps/chosen': -264.52288818359375, 'epoch': 0.01}
+  1%|▏         | 18/1399 [15:26<18:41:31, 48.73s/it]

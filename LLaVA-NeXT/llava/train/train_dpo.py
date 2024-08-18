@@ -38,7 +38,7 @@ import tokenizers
 from llava.constants import IGNORE_INDEX, DEFAULT_IMAGE_TOKEN, DEFAULT_IM_START_TOKEN, DEFAULT_IM_END_TOKEN, IMAGE_TOKEN_INDEX
 from torch.utils.data import Dataset
 from llava.train.llava_trainer import LLaVADPOTrainer
-from data_processing.utils import load_jsonl, load_json
+from llava.utils import load_jsonl, load_json
 from llava import conversation as conversation_lib
 from llava.model import *
 from llava.model.language_model.llava_qwen import LlavaQwenConfig
@@ -983,7 +983,7 @@ class DPODataset(Dataset):
         length_list = []
         for sample in self.list_data_dict:
             # Calculate the length of the prompt, answer, chosen, and rejected text
-            cur_len = len(sample["prompt"].split()) + len(sample["answer"].split()) + len(sample["chosen"].split()) + len(sample["rejected"].split())
+            cur_len = len(sample["prompt"].split()) + len(sample["chosen"].split()) + len(sample["rejected"].split())   # Removed  + len(sample["answer"].split()) since not relevant for our purpose
             # Add additional tokens if an image is present
             img_tokens = 128 if "image" in sample else 0
             length_list.append(cur_len + img_tokens)
@@ -994,7 +994,7 @@ class DPODataset(Dataset):
         length_list = []
         for sample in self.list_data_dict:
             # Calculate the length of the prompt, answer, chosen, and rejected text
-            cur_len = len(sample["prompt"].split()) + len(sample["answer"].split()) + len(sample["chosen"].split()) + len(sample["rejected"].split())
+            cur_len = len(sample["prompt"].split()) + len(sample["chosen"].split()) + len(sample["rejected"].split())   # Removed + len(sample["answer"].split())
             # If the sample includes a video, the length is positive; otherwise, it is negative
             cur_len = cur_len if ("video" in sample or "image" in sample) else -cur_len
             length_list.append(cur_len)
@@ -1187,7 +1187,7 @@ class DPODataset(Dataset):
 class DPODataCollator(DPODataCollatorWithPadding):
     """Collate examples for DPO fine-tuning."""
 
-    # tokenizer: transformers.PreTrainedTokenizer
+    tokenizer: transformers.PreTrainedTokenizer = field(default=None)
 
     def collate(self, batch):
         # first, pad everything to the same length
@@ -1329,6 +1329,7 @@ def get_model(model_args, training_args, bnb_model_from_pretrained_args):
         "wizardlm-2" in model_args.model_name_or_path.lower()
         or "vicuna" in model_args.model_name_or_path.lower()
         or "llama" in model_args.model_name_or_path.lower()
+        or "llava" in model_args.model_name_or_path.lower()
         or "yi" in model_args.model_name_or_path.lower()
         or "nous-hermes" in model_args.model_name_or_path.lower()
         and "wizard-2" in model_args.model_name_or_path.lower()
@@ -1404,6 +1405,7 @@ def get_model(model_args, training_args, bnb_model_from_pretrained_args):
         elif (
             "wizardlm-2" in model_args.model_name_or_path.lower()
             or "vicuna" in model_args.model_name_or_path.lower()
+            or "llava" in model_args.model_name_or_path.lower()     # ADDED SINCE LLaVA IS A NEW MODEL
             or "llama" in model_args.model_name_or_path.lower()
             or "yi" in model_args.model_name_or_path.lower()
             or "nous-hermes" in model_args.model_name_or_path.lower()
@@ -1414,7 +1416,7 @@ def get_model(model_args, training_args, bnb_model_from_pretrained_args):
                 cache_dir=training_args.cache_dir,
                 attn_implementation=training_args.attn_implementation,
                 torch_dtype=(torch.bfloat16 if training_args.bf16 else None),
-                low_cpu_mem_usage=False,
+                low_cpu_mem_usage=True,     # False for Zero-3 (maybe?)
                 **customized_kwargs,
             )
 
@@ -1425,7 +1427,7 @@ def get_model(model_args, training_args, bnb_model_from_pretrained_args):
                     cache_dir=training_args.cache_dir,
                     attn_implementation=training_args.attn_implementation,
                     torch_dtype=(torch.bfloat16 if training_args.bf16 else None),
-                    low_cpu_mem_usage=False,
+                    low_cpu_mem_usage=True,     # False for Zero-3 (maybe?)
                     **customized_kwargs,
                 )
 
@@ -1501,14 +1503,16 @@ def train(attn_implementation=None):
     if training_args.bits in [4, 8]:
         from transformers import BitsAndBytesConfig
 
+        print("Training args device : ", training_args.device)
         bnb_model_from_pretrained_args.update(
             dict(
                 device_map={"": training_args.device},
-                load_in_4bit=training_args.bits == 4,
-                load_in_8bit=training_args.bits == 8,
+                # load_in_4bit=training_args.bits == 4,
+                # load_in_8bit=training_args.bits == 8,
                 quantization_config=BitsAndBytesConfig(
                     load_in_4bit=training_args.bits == 4,
                     load_in_8bit=training_args.bits == 8,
+                    llm_int8_skip_modules=["mm_projector"],
                     llm_int8_threshold=6.0,
                     llm_int8_has_fp16_weight=False,
                     bnb_4bit_compute_dtype=compute_dtype,
@@ -1679,10 +1683,24 @@ def train(attn_implementation=None):
                 for name, param in model.named_parameters():
                     if "vision_tower" in name:
                         param.requires_grad_(True)
+            print("Parameters : \n\n")
+            for name, param in model.named_parameters():
+                print(name, " ", param.dtype, " ", param.requires_grad)
+
+            # print("Modules : \n\n")
+            # for name, module in model.named_modules():
+            #     print(name, " ", module.dtype)
+
             if "mm_language_model" in tunable_parts:
                 for name, param in model.named_parameters():
                     if "vision_tower" not in name and "mm_projector" not in name and "vision_resampler" not in name:
-                        param.requires_grad_(True)
+                        '''
+                            The original large-sized layers have been quantized to torch.int8.
+                            The extra small-sized corresponding LoRA layers (torch.float32) added to be fine-tuned in their presence. 
+                            We therefore only need to fine-tune the non-quantized layers.
+                        '''
+                        if param.dtype not in [torch.int8, torch.uint8]:       # skip the quantized layers (seems like this code doesn't support quantized fine-tuning properly)
+                            param.requires_grad_(True)
 
         total_params = sum(p.ds_numel if hasattr(p, "ds_numel") else p.numel() for p in model.parameters())
         trainable_params = sum(p.ds_numel if hasattr(p, "ds_numel") else p.numel() for p in model.parameters() if p.requires_grad)
@@ -1733,9 +1751,9 @@ def train(attn_implementation=None):
 
     train_dataset = make_dpo_data_module(tokenizer=tokenizer, data_args=data_args)
     data_collator = DPODataCollator(
-        tokenizer,
         label_pad_token_id=IGNORE_INDEX,
         pad_token_id=tokenizer.pad_token_id,
+        tokenizer=tokenizer
     )
 
     trainer = LLaVADPOTrainer(

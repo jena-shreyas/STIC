@@ -4,6 +4,7 @@ import logging.handlers
 import os
 import sys
 import numpy as np
+import json
 
 import requests
 
@@ -189,3 +190,22 @@ def pretty_print_semaphore(semaphore):
     if semaphore is None:
         return "None"
     return f"Semaphore(value={semaphore._value}, locked={semaphore.locked()})"
+
+
+def load_json(data_path):
+    """
+    Load a JSON file.
+    """
+    with open(data_path, "r") as f:
+        data = json.load(f)
+    return data
+
+def load_jsonl(data_path):
+    """
+    Load a JSONL file.
+    """
+    data = []
+    with open(data_path, "r") as f:
+        for line in f:
+            data.append(json.loads(line))
+    return data
