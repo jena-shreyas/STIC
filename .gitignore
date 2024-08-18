@@ -32,7 +32,6 @@ playground
 
 pert_imgs/
 pert_vids/
-data/
 *.zip
 *cache_dir/
 src/
