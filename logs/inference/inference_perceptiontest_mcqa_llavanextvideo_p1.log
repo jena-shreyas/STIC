@@ -1,5 +1,5 @@
 You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
-Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:03<00:06,  3.43s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:06<00:02,  2.99s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:08<00:00,  2.65s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:08<00:00,  2.79s/it]
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:13<00:27, 13.88s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:16<00:07,  7.42s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:19<00:00,  5.17s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:19<00:00,  6.42s/it]
 Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
 Total questions :  6696
 physics : 2001
@@ -10,31 +10,7 @@ descriptive : 5989
 counterfactual : 253
 explanatory : 230
 predictive : 224
-  0%|          | 0/1427 [00:00<?, ?it/s]Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_6653.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_6653.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_1209.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_1209.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_9247.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_9247.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_9830.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_9830.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_6207.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_6207.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_4941.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_4941.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_11050.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_11050.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_2881.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_2881.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_82.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_82.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_9297.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_9297.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_6281.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_6281.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_2388.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_2388.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_912.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_912.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_142.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_142.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_343.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_343.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_5114.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_5114.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_5730.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_5730.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_8691.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_8691.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_10857.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_10857.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_4956.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_4956.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_567.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_567.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_7028.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_7028.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_3870.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_3870.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_1055.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_1055.mp4'
-Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_6694.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_6694.mp4'
+  0%|          | 0/1403 [00:00<?, ?it/s]Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_6694.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_6694.mp4'
 Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_9063.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_9063.mp4'
 Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_11317.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_11317.mp4'
 Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_9322.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_9322.mp4'
@@ -1342,7 +1318,6 @@ Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/va
 Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_6682.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_6682.mp4'
 Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_5944.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_5944.mp4'
 Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_2460.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_2460.mp4'
-100%|██████████| 1427/1427 [00:00<00:00, 31338.80it/s]
 Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_5966.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_5966.mp4'
 Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_10586.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_10586.mp4'
 Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_7118.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_7118.mp4'
@@ -1367,6 +1342,7 @@ Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/va
 Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_7424.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_7424.mp4'
 Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_2380.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_2380.mp4'
 Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_3182.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_3182.mp4'
+100%|██████████| 1403/1403 [00:00<00:00, 31536.12it/s]
 Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_6766.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_6766.mp4'
 Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_9836.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_9836.mp4'
 Error in processing file /home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_1961.mp4 :  [Errno 2] No such file or directory: '/home/shreyasjena/BTP/datasets/PerceptionTest/videos/validation/video_1961.mp4'
