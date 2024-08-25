@@ -28,7 +28,7 @@ BATCH_SIZE=1
 GRAD_ACCUM=16
 NUM_EPOCHS=1
 NUM_NODES=1
-NUM_GPUS=2
+NUM_GPUS=1
 BITS=16
 MASTER_PORT=29500
 MODEL_MAX_LENGTH=32768
@@ -44,7 +44,7 @@ wandb online
 
 
 #torchrun --nproc_per_node="${ARNOLD_WORKER_GPU}" --nnodes="${ARNOLD_WORKER_NUM}" --node_rank="${ARNOLD_ID}" --master_addr="${METIS_WORKER_0_HOST}" --master_port="${port_in_cmd}" \
-CUDA_VISIBLE_DEVICES=0,1 torchrun --nproc_per_node ${NUM_GPUS} --nnodes ${NUM_NODES} --master_port ${MASTER_PORT} \
+CUDA_VISIBLE_DEVICES=0 torchrun --nproc_per_node ${NUM_GPUS} --nnodes ${NUM_NODES} --master_port ${MASTER_PORT} \
     LLaVA-NeXT/llava/train/train_dpo.py \
     --lora_enable True --lora_r 128 --lora_alpha 256 --mm_projector_lr 2e-5 \
     --deepspeed scripts/zero2.json \

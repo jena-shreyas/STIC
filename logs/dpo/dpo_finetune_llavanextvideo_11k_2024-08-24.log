@@ -1,0 +1,947 @@
+nohup: ignoring input
+wandb: Appending key for api.wandb.ai to your netrc file: /home/shreyasjena/.netrc
+W&B online. Running your script from this directory will now sync to the cloud.
+[2024-08-24 13:14:47,509] [INFO] [real_accelerator.py:158:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+/home/shreyasjena/anaconda3/envs/stic/lib/python3.10/site-packages/transformers/training_args.py:1494: FutureWarning: `evaluation_strategy` is deprecated and will be removed in version 4.46 of 🤗 Transformers. Use `eval_strategy` instead
+  warnings.warn(
+[2024-08-24 13:14:50,291] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-08-24 13:14:50,291] [INFO] [comm.py:668:init_distributed] Initializing TorchBackend in DeepSpeed with backend nccl
+Rank 0:  Inspecting experiment hyperparameters:
+
+Rank 0:  model_args = {'model_name_or_path': 'lmms-lab/LLaVA-NeXT-Video-7B', 'model_class_name': None, 'mm_tunable_parts': 'mm_vision_tower,mm_mlp_adapter,mm_language_model', 'version': 'v1', 'freeze_backbone': False, 'tune_mm_mlp_adapter': False, 'tune_mm_vision_resampler': False, 'vision_tower': 'openai/clip-vit-large-patch14-336', 'vision_tower_pretrained': None, 'unfreeze_mm_vision_tower': False, 'unfreeze_language_model': False, 'mm_vision_select_layer': -2, 'pretrain_mm_mlp_adapter': None, 'mm_projector_type': 'mlp2x_gelu', 'mm_use_im_start_end': False, 'mm_use_im_patch_token': False, 'mm_patch_merge_type': 'spatial_unpad', 'mm_vision_select_feature': 'patch', 'mm_resampler_type': 'spatial_pool', 'mm_mask_drop_mode': 'fixed', 'mm_mask_drop_skip_percentage': 0.0, 'mm_mask_drop_ratio': 0.25, 'mm_mask_drop_ratio_upper': None, 'mm_mask_drop_ratio_lower': None, 'mm_spatial_pool_stride': 2, 'mm_spatial_pool_mode': 'average', 'mm_spatial_pool_out_channels': 1024, 'mm_perceiver_depth': 3, 'mm_perceiver_latents': 32, 'mm_perceiver_ff_mult': 4, 'mm_perceiver_pretrained': None, 'mm_qformer_depth': 3, 'mm_qformer_latents': 32, 'mm_qformer_pretrained': None, 'rope_scaling_factor': None, 'rope_scaling_type': None, 's2': False, 's2_scales': '336,672,1008'}
+
+
+Rank 0:  data_args = {'data_path': 'data/data_pref_merged.jsonl', 'lazy_preprocess': True, 'is_multimodal': False, 'image_folder': '/home/shreyasjena/BTP/datasets/COCO/pref_images', 'video_folder': '/home/shreyasjena/BTP/datasets/WebVid/videos', 'video_fps': 1, 'image_aspect_ratio': 'anyres', 'image_grid_pinpoints': '[(336, 672), (672, 336), (672, 672), (1008, 336), (336, 1008)]', 'image_crop_resolution': 384, 'image_split_resolution': 384, 'input_prompt': None, 'refine_prompt': False, 'frames_upbound': 0, 'num_sample': None}
+
+
+Rank 0:  training_args = {'output_dir': 'checkpoints/LLaVA_NeXT_Video_7B_dpo_finetune_mixed', 'overwrite_output_dir': False, 'do_train': False, 'do_eval': False, 'do_predict': False, 'eval_strategy': <IntervalStrategy.NO: 'no'>, 'prediction_loss_only': False, 'per_device_train_batch_size': 1, 'per_device_eval_batch_size': 1, 'per_gpu_train_batch_size': None, 'per_gpu_eval_batch_size': None, 'gradient_accumulation_steps': 4, 'eval_accumulation_steps': None, 'eval_delay': 0, 'learning_rate': 5e-07, 'weight_decay': 0.0, 'adam_beta1': 0.9, 'adam_beta2': 0.999, 'adam_epsilon': 1e-08, 'max_grad_norm': 1.0, 'num_train_epochs': 1.0, 'max_steps': -1, 'lr_scheduler_type': <SchedulerType.LINEAR: 'linear'>, 'lr_scheduler_kwargs': {}, 'warmup_ratio': 0.1, 'warmup_steps': 0, 'log_level': 'passive', 'log_level_replica': 'warning', 'log_on_each_node': True, 'logging_dir': 'checkpoints/LLaVA_NeXT_Video_7B_dpo_finetune_mixed/runs/Aug24_13-14-50_gpu', 'logging_strategy': <IntervalStrategy.STEPS: 'steps'>, 'logging_first_step': False, 'logging_steps': 1.0, 'logging_nan_inf_filter': True, 'save_strategy': <IntervalStrategy.STEPS: 'steps'>, 'save_steps': 3000, 'save_total_limit': 1, 'save_safetensors': True, 'save_on_each_node': False, 'save_only_model': False, 'restore_callback_states_from_checkpoint': False, 'no_cuda': False, 'use_cpu': False, 'use_mps_device': False, 'seed': 42, 'data_seed': None, 'jit_mode_eval': False, 'use_ipex': False, 'bf16': True, 'fp16': False, 'fp16_opt_level': 'O1', 'half_precision_backend': 'auto', 'bf16_full_eval': False, 'fp16_full_eval': False, 'tf32': True, 'local_rank': 0, 'ddp_backend': None, 'tpu_num_cores': None, 'tpu_metrics_debug': False, 'debug': [], 'dataloader_drop_last': True, 'eval_steps': None, 'dataloader_num_workers': 4, 'dataloader_prefetch_factor': None, 'past_index': -1, 'run_name': 'LLaVA_NeXT_Video_7B_dpo_finetune_mixed', 'disable_tqdm': False, 'remove_unused_columns': False, 'label_names': None, 'load_best_model_at_end': False, 'metric_for_best_model': None, 'greater_is_better': None, 'ignore_data_skip': False, 'fsdp': [], 'fsdp_min_num_params': 0, 'fsdp_config': {'min_num_params': 0, 'xla': False, 'xla_fsdp_v2': False, 'xla_fsdp_grad_ckpt': False}, 'fsdp_transformer_layer_cls_to_wrap': None, 'accelerator_config': AcceleratorConfig(split_batches=False, dispatch_batches=None, even_batches=True, use_seedable_sampler=True, non_blocking=False, gradient_accumulation_kwargs=None, use_configured_state=False), 'deepspeed': 'scripts/zero2.json', 'label_smoothing_factor': 0.0, 'optim': <OptimizerNames.ADAMW_TORCH: 'adamw_torch'>, 'optim_args': None, 'adafactor': False, 'group_by_length': False, 'length_column_name': 'length', 'report_to': ['wandb'], 'ddp_find_unused_parameters': None, 'ddp_bucket_cap_mb': None, 'ddp_broadcast_buffers': None, 'dataloader_pin_memory': True, 'dataloader_persistent_workers': False, 'skip_memory_metrics': True, 'use_legacy_prediction_loop': False, 'push_to_hub': False, 'resume_from_checkpoint': None, 'hub_model_id': None, 'hub_strategy': <HubStrategy.EVERY_SAVE: 'every_save'>, 'hub_token': None, 'hub_private_repo': False, 'hub_always_push': False, 'gradient_checkpointing': True, 'gradient_checkpointing_kwargs': None, 'include_inputs_for_metrics': False, 'eval_do_concat_batches': True, 'fp16_backend': 'auto', 'evaluation_strategy': 'no', 'push_to_hub_model_id': None, 'push_to_hub_organization': None, 'push_to_hub_token': None, 'mp_parameters': '', 'auto_find_batch_size': False, 'full_determinism': False, 'torchdynamo': None, 'ray_scope': 'last', 'ddp_timeout': 1800, 'torch_compile': True, 'torch_compile_backend': 'inductor', 'torch_compile_mode': None, 'dispatch_batches': None, 'split_batches': None, 'include_tokens_per_second': False, 'include_num_input_tokens_seen': False, 'neftune_noise_alpha': None, 'optim_target_modules': None, 'batch_eval_metrics': False, 'eval_on_start': False, 'cache_dir': None, 'freeze_mm_mlp_adapter': False, 'freeze_mm_vision_resampler': False, 'mpt_attn_impl': 'triton', 'model_max_length': 32768, 'double_quant': True, 'quant_type': 'nf4', 'bits': 8, 'lora_enable': True, 'lora_r': 128, 'lora_alpha': 256, 'lora_dropout': 0.05, 'lora_weight_path': '', 'lora_bias': 'none', 'mm_projector_lr': 2e-05, 'mm_vision_tower_lr': None, 'group_by_varlen': False, 'group_by_modality_length': True, 'group_by_modality_length_auto': False, 'verbose_logging': True, 'attn_implementation': 'flash_attention_2', 'dpo_alpha': 1.0, 'beta': 0.1, 'gamma': 0.0, 'generate_during_eval': False, 'precompute_ref_log_probs': False, 'distributed_state': Distributed environment: DEEPSPEED  Backend: nccl
+Num processes: 1
+Process index: 0
+Local process index: 0
+Device: cuda:0
+, '_n_gpu': 1, '__cached__setup_devices': device(type='cuda', index=0), 'deepspeed_plugin': DeepSpeedPlugin(hf_ds_config=<transformers.integrations.deepspeed.HfTrainerDeepSpeedConfig object at 0x7f1c4e114520>, gradient_accumulation_steps=4, gradient_clipping='auto', zero_stage=2, is_train_batch_min=True, offload_optimizer_device='none', offload_param_device='none', offload_optimizer_nvme_path='none', offload_param_nvme_path='none', zero3_init_flag=False, zero3_save_16bit_model=False, transformer_moe_cls_names=None), 'hf_deepspeed_config': <transformers.integrations.deepspeed.HfTrainerDeepSpeedConfig object at 0x7f1c4e114520>}
+
+
+Training args device :  cuda:0
+You are using a model of type llava to instantiate a model of type llava_llama. This is not supported for all configurations of models and can yield errors.
+Rank 0:  Overwriting config with {'mm_resampler_type': 'spatial_pool', 'mm_spatial_pool_stride': 2, 'mm_spatial_pool_out_channels': 1024, 'mm_spatial_pool_mode': 'average'}
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:02<00:05,  2.81s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:05<00:02,  2.69s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:07<00:00,  2.34s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:07<00:00,  2.45s/it]
+Some weights of the model checkpoint at lmms-lab/LLaVA-NeXT-Video-7B were not used when initializing LlavaLlamaForCausalLM: ['model.vision_tower.vision_tower.vision_model.embeddings.class_embedding', 'model.vision_tower.vision_tower.vision_model.embeddings.patch_embedding.weight', 'model.vision_tower.vision_tower.vision_model.embeddings.position_embedding.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.post_layernorm.bias', 'model.vision_tower.vision_tower.vision_model.post_layernorm.weight', 'model.vision_tower.vision_tower.vision_model.pre_layrnorm.bias', 'model.vision_tower.vision_tower.vision_model.pre_layrnorm.weight']
+- This IS expected if you are initializing LlavaLlamaForCausalLM from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing LlavaLlamaForCausalLM from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Rank 0:  Adding LoRA adapters...
+Rank 0:  Prompt version: v1
+/home/shreyasjena/anaconda3/envs/stic/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+Rank 0:  Using mm_tunable_parts: mm_vision_tower,mm_mlp_adapter,mm_language_model
+Rank 0:  Total parameters: ~7382.72 MB)
+Rank 0:  Trainable parameters: ~775.65 MB)
+Rank 0:  Loading data/data_pref_merged.jsonl
+Rank 0:  Loaded 11198 samples from data/data_pref_merged.jsonl
+Rank 0:  Formatting inputs...Skip in lazy mode
+/home/shreyasjena/BTP/models/STIC/LLaVA-NeXT/trl/trainer/dpo_trainer.py:239: UserWarning: `max_prompt_length` is not set in the DPOTrainer's init it will default to `128` by default, but you should do it yourself in the future.
+  warnings.warn(
+gpu:3878309:3878309 [0] NCCL INFO Bootstrap : Using eno8303:10.5.30.82<0>
+gpu:3878309:3878309 [0] NCCL INFO NET/Plugin : Plugin load (libnccl-net.so) returned 2 : libnccl-net.so: cannot open shared object file: No such file or directory
+gpu:3878309:3878309 [0] NCCL INFO NET/Plugin : No plugin found, using internal implementation
+gpu:3878309:3878309 [0] NCCL INFO cudaDriverVersion 12020
+NCCL version 2.18.1+cuda12.1
+gpu:3878309:3878707 [0] NCCL INFO Failed to open libibverbs.so[.1]
+gpu:3878309:3878707 [0] NCCL INFO NET/Socket : Using [0]eno8303:10.5.30.82<0>
+gpu:3878309:3878707 [0] NCCL INFO Using network Socket
+gpu:3878309:3878707 [0] NCCL INFO Setting affinity for GPU 0 to aaaaaaaa
+gpu:3878309:3878707 [0] NCCL INFO Channel 00/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 01/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 02/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 03/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 04/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 05/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 06/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 07/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 08/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 09/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 10/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 11/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 12/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 13/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 14/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 15/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 16/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 17/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 18/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 19/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 20/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 21/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 22/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 23/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 24/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 25/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 26/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 27/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 28/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 29/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 30/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Channel 31/32 :    0
+gpu:3878309:3878707 [0] NCCL INFO Trees [0] -1/-1/-1->0->-1 [1] -1/-1/-1->0->-1 [2] -1/-1/-1->0->-1 [3] -1/-1/-1->0->-1 [4] -1/-1/-1->0->-1 [5] -1/-1/-1->0->-1 [6] -1/-1/-1->0->-1 [7] -1/-1/-1->0->-1 [8] -1/-1/-1->0->-1 [9] -1/-1/-1->0->-1 [10] -1/-1/-1->0->-1 [11] -1/-1/-1->0->-1 [12] -1/-1/-1->0->-1 [13] -1/-1/-1->0->-1 [14] -1/-1/-1->0->-1 [15] -1/-1/-1->0->-1 [16] -1/-1/-1->0->-1 [17] -1/-1/-1->0->-1 [18] -1/-1/-1->0->-1 [19] -1/-1/-1->0->-1 [20] -1/-1/-1->0->-1 [21] -1/-1/-1->0->-1 [22] -1/-1/-1->0->-1 [23] -1/-1/-1->0->-1 [24] -1/-1/-1->0->-1 [25] -1/-1/-1->0->-1 [26] -1/-1/-1->0->-1 [27] -1/-1/-1->0->-1 [28] -1/-1/-1->0->-1 [29] -1/-1/-1->0->-1 [30] -1/-1/-1->0->-1 [31] -1/-1/-1->0->-1
+gpu:3878309:3878707 [0] NCCL INFO P2P Chunksize set to 131072
+gpu:3878309:3878707 [0] NCCL INFO Connected all rings
+gpu:3878309:3878707 [0] NCCL INFO Connected all trees
+gpu:3878309:3878707 [0] NCCL INFO 32 coll channels, 0 nvls channels, 32 p2p channels, 32 p2p channels per peer
+gpu:3878309:3878707 [0] NCCL INFO comm 0x3c7a7b20 rank 0 nranks 1 cudaDev 0 busId ca000 commId 0x39a48a4575d16562 - Init COMPLETE
+wandb: Currently logged in as: jenashreyas. Use `wandb login --relogin` to force relogin
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.7 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.16.5
+wandb: Run data is saved locally in /home/shreyasjena/BTP/models/STIC/wandb/run-20240824_131547-3hyvhw0f
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run LLaVA_NeXT_Video_7B_dpo_finetune_mixed
+wandb: ⭐️ View project at https://wandb.ai/jenashreyas/LLaVA-NeXT-Video
+wandb: 🚀 View run at https://wandb.ai/jenashreyas/LLaVA-NeXT-Video/runs/3hyvhw0f/workspace
+  0%|          | 0/2799 [00:00<?, ?it/s]/home/shreyasjena/BTP/models/STIC/LLaVA-NeXT/trl/trainer/dpo_trainer.py:1042: UserWarning: compute_loss is only implemented for DPODataCollatorWithPadding, and you passed a datacollator that is different than DPODataCollatorWithPadding - you might see unexpected behavior. Alternatively, you can implement your own prediction_step method if you are using a custom data collator
+  warnings.warn(
+Inside get_batch_loss_metrics
+Mem 2 |  1.0
+L861 dpo_trainer.py |  0.9999997379653528
+Chosen batch labels shape :  torch.Size([1, 553])
+/home/shreyasjena/anaconda3/envs/stic/lib/python3.10/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+/home/shreyasjena/anaconda3/envs/stic/lib/python3.10/site-packages/bitsandbytes/autograd/_functions.py:322: UserWarning: MatMul8bitLt: inputs will be cast from torch.bfloat16 to float16 during quantization
+  warnings.warn(f"MatMul8bitLt: inputs will be cast from {A.dtype} to float16 during quantization")
+L873 dpo_trainer.py |  0.9305933875463268
+Mem 1 |  0.9611653309683501
+Mem 3 |  0.9611641254073652
+Mem 4 |  0.9611641254073652
+L861 dpo_trainer.py |  0.9611653309683501
+Chosen batch labels shape :  torch.Size([1, 553])
+/home/shreyasjena/anaconda3/envs/stic/lib/python3.10/site-packages/torch/utils/checkpoint.py:61: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.935025924780352
+Mem 1 |  0.9278784811561377
+Mem 4 |  0.8918321803326107
+Mem 7 |  0.8918322839042325
+gpu:3878309:3879154 [0] NCCL INFO Using network Socket
+gpu:3878309:3879154 [0] NCCL INFO Setting affinity for GPU 0 to aaaaaaaa
+gpu:3878309:3879154 [0] NCCL INFO Channel 00/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 01/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 02/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 03/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 04/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 05/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 06/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 07/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 08/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 09/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 10/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 11/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 12/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 13/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 14/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 15/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 16/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 17/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 18/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 19/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 20/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 21/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 22/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 23/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 24/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 25/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 26/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 27/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 28/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 29/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 30/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Channel 31/32 :    0
+gpu:3878309:3879154 [0] NCCL INFO Trees [0] -1/-1/-1->0->-1 [1] -1/-1/-1->0->-1 [2] -1/-1/-1->0->-1 [3] -1/-1/-1->0->-1 [4] -1/-1/-1->0->-1 [5] -1/-1/-1->0->-1 [6] -1/-1/-1->0->-1 [7] -1/-1/-1->0->-1 [8] -1/-1/-1->0->-1 [9] -1/-1/-1->0->-1 [10] -1/-1/-1->0->-1 [11] -1/-1/-1->0->-1 [12] -1/-1/-1->0->-1 [13] -1/-1/-1->0->-1 [14] -1/-1/-1->0->-1 [15] -1/-1/-1->0->-1 [16] -1/-1/-1->0->-1 [17] -1/-1/-1->0->-1 [18] -1/-1/-1->0->-1 [19] -1/-1/-1->0->-1 [20] -1/-1/-1->0->-1 [21] -1/-1/-1->0->-1 [22] -1/-1/-1->0->-1 [23] -1/-1/-1->0->-1 [24] -1/-1/-1->0->-1 [25] -1/-1/-1->0->-1 [26] -1/-1/-1->0->-1 [27] -1/-1/-1->0->-1 [28] -1/-1/-1->0->-1 [29] -1/-1/-1->0->-1 [30] -1/-1/-1->0->-1 [31] -1/-1/-1->0->-1
+gpu:3878309:3879154 [0] NCCL INFO P2P Chunksize set to 131072
+gpu:3878309:3879154 [0] NCCL INFO Connected all rings
+gpu:3878309:3879154 [0] NCCL INFO Connected all trees
+gpu:3878309:3879154 [0] NCCL INFO 32 coll channels, 0 nvls channels, 32 p2p channels, 32 p2p channels per peer
+gpu:3878309:3879154 [0] NCCL INFO comm 0x3a43acf0 rank 0 nranks 1 cudaDev 0 busId ca000 commId 0xf450f851236fc2e6 - Init COMPLETE
+Could not estimate the number of tokens of the input, floating-point operations will not be computed
+Inside get_batch_loss_metrics
+Mem 2 |  0.7825205778169637
+L861 dpo_trainer.py |  0.7825215721045331
+Batch labels shape :  torch.Size([1, 510])
+Input ids shape:  torch.Size([2, 510])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.8865338083045052
+Mem 1 |  0.9309733462159859
+Mem 3 |  0.9309723519284167
+Mem 4 |  0.9309723519284167
+L861 dpo_trainer.py |  0.9309733462159859
+Chosen batch labels shape :  torch.Size([1, 510])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.9458143931908536
+Mem 1 |  0.9419095115388009
+Mem 4 |  0.9128523348058278
+Mem 7 |  0.9128524363590396
+Inside get_batch_loss_metrics
+Mem 2 |  0.77070154096031
+L861 dpo_trainer.py |  0.7707022112115071
+Batch labels shape :  torch.Size([1, 231])
+Input ids shape:  torch.Size([2, 329])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.8669997801576074
+Mem 1 |  0.8961317203650261
+Mem 3 |  0.896131050113829
+Mem 4 |  0.896131050113829
+L861 dpo_trainer.py |  0.8961317203650261
+Batch labels shape :  torch.Size([1, 231])
+Input ids shape:  torch.Size([2, 329])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.905841568215567
+Mem 1 |  0.9155551532242983
+Mem 4 |  0.8961261349383832
+Mem 7 |  0.8961262364915948
+Inside get_batch_loss_metrics
+Mem 2 |  0.7721131102921499
+L861 dpo_trainer.py |  0.7721139024072011
+Batch labels shape :  torch.Size([1, 415])
+Input ids shape:  torch.Size([2, 415])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.8592244397471797
+Mem 1 |  0.8951963137321552
+Mem 3 |  0.8951955216171041
+Mem 4 |  0.8951955216171041
+L861 dpo_trainer.py |  0.8951963137321552
+Batch labels shape :  torch.Size([1, 415])
+Input ids shape:  torch.Size([2, 415])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.9072046560441466
+Mem 1 |  0.9191981106553042
+Mem 4 |  0.8952089469516894
+Mem 7 |  0.8952090485049011
+/home/shreyasjena/anaconda3/envs/stic/lib/python3.10/site-packages/deepspeed/runtime/zero/stage_1_and_2.py:1586: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at ../torch/csrc/tensor/python_tensor.cpp:83.)
+  total_norm_cuda = get_accelerator().FloatTensor([float(total_norm)])
+  0%|          | 1/2799 [00:29<22:47:40, 29.33s/it]                                                   {'loss': 0.6931, 'grad_norm': 742.4288640429213, 'learning_rate': 1.7857142857142855e-09, 'losses/dpo': 0.6931471824645996, 'losses/sft': 0.820172905921936, 'losses/total': 0.6931471824645996, 'rewards/chosen': 0.0, 'rewards/rejected': 0.0, 'rewards/accuracies': 0.0, 'rewards/margins': 0.0, 'logps/rejected': -176.73440551757812, 'logps/chosen': -310.71160888671875, 'ref_logps/rejected': -176.73440551757812, 'ref_logps/chosen': -310.71160888671875, 'epoch': 0.0}
+  0%|          | 1/2799 [00:29<22:47:40, 29.33s/it]Inside get_batch_loss_metrics
+Mem 2 |  0.6873399678042579
+L861 dpo_trainer.py |  0.6873406849740049
+Batch labels shape :  torch.Size([1, 357])
+Input ids shape:  torch.Size([2, 357])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.7707515705868048
+Mem 1 |  0.8051673913036116
+Mem 3 |  0.8051666741338647
+Mem 4 |  0.8051666741338647
+L861 dpo_trainer.py |  0.8051673913036116
+Batch labels shape :  torch.Size([1, 357])
+Input ids shape:  torch.Size([2, 357])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.8166924485870471
+Mem 1 |  0.8281671844599038
+Mem 4 |  0.8052156010477133
+Mem 7 |  0.8052157006546226
+Inside get_batch_loss_metrics
+Mem 2 |  0.7507755045333993
+L861 dpo_trainer.py |  0.7507762814672918
+Batch labels shape :  torch.Size([1, 361])
+Input ids shape:  torch.Size([2, 387])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.841905288132807
+Mem 1 |  0.8799370189496766
+Mem 3 |  0.879936242015784
+Mem 4 |  0.879936242015784
+L861 dpo_trainer.py |  0.8799370189496766
+Batch labels shape :  torch.Size([1, 361])
+Input ids shape:  torch.Size([2, 387])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.8926575583585427
+Mem 1 |  0.9053375378339413
+Mem 4 |  0.8799752480814663
+Mem 7 |  0.8799753476883756
+Inside get_batch_loss_metrics
+Mem 2 |  0.7540824937649561
+L861 dpo_trainer.py |  0.7540830914064119
+Batch labels shape :  torch.Size([1, 217])
+Input ids shape:  torch.Size([2, 307])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.8325520997425341
+Mem 1 |  0.8564937957545583
+Mem 3 |  0.8564931981131025
+Mem 4 |  0.8564931981131025
+L861 dpo_trainer.py |  0.8564937957545583
+Batch labels shape :  torch.Size([1, 217])
+Input ids shape:  torch.Size([2, 307])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.8644519893800707
+Mem 1 |  0.8724355030819274
+Mem 4 |  0.8564669018890471
+Mem 7 |  0.8564670014959563
+Inside get_batch_loss_metrics
+Mem 2 |  0.7561171641012475
+L861 dpo_trainer.py |  0.7561191960821972
+Batch labels shape :  torch.Size([1, 297])
+Input ids shape:  torch.Size([2, 1079])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.9037310377579711
+Mem 1 |  0.952117404831226
+Mem 3 |  0.9521153728502763
+Mem 4 |  0.9521153728502763
+L861 dpo_trainer.py |  0.952117404831226
+Chosen batch labels shape :  torch.Size([1, 297])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.9448586694160608
+Mem 1 |  0.9385013301800327
+Mem 4 |  0.9077397073643811
+Mem 7 |  0.9077398023250123
+  0%|          | 2/2799 [00:54<21:03:30, 27.10s/it]                                                   {'loss': 0.6931, 'grad_norm': 287.80684224386124, 'learning_rate': 3.571428571428571e-09, 'losses/dpo': 0.6931471824645996, 'losses/sft': 0.8159608840942383, 'losses/total': 0.6931471824645996, 'rewards/chosen': 0.0, 'rewards/rejected': 0.0, 'rewards/accuracies': 0.0, 'rewards/margins': 0.0, 'logps/rejected': -200.55145263671875, 'logps/chosen': -207.72412109375, 'ref_logps/rejected': -200.55145263671875, 'ref_logps/chosen': -207.72412109375, 'epoch': 0.0}
+  0%|          | 2/2799 [00:54<21:03:30, 27.10s/it]Inside get_batch_loss_metrics
+Mem 2 |  0.655038642424585
+L861 dpo_trainer.py |  0.6550397249757798
+Batch labels shape :  torch.Size([1, 591])
+Input ids shape:  torch.Size([2, 591])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.7533388110423792
+Mem 1 |  0.795237435668683
+Mem 3 |  0.7952363531174882
+Mem 4 |  0.7952363531174882
+L861 dpo_trainer.py |  0.795237435668683
+Batch labels shape :  torch.Size([1, 591])
+Input ids shape:  torch.Size([2, 591])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.8092445275945054
+Mem 1 |  0.8232132554253525
+Mem 4 |  0.7952730079211031
+Mem 7 |  0.7952731028817341
+Inside get_batch_loss_metrics
+Mem 2 |  0.7174312526338518
+L861 dpo_trainer.py |  0.7174317654212599
+Batch labels shape :  torch.Size([1, 249])
+Input ids shape:  torch.Size([2, 261])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.8052833588198172
+Mem 1 |  0.8315554898934445
+Mem 3 |  0.8315549771060364
+Mem 4 |  0.8315549771060364
+L861 dpo_trainer.py |  0.8315554898934445
+Batch labels shape :  torch.Size([1, 249])
+Input ids shape:  torch.Size([2, 261])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.8403442862254723
+Mem 1 |  0.8491044234390263
+Mem 4 |  0.8315825726654418
+Mem 7 |  0.8315826676260729
+Inside get_batch_loss_metrics
+Mem 2 |  0.7185134809625491
+L861 dpo_trainer.py |  0.7185139367735784
+Batch labels shape :  torch.Size([1, 249])
+Input ids shape:  torch.Size([2, 249])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.7766855659213947
+Mem 1 |  0.7945817704950064
+Mem 3 |  0.794581314683977
+Mem 4 |  0.794581314683977
+L861 dpo_trainer.py |  0.7945817704950064
+Batch labels shape :  torch.Size([1, 249])
+Input ids shape:  torch.Size([2, 249])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.8005913730279787
+Mem 1 |  0.8065596676864109
+Mem 4 |  0.7946219008577206
+Mem 7 |  0.7946219958183516
+Inside get_batch_loss_metrics
+Mem 2 |  0.7210119521438683
+L861 dpo_trainer.py |  0.7210124649312764
+Batch labels shape :  torch.Size([1, 257])
+Input ids shape:  torch.Size([2, 257])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.9341505949122108
+Memory leak in DPO forward pass
+ML Input ids shape:  torch.Size([2, 257])
+Mem 1 |  0.9606941806919056
+Mem 3 |  0.9606936857023457
+Mem 4 |  0.9606936857023457
+L861 dpo_trainer.py |  0.9606941806919056
+Chosen batch labels shape :  torch.Size([1, 257])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.9152814407447237
+Mem 1 |  0.9271198344590387
+Mem 4 |  0.8906697752051859
+Mem 7 |  0.8906698601837495
+  0%|          | 3/2799 [01:23<21:27:36, 27.63s/it]                                                   {'loss': 0.7014, 'grad_norm': 417.49016013970504, 'learning_rate': 5.357142857142857e-09, 'losses/dpo': 0.701422929763794, 'losses/sft': 1.0988432168960571, 'losses/total': 0.701422929763794, 'rewards/chosen': -0.0018680572975426912, 'rewards/rejected': 0.014418221078813076, 'rewards/accuracies': 0.0, 'rewards/margins': -0.016286278143525124, 'logps/rejected': -185.36865234375, 'logps/chosen': -288.9544677734375, 'ref_logps/rejected': -185.51284790039062, 'ref_logps/chosen': -288.935791015625, 'epoch': 0.0}
+  0%|          | 3/2799 [01:23<21:27:36, 27.63s/it]Inside get_batch_loss_metrics
+Mem 2 |  0.5870506639477152
+L861 dpo_trainer.py |  0.5870511228319589
+Batch labels shape :  torch.Size([1, 263])
+Input ids shape:  torch.Size([2, 263])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.7390895172347405
+Mem 1 |  0.7828173276322008
+Mem 3 |  0.7828168687479571
+Mem 4 |  0.7828168687479571
+L861 dpo_trainer.py |  0.7828173276322008
+Batch labels shape :  torch.Size([1, 263])
+Input ids shape:  torch.Size([2, 263])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.7973705354981974
+Mem 1 |  0.8119486250876299
+Mem 4 |  0.7827901854789718
+Mem 7 |  0.7827902704575355
+Inside get_batch_loss_metrics
+Mem 2 |  0.6427237070885446
+L861 dpo_trainer.py |  0.6427241659727884
+Batch labels shape :  torch.Size([1, 278])
+Input ids shape:  torch.Size([2, 278])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.7683654652012102
+Mem 1 |  0.8049419895534832
+Mem 3 |  0.8049415306692395
+Mem 4 |  0.8049415306692395
+L861 dpo_trainer.py |  0.8049419895534832
+Batch labels shape :  torch.Size([1, 278])
+Input ids shape:  torch.Size([2, 278])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.8171393366994816
+Mem 1 |  0.8293337775786032
+Mem 4 |  0.804942941313396
+Mem 7 |  0.8049430262919597
+Inside get_batch_loss_metrics
+Mem 2 |  0.6455763694873387
+L861 dpo_trainer.py |  0.6455768283715823
+Batch labels shape :  torch.Size([1, 280])
+Input ids shape:  torch.Size([2, 280])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.7904087176585183
+Mem 1 |  0.8325176014399311
+Mem 3 |  0.8325171425556874
+Mem 4 |  0.8325171425556874
+L861 dpo_trainer.py |  0.8325176014399311
+Batch labels shape :  torch.Size([1, 280])
+Input ids shape:  torch.Size([2, 280])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.8465684330333567
+Mem 1 |  0.860606908743628
+Mem 4 |  0.8325277648761434
+Mem 7 |  0.8325278498547071
+Inside get_batch_loss_metrics
+Mem 2 |  0.6480371107505905
+L861 dpo_trainer.py |  0.6480375696348342
+Batch labels shape :  torch.Size([1, 222])
+Input ids shape:  torch.Size([2, 277])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.7936344189560118
+Mem 1 |  0.8357050623837833
+Mem 3 |  0.8357046034995396
+Mem 4 |  0.8357046034995396
+L861 dpo_trainer.py |  0.8357050623837833
+Batch labels shape :  torch.Size([1, 222])
+Input ids shape:  torch.Size([2, 277])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.8497474980951205
+Mem 1 |  0.8637732270208446
+Mem 4 |  0.8357195767224543
+Mem 7 |  0.835719661701018
+  0%|          | 4/2799 [02:00<24:17:12, 31.28s/it]                                                   {'loss': 0.6543, 'grad_norm': 101.45012888441929, 'learning_rate': 7.142857142857142e-09, 'losses/dpo': 0.6542741060256958, 'losses/sft': 0.866787314414978, 'losses/total': 0.6542741060256958, 'rewards/chosen': 0.042781829833984375, 'rewards/rejected': -0.037360385060310364, 'rewards/accuracies': 0.75, 'rewards/margins': 0.08014221489429474, 'logps/rejected': -147.79254150390625, 'logps/chosen': -178.24952697753906, 'ref_logps/rejected': -147.4189453125, 'ref_logps/chosen': -178.67735290527344, 'epoch': 0.0}
+  0%|          | 4/2799 [02:00<24:17:12, 31.28s/it]Inside get_batch_loss_metrics
+Mem 2 |  0.5875730101827433
+L861 dpo_trainer.py |  0.587573469066987
+Batch labels shape :  torch.Size([1, 271])
+Input ids shape:  torch.Size([2, 271])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.7523219882645283
+Mem 1 |  0.7998230168450627
+Mem 3 |  0.799822557960819
+Mem 4 |  0.799822557960819
+L861 dpo_trainer.py |  0.7998230168450627
+Batch labels shape :  torch.Size([1, 271])
+Input ids shape:  torch.Size([2, 271])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.8156872060081612
+Mem 1 |  0.831522978339576
+Mem 4 |  0.7998490202855388
+Mem 7 |  0.7998491052641025
+Inside get_batch_loss_metrics
+Mem 2 |  0.6422395842114451
+L861 dpo_trainer.py |  0.642240349018518
+Batch labels shape :  torch.Size([1, 273])
+Input ids shape:  torch.Size([2, 458])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.7266106191116654
+Mem 1 |  0.7526322959875433
+Mem 3 |  0.7526315311804705
+Mem 4 |  0.7526315311804705
+L861 dpo_trainer.py |  0.7526322959875433
+Batch labels shape :  torch.Size([1, 273])
+Input ids shape:  torch.Size([2, 458])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.7613732250357453
+Mem 1 |  0.7700495533798626
+Mem 4 |  0.7526950781503661
+Mem 7 |  0.7526951631289297
+Inside get_batch_loss_metrics
+Mem 2 |  0.6445244878307977
+L861 dpo_trainer.py |  0.6445249977021796
+Batch labels shape :  torch.Size([1, 252])
+Input ids shape:  torch.Size([2, 319])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.7312085202635125
+Mem 1 |  0.757293931062126
+Mem 3 |  0.757293421190744
+Mem 4 |  0.757293421190744
+L861 dpo_trainer.py |  0.757293931062126
+Batch labels shape :  torch.Size([1, 252])
+Input ids shape:  torch.Size([2, 319])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.765987357093249
+Mem 1 |  0.7746849300782782
+Mem 4 |  0.7572882205026489
+Mem 7 |  0.7572883054812125
+Inside get_batch_loss_metrics
+Mem 2 |  0.6454921727264767
+L861 dpo_trainer.py |  0.6454929885206877
+Batch labels shape :  torch.Size([1, 487])
+Input ids shape:  torch.Size([2, 487])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.7253606014361241
+Mem 1 |  0.7588777615313871
+Mem 3 |  0.7588769457371761
+Mem 4 |  0.7588769457371761
+L861 dpo_trainer.py |  0.7588777615313871
+Batch labels shape :  torch.Size([1, 487])
+Input ids shape:  torch.Size([2, 487])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.7700869779392929
+Mem 1 |  0.7812616760546451
+Mem 4 |  0.7589100873769986
+Mem 7 |  0.7589101723555622
+  0%|          | 5/2799 [02:28<23:31:34, 30.31s/it]                                                   {'loss': 0.6849, 'grad_norm': 113.99956177744377, 'learning_rate': 8.928571428571428e-09, 'losses/dpo': 0.684885561466217, 'losses/sft': 0.9132331609725952, 'losses/total': 0.684885561466217, 'rewards/chosen': 0.005212781019508839, 'rewards/rejected': -0.016681289300322533, 'rewards/accuracies': 0.5, 'rewards/margins': 0.021894067525863647, 'logps/rejected': -200.61172485351562, 'logps/chosen': -238.70989990234375, 'ref_logps/rejected': -200.44491577148438, 'ref_logps/chosen': -238.76202392578125, 'epoch': 0.0}
+  0%|          | 5/2799 [02:28<23:31:34, 30.31s/it]Inside get_batch_loss_metrics
+Mem 2 |  0.5870925073924552
+L861 dpo_trainer.py |  0.5870929152895608
+Batch labels shape :  torch.Size([1, 248])
+Input ids shape:  torch.Size([2, 256])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.6923230263626619
+Mem 1 |  0.72311223859914
+Mem 3 |  0.7231118307020344
+Mem 4 |  0.7231118307020344
+L861 dpo_trainer.py |  0.72311223859914
+Batch labels shape :  torch.Size([1, 248])
+Input ids shape:  torch.Size([2, 256])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.733454401726438
+Mem 1 |  0.7437198292107626
+Mem 4 |  0.7231873086622661
+Mem 7 |  0.7231873936408297
+Inside get_batch_loss_metrics
+Mem 2 |  0.6410109641382303
+L861 dpo_trainer.py |  0.6410118309195796
+Batch labels shape :  torch.Size([1, 542])
+Input ids shape:  torch.Size([2, 542])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.7302108039434404
+Mem 1 |  0.7683042636396713
+Mem 3 |  0.768303396858322
+Mem 4 |  0.768303396858322
+L861 dpo_trainer.py |  0.7683042636396713
+Batch labels shape :  torch.Size([1, 542])
+Input ids shape:  torch.Size([2, 542])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.7810381314451141
+Mem 1 |  0.793738194777938
+Mem 4 |  0.76833563772537
+Mem 7 |  0.7683357227039336
+Inside get_batch_loss_metrics
+Mem 2 |  0.6465774679542438
+L861 dpo_trainer.py |  0.6465779268384875
+Batch labels shape :  torch.Size([1, 249])
+Input ids shape:  torch.Size([2, 274])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.9159456632107811
+Memory leak in DPO forward pass
+ML Input ids shape:  torch.Size([2, 274])
+Mem 1 |  0.9508989099782287
+Mem 3 |  0.950898470485482
+Mem 4 |  0.950898470485482
+L861 dpo_trainer.py |  0.9508989099782287
+Chosen batch labels shape :  torch.Size([1, 249])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.8941986970087229
+Mem 1 |  0.9105841139089608
+Mem 4 |  0.8658671302909376
+Mem 7 |  0.8658672043939909
+Inside get_batch_loss_metrics
+Mem 2 |  0.5657384118052804
+L861 dpo_trainer.py |  0.5657391231945921
+Batch labels shape :  torch.Size([1, 398])
+Input ids shape:  torch.Size([2, 505])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.6404802334329175
+Mem 1 |  0.6720866973711186
+Mem 3 |  0.6720859859818068
+Mem 4 |  0.6720859859818068
+L861 dpo_trainer.py |  0.6720866973711186
+Batch labels shape :  torch.Size([1, 398])
+Input ids shape:  torch.Size([2, 505])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.6826329698148771
+Mem 1 |  0.6931704388159026
+Mem 4 |  0.6720935000314123
+Mem 7 |  0.6720935741344656
+  0%|          | 6/2799 [03:07<25:42:59, 33.15s/it]                                                   {'loss': 0.7878, 'grad_norm': 1600.597738230598, 'learning_rate': 1.0714285714285715e-08, 'losses/dpo': 0.7877503633499146, 'losses/sft': 3.22230863571167, 'losses/total': 0.7877503633499146, 'rewards/chosen': -0.028804399073123932, 'rewards/rejected': 0.14094315469264984, 'rewards/accuracies': 0.5, 'rewards/margins': -0.16974754631519318, 'logps/rejected': -762.6114501953125, 'logps/chosen': -716.021728515625, 'ref_logps/rejected': -764.0209350585938, 'ref_logps/chosen': -715.733642578125, 'epoch': 0.0}
+  0%|          | 6/2799 [03:07<25:42:59, 33.15s/it]Inside get_batch_loss_metrics
+Mem 2 |  0.5120330094125847
+L861 dpo_trainer.py |  0.5120334984927365
+Batch labels shape :  torch.Size([1, 327])
+Input ids shape:  torch.Size([2, 327])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.5818384116822692
+Mem 1 |  0.6030736642298471
+Mem 3 |  0.6030731751496952
+Mem 4 |  0.6030731751496952
+L861 dpo_trainer.py |  0.6030736642298471
+Batch labels shape :  torch.Size([1, 327])
+Input ids shape:  torch.Size([2, 327])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.6101613248665556
+Mem 1 |  0.6172418864307573
+Mem 4 |  0.6030794146267837
+Mem 7 |  0.6030794887298371
+Inside get_batch_loss_metrics
+Mem 2 |  0.5589164698971241
+L861 dpo_trainer.py |  0.5589168700536119
+Batch labels shape :  torch.Size([1, 240])
+Input ids shape:  torch.Size([2, 281])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.6570169226030511
+Mem 1 |  0.6857443495347358
+Mem 3 |  0.685743949378248
+Mem 4 |  0.685743949378248
+L861 dpo_trainer.py |  0.6857443495347358
+Batch labels shape :  torch.Size([1, 240])
+Input ids shape:  torch.Size([2, 281])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.6953313579534207
+Mem 1 |  0.704909192414106
+Mem 4 |  0.6857519525080052
+Mem 7 |  0.6857520266110585
+Inside get_batch_loss_metrics
+Mem 2 |  0.5616083818734269
+L861 dpo_trainer.py |  0.5616087375680827
+Batch labels shape :  torch.Size([1, 246])
+Input ids shape:  torch.Size([2, 246])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.7219500194765055
+Mem 1 |  0.7678961059779185
+Mem 3 |  0.7678957502832626
+Mem 4 |  0.7678957502832626
+L861 dpo_trainer.py |  0.7678961059779185
+Batch labels shape :  torch.Size([1, 246])
+Input ids shape:  torch.Size([2, 246])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.7832385651615492
+Mem 1 |  0.7985556811009484
+Mem 4 |  0.7679191964893293
+Mem 7 |  0.7679192705923826
+Inside get_batch_loss_metrics
+Mem 2 |  0.5634140213321646
+L861 dpo_trainer.py |  0.563415533034452
+Batch labels shape :  torch.Size([1, 561])
+Input ids shape:  torch.Size([2, 1078])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.6514333168187268
+Mem 1 |  0.6895426349175395
+Mem 3 |  0.6895411232152521
+Mem 4 |  0.6895411232152521
+L861 dpo_trainer.py |  0.6895426349175395
+Batch labels shape :  torch.Size([1, 561])
+Input ids shape:  torch.Size([2, 1078])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.7023036104949072
+Mem 1 |  0.7150085938051952
+Mem 4 |  0.6895955444976015
+Mem 7 |  0.6895956186006549
+  0%|          | 7/2799 [03:40<25:37:17, 33.04s/it]                                                   {'loss': 0.7243, 'grad_norm': 188.66150507701565, 'learning_rate': 1.25e-08, 'losses/dpo': 0.7242850065231323, 'losses/sft': 0.7869991064071655, 'losses/total': 0.7242850065231323, 'rewards/chosen': -0.022994615137577057, 'rewards/rejected': 0.03636608272790909, 'rewards/accuracies': 0.25, 'rewards/margins': -0.059360697865486145, 'logps/rejected': -261.8897399902344, 'logps/chosen': -225.94400024414062, 'ref_logps/rejected': -262.2533874511719, 'ref_logps/chosen': -225.71405029296875, 'epoch': 0.0}
+  0%|          | 7/2799 [03:40<25:37:17, 33.04s/it]Inside get_batch_loss_metrics
+Mem 2 |  0.5119589211798872
+L861 dpo_trainer.py |  0.511959677031031
+Batch labels shape :  torch.Size([1, 518])
+Input ids shape:  torch.Size([2, 518])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.5861082592551046
+Mem 1 |  0.6178592389678672
+Mem 3 |  0.6178584831167234
+Mem 4 |  0.6178584831167234
+L861 dpo_trainer.py |  0.6178592389678672
+Batch labels shape :  torch.Size([1, 518])
+Input ids shape:  torch.Size([2, 518])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.6284791846672246
+Mem 1 |  0.6390648206529004
+Mem 4 |  0.6178914886166669
+Mem 7 |  0.6178915627197202
+Inside get_batch_loss_metrics
+Mem 2 |  0.5599977964716069
+L861 dpo_trainer.py |  0.5599981966280947
+Batch labels shape :  torch.Size([1, 272])
+Input ids shape:  torch.Size([2, 272])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.6402419180134785
+Mem 1 |  0.6640671908390604
+Mem 3 |  0.6640667906825726
+Mem 4 |  0.6640667906825726
+L861 dpo_trainer.py |  0.6640671908390604
+Batch labels shape :  torch.Size([1, 272])
+Input ids shape:  torch.Size([2, 272])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.6719616558789665
+Mem 1 |  0.6799055180142077
+Mem 4 |  0.6640164302475443
+Mem 7 |  0.6640165043505977
+Inside get_batch_loss_metrics
+Mem 2 |  0.5615344270262254
+L861 dpo_trainer.py |  0.5615347827208812
+Batch labels shape :  torch.Size([1, 251])
+Input ids shape:  torch.Size([2, 251])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.6705276432325691
+Mem 1 |  0.7021229917127739
+Mem 3 |  0.7021226360181181
+Mem 4 |  0.7021226360181181
+L861 dpo_trainer.py |  0.7021229917127739
+Batch labels shape :  torch.Size([1, 251])
+Input ids shape:  torch.Size([2, 251])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.7127069381488343
+Mem 1 |  0.7232407019971944
+Mem 4 |  0.7021715292126908
+Mem 7 |  0.7021716033157441
+Inside get_batch_loss_metrics
+Mem 2 |  0.5634403575573103
+L861 dpo_trainer.py |  0.5634407577137981
+Batch labels shape :  torch.Size([1, 142])
+Input ids shape:  torch.Size([2, 280])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.626590890662827
+Mem 1 |  0.6457029869888525
+Mem 3 |  0.6457025868323647
+Mem 4 |  0.6457025868323647
+L861 dpo_trainer.py |  0.6457029869888525
+Batch labels shape :  torch.Size([1, 142])
+Input ids shape:  torch.Size([2, 280])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.6520742193061781
+Mem 1 |  0.6584470967112872
+Mem 4 |  0.6457001710728268
+Mem 7 |  0.6457002451758801
+  0%|          | 8/2799 [04:06<23:53:25, 30.82s/it]                                                   {'loss': 0.7286, 'grad_norm': 292.9544764231256, 'learning_rate': 1.4285714285714284e-08, 'losses/dpo': 0.728578507900238, 'losses/sft': 0.9164618849754333, 'losses/total': 0.728578507900238, 'rewards/chosen': -0.06617869436740875, 'rewards/rejected': 0.0005802148953080177, 'rewards/accuracies': 0.25, 'rewards/margins': -0.06675891578197479, 'logps/rejected': -182.7581787109375, 'logps/chosen': -219.81259155273438, 'ref_logps/rejected': -182.76397705078125, 'ref_logps/chosen': -219.1508026123047, 'epoch': 0.0}
+  0%|          | 8/2799 [04:06<23:53:25, 30.82s/it]Inside get_batch_loss_metrics
+Mem 2 |  0.5111856854598382
+L861 dpo_trainer.py |  0.5111859966926622
+Batch labels shape :  torch.Size([1, 215])
+Input ids shape:  torch.Size([2, 215])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.5734646777347876
+Mem 1 |  0.5918542396498376
+Mem 3 |  0.5918539284170137
+Mem 4 |  0.5918539284170137
+L861 dpo_trainer.py |  0.5918542396498376
+Batch labels shape :  torch.Size([1, 215])
+Input ids shape:  torch.Size([2, 215])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.5979777158187328
+Mem 1 |  0.6041097583005905
+Mem 4 |  0.5918446210735182
+Mem 7 |  0.5918446951765715
+Inside get_batch_loss_metrics
+Mem 2 |  0.5588123402866155
+L861 dpo_trainer.py |  0.5588127849049354
+Batch labels shape :  torch.Size([1, 292])
+Input ids shape:  torch.Size([2, 292])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.6806461928526331
+Mem 1 |  0.7158987048609217
+Mem 3 |  0.7158982602426018
+Mem 4 |  0.7158982602426018
+L861 dpo_trainer.py |  0.7158987048609217
+Batch labels shape :  torch.Size([1, 292])
+Input ids shape:  torch.Size([2, 292])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.727689627008654
+Mem 1 |  0.7394423860839328
+Mem 4 |  0.7159349708952106
+Mem 7 |  0.715935044998264
+Inside get_batch_loss_metrics
+Mem 2 |  0.5633005547369391
+L861 dpo_trainer.py |  0.5633020664392266
+Batch labels shape :  torch.Size([1, 277])
+Input ids shape:  torch.Size([2, 1078])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.8390253592949527
+Memory leak in DPO forward pass
+ML Input ids shape:  torch.Size([2, 1078])
+Mem 1 |  0.9214318375735767
+Mem 3 |  0.9214303258712893
+Mem 4 |  0.9214303258712893
+L861 dpo_trainer.py |  0.9214318375735767
+Chosen batch labels shape :  torch.Size([1, 277])
+Image features device :  cuda:0
+inputs_embeds dtype torch.bfloat16
+L873 dpo_trainer.py |  0.8937312384528622
+Traceback (most recent call last):
+  File "/home/shreyasjena/BTP/models/STIC/LLaVA-NeXT/llava/train/train_dpo.py", line 1831, in <module>
+    train()
+  File "/home/shreyasjena/BTP/models/STIC/LLaVA-NeXT/llava/train/train_dpo.py", line 1809, in train
+    trainer.train()
+  File "/home/shreyasjena/anaconda3/envs/stic/lib/python3.10/site-packages/transformers/trainer.py", line 1932, in train
+    return inner_training_loop(
+  File "/home/shreyasjena/anaconda3/envs/stic/lib/python3.10/site-packages/transformers/trainer.py", line 2268, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs)
+  File "/home/shreyasjena/anaconda3/envs/stic/lib/python3.10/site-packages/transformers/trainer.py", line 3307, in training_step
+    loss = self.compute_loss(model, inputs)
+  File "/home/shreyasjena/BTP/models/STIC/LLaVA-NeXT/trl/trainer/dpo_trainer.py", line 1051, in compute_loss
+    loss, metrics = self.get_batch_loss_metrics(model, inputs, train_eval="train")
+  File "/home/shreyasjena/BTP/models/STIC/LLaVA-NeXT/trl/trainer/dpo_trainer.py", line 960, in get_batch_loss_metrics
+    ) = self.concatenated_forward(
+  File "/home/shreyasjena/BTP/models/STIC/LLaVA-NeXT/trl/trainer/dpo_trainer.py", line 892, in concatenated_forward
+    all_logps = self.get_batch_logps(
+  File "/home/shreyasjena/BTP/models/STIC/LLaVA-NeXT/trl/trainer/dpo_trainer.py", line 826, in get_batch_logps
+    per_token_logps = torch.gather(logits.log_softmax(-1), dim=2, index=labels.unsqueeze(2)).squeeze(2)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.77 GiB. GPU 0 has a total capacty of 44.35 GiB of which 1.59 GiB is free. Process 3020801 has 812.00 MiB memory in use. Process 3872759 has 810.00 MiB memory in use. Process 3880831 has 810.00 MiB memory in use. Process 1973494 has 868.00 MiB memory in use. Process 2052116 has 868.00 MiB memory in use. Process 3423348 has 1.32 GiB memory in use. Including non-PyTorch memory, this process has 37.32 GiB memory in use. Of the allocated memory 31.41 GiB is allocated by PyTorch, and 5.35 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+wandb: - 0.007 MB of 0.007 MB uploadedwandb: \ 0.007 MB of 0.007 MB uploadedwandb: | 0.007 MB of 0.065 MB uploadedwandb: / 0.007 MB of 0.065 MB uploadedwandb: - 0.065 MB of 0.065 MB uploadedwandb: \ 0.065 MB of 0.065 MB uploadedwandb: | 0.065 MB of 0.065 MB uploadedwandb: 
+wandb: Run history:
+wandb:              train/epoch ▁▂▃▄▅▆▇█
+wandb:        train/global_step ▁▂▃▄▅▆▇█
+wandb:          train/grad_norm ▄▂▂▁▁█▁▂
+wandb:      train/learning_rate ▁▂▃▄▅▆▇█
+wandb:       train/logps/chosen ▆█▇█▇▁▇▇
+wandb:     train/logps/rejected █▇██▇▁▇█
+wandb:               train/loss ▃▃▃▁▃█▅▅
+wandb:         train/losses/dpo ▃▃▃▁▃█▅▅
+wandb:         train/losses/sft ▁▁▂▁▁█▁▁
+wandb:       train/losses/total ▃▃▃▁▃█▅▅
+wandb:   train/ref_logps/chosen ▆█▇█▇▁▇▇
+wandb: train/ref_logps/rejected █▇██▇▁▇█
+wandb: train/rewards/accuracies ▁▁▁█▆▆▃▃
+wandb:     train/rewards/chosen ▅▅▅█▆▃▄▁
+wandb:    train/rewards/margins ▆▆▅█▆▁▄▄
+wandb:   train/rewards/rejected ▂▂▃▁▂█▄▂
+wandb: 
+wandb: Run summary:
+wandb:              train/epoch 0.00286
+wandb:        train/global_step 8
+wandb:          train/grad_norm 292.95448
+wandb:      train/learning_rate 0.0
+wandb:       train/logps/chosen -219.81259
+wandb:     train/logps/rejected -182.75818
+wandb:               train/loss 0.7286
+wandb:         train/losses/dpo 0.72858
+wandb:         train/losses/sft 0.91646
+wandb:       train/losses/total 0.72858
+wandb:   train/ref_logps/chosen -219.1508
+wandb: train/ref_logps/rejected -182.76398
+wandb: train/rewards/accuracies 0.25
+wandb:     train/rewards/chosen -0.06618
+wandb:    train/rewards/margins -0.06676
+wandb:   train/rewards/rejected 0.00058
+wandb: 
+wandb: 🚀 View run LLaVA_NeXT_Video_7B_dpo_finetune_mixed at: https://wandb.ai/jenashreyas/LLaVA-NeXT-Video/runs/3hyvhw0f/workspace
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20240824_131547-3hyvhw0f/logs
+gpu:3878309:3879155 [0] NCCL INFO [Service thread] Connection closed by localRank 0
+gpu:3878309:3878309 [0] NCCL INFO comm 0x3a43acf0 rank 0 nranks 1 cudaDev 0 busId ca000 - Abort COMPLETE
+[2024-08-24 13:20:36,203] torch.distributed.elastic.multiprocessing.api: [ERROR] failed (exitcode: 1) local_rank: 0 (pid: 3878309) of binary: /home/shreyasjena/anaconda3/envs/stic/bin/python
+Traceback (most recent call last):
+  File "/home/shreyasjena/anaconda3/envs/stic/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/shreyasjena/anaconda3/envs/stic/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 346, in wrapper
+    return f(*args, **kwargs)
+  File "/home/shreyasjena/anaconda3/envs/stic/lib/python3.10/site-packages/torch/distributed/run.py", line 806, in main
+    run(args)
+  File "/home/shreyasjena/anaconda3/envs/stic/lib/python3.10/site-packages/torch/distributed/run.py", line 797, in run
+    elastic_launch(
+  File "/home/shreyasjena/anaconda3/envs/stic/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 134, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/shreyasjena/anaconda3/envs/stic/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+LLaVA-NeXT/llava/train/train_dpo.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-08-24_13:20:36
+  host      : gpu
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 3878309)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
