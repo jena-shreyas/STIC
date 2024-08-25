@@ -5,6 +5,7 @@ __pycache__
 dist
 
 # Log
+logs/
 
 # Editor
 .idea

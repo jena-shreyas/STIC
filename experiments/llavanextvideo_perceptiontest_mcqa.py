@@ -16,7 +16,7 @@ from tqdm import tqdm
 
 # SAMPLES_PER_DATASET = 200
 
-ROOT="/home/shreyasj/BTP/datasets/PerceptionTest"
+ROOT="/home/shreyasjena/BTP/datasets/PerceptionTest"
 PART_IDX=int(sys.argv[1])
 
 def read_video_pyav(container, indices):
@@ -89,9 +89,30 @@ for reasoning in reasoning_stats:
 
 OUTPUT_DIR='results/inference/PerceptionTest'
 os.makedirs(OUTPUT_DIR, exist_ok=True)
-f = open(osj(OUTPUT_DIR, f"perceptiontest_mcqa_llavanextvideo_responses_p{PART_IDX}.jsonl"), "w")
+output_path = osj(OUTPUT_DIR, f"perceptiontest_mcqa_llavanextvideo_responses_p{PART_IDX}.jsonl")
 
-for vid, d in tqdm(data.items(), total=len(data)):
+completed_vids = set()
+total_vids = list(data.keys())
+vids = list()
+
+if os.path.exists(output_path):
+    # load jsonl file
+    f = open(output_path, "r")
+    for line in f.readlines():
+        d = json.loads(line)
+        vid = d["video"]
+        completed_vids.add(vid)
+    completed_vids = list(completed_vids)
+    last_vid = completed_vids[-1]
+    last_vid_idx = total_vids.index(last_vid)
+    vids = total_vids[last_vid_idx+1:]
+    f = open(output_path, "a")
+else:
+    f = open(output_path, "w")
+    vids = total_vids
+
+for vid in tqdm(vids, total=len(vids)):
+    d = data[vid]
     if(d["mc_question"]):
         video_path = osj(ROOT,VID_DIR,SPLIT,vid+".mp4")
         try:
@@ -105,6 +126,8 @@ for vid, d in tqdm(data.items(), total=len(data)):
             instruction = "Based on the video clip provided, answer the question by choosing the most appropriate option from the following:"
 
             for qn_dict in d["mc_question"]:
+                area = qn_dict["area"]
+                reasoning = qn_dict["reasoning"]
                 qs = qn_dict["question"]
                 num_options = len(qn_dict["options"])
                 options = '\n'.join([f"Option {i+1}: {qn_dict['options'][i]}" for i in range(num_options)])
@@ -133,9 +156,10 @@ for vid, d in tqdm(data.items(), total=len(data)):
                 correct_answer = qn_dict['options'][correct_option]
 
                 response_dict = {
-                    "id": vid,
-                    "area": qn_dict["area"],
-                    "reasoning": qn_dict["reasoning"],
+                    "id": f"{vid}_{area}_{reasoning}",
+                    "video": vid,
+                    "area": area,
+                    "reasoning": reasoning,
                     "question": prompt,
                     "answer": correct_answer,
                     "pred": response
