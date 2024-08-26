@@ -18,6 +18,10 @@ from tqdm import tqdm
 
 ROOT="/home/shreyasjena/BTP/datasets/PerceptionTest"
 PART_IDX=int(sys.argv[1])
+DEVICE_MAP=sys.argv[2]
+
+def create_random_string(length: int = 3):
+    return ''.join(random.choices('abcdefghijklmnopqrstuvwxyz', k=length))
 
 def read_video_pyav(container, indices):
     '''
@@ -45,7 +49,7 @@ def read_video_pyav(container, indices):
 model = LlavaNextVideoForConditionalGeneration.from_pretrained("llava-hf/LLaVA-NeXT-Video-7B-hf", 
                                                                torch_dtype=torch.float16,       # 
                                                                attn_implementation="flash_attention_2",
-                                                               device_map="auto"
+                                                               device_map=DEVICE_MAP
                                                                )
 processor = LlavaNextVideoProcessor.from_pretrained("llava-hf/LLaVA-NeXT-Video-7B-hf")
 
@@ -156,8 +160,9 @@ for vid in tqdm(vids, total=len(vids)):
                 correct_answer = qn_dict['options'][correct_option]
 
                 response_dict = {
-                    "id": f"{vid}_{area}_{reasoning}",
+                    "id": f"{vid}_{area}_{reasoning}_{create_random_string(3)}",
                     "video": vid,
+                    "type": f"{area}_{reasoning}",
                     "area": area,
                     "reasoning": reasoning,
                     "question": prompt,
