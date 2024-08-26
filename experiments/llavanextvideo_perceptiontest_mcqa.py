@@ -19,6 +19,9 @@ from tqdm import tqdm
 ROOT="/home/shreyasjena/BTP/datasets/PerceptionTest"
 PART_IDX=int(sys.argv[1])
 
+def create_random_string(length: int = 3):
+    return ''.join(random.choices('abcdefghijklmnopqrstuvwxyz', k=length))
+
 def read_video_pyav(container, indices):
     '''
     Decode the video with PyAV decoder.
@@ -156,8 +159,9 @@ for vid in tqdm(vids, total=len(vids)):
                 correct_answer = qn_dict['options'][correct_option]
 
                 response_dict = {
-                    "id": f"{vid}_{area}_{reasoning}",
+                    "id": f"{vid}_{area}_{reasoning}_{create_random_string(3)}",
                     "video": vid,
+                    "type": f"{area}_{reasoning}",
                     "area": area,
                     "reasoning": reasoning,
                     "question": prompt,
