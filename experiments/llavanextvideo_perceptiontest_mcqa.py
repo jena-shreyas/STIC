@@ -23,6 +23,9 @@ DEVICE_MAP=sys.argv[2]
 def create_random_string(length: int = 3):
     return ''.join(random.choices('abcdefghijklmnopqrstuvwxyz', k=length))
 
+def create_random_string(length: int = 3):
+    return ''.join(random.choices('abcdefghijklmnopqrstuvwxyz', k=length))
+
 def read_video_pyav(container, indices):
     '''
     Decode the video with PyAV decoder.
