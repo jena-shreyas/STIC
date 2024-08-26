@@ -23,9 +23,6 @@ DEVICE_MAP=sys.argv[2]
 def create_random_string(length: int = 3):
     return ''.join(random.choices('abcdefghijklmnopqrstuvwxyz', k=length))
 
-def create_random_string(length: int = 3):
-    return ''.join(random.choices('abcdefghijklmnopqrstuvwxyz', k=length))
-
 def read_video_pyav(container, indices):
     '''
     Decode the video with PyAV decoder.
@@ -71,28 +68,7 @@ with open(osj(ROOT,DATA_DIR,f"all_valid_p{PART_IDX}.json")) as f:
 # acq_sample = random.sample(acq_data, SAMPLES_PER_DATASET)
 area_stats = {}
 reasoning_stats = {}
-total_qns = 0
-
-for vid, d in data.items():
-    if d["mc_question"]:
-        for qn_dict in d["mc_question"]:
-            total_qns += 1
-            if qn_dict["area"] not in area_stats:
-                area_stats[qn_dict["area"]] = 0
-            
-            area_stats[qn_dict["area"]] += 1
-
-            if qn_dict["reasoning"] not in reasoning_stats:
-                reasoning_stats[qn_dict["reasoning"]] = 0
-
-            reasoning_stats[qn_dict["reasoning"]] += 1
-
-print("Total questions : ", total_qns)
-for area in area_stats:
-    print(f"{area} : {area_stats[area]}")
-
-for reasoning in reasoning_stats:
-    print(f"{reasoning} : {reasoning_stats[reasoning]}")    
+total_qns = 0   
 
 OUTPUT_DIR='results/inference/PerceptionTest'
 os.makedirs(OUTPUT_DIR, exist_ok=True)
