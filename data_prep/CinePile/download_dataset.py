@@ -54,16 +54,13 @@ def download_video(video_url, filename, root):
     
 ## load the dataset
 DATA_ROOT=osj(osd(osd(os.getcwd())),"datasets/CinePile")
-SPLIT="test"
-
 cinepile = load_dataset("tomg-group-umd/cinepile", cache_dir=DATA_ROOT)
-cinepile_data = cinepile[SPLIT]
-vid2freq = {}
-maxfreq = 0
 
 # DATASET SPLIT VIDEO STATISTICS
 for split in ['train', 'test']:
     cinepile_data = cinepile[split]
+    vid2freq = {}
+    maxfreq = 0
     for i in tqdm(range(len(cinepile_data))):
         data = cinepile_data[i]
         clip_title, yt_link = data['yt_clip_title'], data['yt_clip_link']
@@ -78,12 +75,18 @@ for split in ['train', 'test']:
     print(f"Split: {split}")
     print("Total unique videos : ", len(vid2freq))
     print("Max frequency : ", maxfreq)
+    
+    if split == "train":
+        continue    
 
-root_dir = osj(DATA_ROOT, f"yt_videos/{SPLIT}")
-os.makedirs(root_dir, exist_ok=True)
+    root_dir = osj(DATA_ROOT, f"yt_videos/{split}")
+    os.makedirs(root_dir, exist_ok=True)
+    
+    print("Total videos to be downloaded : ", len(vid2freq))
 
-for vid in vid2freq:
-    yt_link = f"https://www.youtube.com/watch?v={vid}"
-    vid_path = f"{data['movie_name']}_{yt_link.split('/')[-1]}"
-    if not os.path.exists(os.path.join(root_dir, vid_path + '.mp4')):
-        download_video(yt_link, vid_path, root=root_dir)
+    for vid in tqdm(vid2freq):
+        yt_link = f"https://www.youtube.com/watch?v={vid}"
+        vid_path = f"{data['movie_name']}_{yt_link.split('/')[-1]}"
+        if not os.path.exists(os.path.join(root_dir, vid_path + '.mp4')):
+            print(f"Downloading {vid_path}...")
+            download_video(yt_link, vid_path, root=root_dir)
