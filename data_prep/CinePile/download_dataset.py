@@ -2,6 +2,8 @@ import os
 from os.path import dirname as osd, join as osj
 import random
 import subprocess
+import json
+
 random.seed(42)
 
 from tqdm import tqdm
@@ -59,22 +61,21 @@ cinepile = load_dataset("tomg-group-umd/cinepile", cache_dir=DATA_ROOT)
 # DATASET SPLIT VIDEO STATISTICS
 for split in ['train', 'test']:
     cinepile_data = cinepile[split]
-    vid2freq = {}
-    maxfreq = 0
+    vid2movie = {}
+    vid2cliptitle = {}
+
     for i in tqdm(range(len(cinepile_data))):
         data = cinepile_data[i]
-        clip_title, yt_link = data['yt_clip_title'], data['yt_clip_link']
+        clip_title, yt_link, movie_name = data['yt_clip_title'], data['yt_clip_link'], data['movie_name']
         vid = yt_link.split('=')[-1]
+        vid2movie[vid] = movie_name
+        vid2cliptitle[vid] = clip_title
 
-        if vid not in vid2freq:
-            vid2freq[vid]=0
-        vid2freq[vid]+=1
-
-        maxfreq = max(maxfreq, vid2freq[vid])
+    with open(f"data/cinepile_vid2cliptitle_{split}.json", 'w') as f:
+        json.dump(vid2cliptitle, f, indent=4)
 
     print(f"Split: {split}")
-    print("Total unique videos : ", len(vid2freq))
-    print("Max frequency : ", maxfreq)
+    print("Total unique videos : ", len(vid2movie))
     
     if split == "train":
         continue    
@@ -82,11 +83,14 @@ for split in ['train', 'test']:
     root_dir = osj(DATA_ROOT, f"yt_videos/{split}")
     os.makedirs(root_dir, exist_ok=True)
     
-    print("Total videos to be downloaded : ", len(vid2freq))
+    print("Total videos to be downloaded : ", len(vid2movie))
 
-    for vid in tqdm(vid2freq):
+    for vid in tqdm(vid2movie):
         yt_link = f"https://www.youtube.com/watch?v={vid}"
-        vid_path = f"{data['movie_name']}_{yt_link.split('/')[-1]}"
-        if not os.path.exists(os.path.join(root_dir, vid_path + '.mp4')):
+        vid_path = f"{vid2movie[vid]}_{vid}"
+        while not os.path.exists(os.path.join(root_dir, vid_path + '.mp4')):
             print(f"Downloading {vid_path}...")
-            download_video(yt_link, vid_path, root=root_dir)
+            _,  status = download_video(yt_link, vid_path, root=root_dir)
+            if status:
+                break
+        print(f"Downloaded {vid_path}")
