@@ -6,6 +6,9 @@ dist
 
 # Log
 logs/inference/
+logs/data_prep/
+logs/dpo/
+logs/sft/
 
 # Editor
 .idea
