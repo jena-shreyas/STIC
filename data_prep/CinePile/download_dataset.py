@@ -87,7 +87,7 @@ for split in ['train', 'test']:
 
     for vid in tqdm(vid2movie):
         yt_link = f"https://www.youtube.com/watch?v={vid}"
-        vid_path = f"{vid2movie[vid]}_{vid}"
+        vid_path = vid
         while not os.path.exists(os.path.join(root_dir, vid_path + '.mp4')):
             print(f"Downloading {vid_path}...")
             _,  status = download_video(yt_link, vid_path, root=root_dir)
