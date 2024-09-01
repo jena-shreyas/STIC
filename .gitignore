@@ -43,3 +43,5 @@ results/eval/NExT-QA/*
 sample_images/
 tmp.py
 kill_proc.sh
+
+.vscode
