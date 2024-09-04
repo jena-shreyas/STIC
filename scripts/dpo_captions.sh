@@ -10,6 +10,7 @@ export NCCL_DEBUG=INFO
 # data args
 
 SCRATCH="/home/shreyasjena/BTP"
+TEAM_NAME="Video-LMs"
 PROJECT_NAME="LLaVA-NeXT-Video"
 DATA_PATH="data/data_pref_merged.jsonl"
 IMAGE_FOLDER="${SCRATCH}/datasets/COCO/pref_images"
@@ -25,7 +26,7 @@ VISION_MODEL_VERSION="openai/clip-vit-large-patch14-336"
 
 LR=1e-7
 BATCH_SIZE=1
-GRAD_ACCUM=16
+GRAD_ACCUM=128
 NUM_EPOCHS=1
 NUM_NODES=1
 NUM_GPUS=1
@@ -36,6 +37,7 @@ MASTER_PORT=29500
 export WANDB_API_KEY=`cat .wandb_api_key`
 wandb login $WANDB_API_KEY
 export WANDB_NAME=$PROJECT_NAME--$MODEL_NAME
+export WANDB_ENTITY=$TEAM_NAME
 export WANDB_PROJECT=$PROJECT_NAME
 export WANDB_MODE=online
 MID_RUN_NAME="llavanextvideo7b_dpo_finetune_mixed"
@@ -45,7 +47,7 @@ wandb online
 #torchrun --nproc_per_node="${ARNOLD_WORKER_GPU}" --nnodes="${ARNOLD_WORKER_NUM}" --node_rank="${ARNOLD_ID}" --master_addr="${METIS_WORKER_0_HOST}" --master_port="${port_in_cmd}" \
 ACCELERATE_CPU_AFFINITY=1 CUDA_VISIBLE_DEVICES=0 torchrun --nproc_per_node ${NUM_GPUS} --nnodes ${NUM_NODES} --master_port ${MASTER_PORT} \
     LLaVA-NeXT/llava/train/train_dpo.py \
-    --lora_enable True --lora_r 128 --lora_alpha 256 --mm_projector_lr 2e-5 \
+    --lora_enable True --lora_r 128 --lora_alpha 256 \
     --deepspeed scripts/zero2.json \
     --model_name_or_path $MODEL_NAME \
     --version $PROMPT_VERSION \
