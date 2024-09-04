@@ -20,6 +20,7 @@ from contextlib import contextmanager, nullcontext
 from copy import deepcopy
 from functools import wraps
 from typing import Any, Callable, Dict, List, Literal, Optional, Tuple, Union
+import gc
 
 import numpy as np
 import torch
@@ -859,13 +860,13 @@ class DPOTrainer(Trainer):
         len_chosen = batch["chosen_labels"].shape[0]
 
         frac_before = torch.cuda.memory_allocated() / torch.cuda.max_memory_allocated()
-        print("L861 dpo_trainer.py | ", frac_before)
+        # print("L861 dpo_trainer.py | ", frac_before)
         
-        if frac_before >= 0.9:
-            print("Chosen batch labels shape : ", batch["chosen_labels"].shape)
-        else:
-            print("Batch labels shape : ", batch["chosen_labels"].shape)
-            print("Input ids shape: ", concatenated_batch["concatenated_input_ids"].shape)
+        # if frac_before >= 0.9:
+            # print("Chosen batch labels shape : ", batch["chosen_labels"].shape)
+        # else:
+            # print("Batch labels shape : ", batch["chosen_labels"].shape)
+            # print("Input ids shape: ", concatenated_batch["concatenated_input_ids"].shape)
 
         # import pdb; pdb.set_trace()
         all_logits, new_labels = model(
@@ -873,19 +874,19 @@ class DPOTrainer(Trainer):
             attention_mask=concatenated_batch["concatenated_attention_mask"],
             labels=concatenated_batch["concatenated_labels"],
             images=concatenated_batch["concatenated_images"],
-            image_sizes=concatenated_batch["image_sizes"],
+            image_sizes=concatenated_batch["image_sizes"],      # list of 2 copies of img tensor 5,3,336,336
             modalities=concatenated_batch["modalities"],
             use_cache=False,
             dpo_forward=True,
         )
         frac_after = torch.cuda.memory_allocated() / torch.cuda.max_memory_allocated()
-        print("L873 dpo_trainer.py | ", frac_after)
+        # print("L873 dpo_trainer.py | ", frac_after)
         # print("Input ids : ", concatenated_batch["concatenated_input_ids"][0])
-        if abs(frac_after - frac_before) >= 0.2:
-            print("Memory leak in DPO forward pass")
+        # if abs(frac_after - frac_before) >= 0.2:
+            # print("Memory leak in DPO forward pass")
             # Steps to resolve
             # 1. Check if the model is using the correct device
-            print("ML Input ids shape: ", concatenated_batch["concatenated_input_ids"].shape)
+            # print("ML Input ids shape: ", concatenated_batch["concatenated_input_ids"].shape)
 
 
         all_logits = all_logits.to(torch.float32)
@@ -897,7 +898,7 @@ class DPOTrainer(Trainer):
             label_pad_token_id=self.label_pad_token_id,
         )
 
-        print("Mem 1 | ", torch.cuda.memory_allocated() / torch.cuda.max_memory_allocated())
+        # print("Mem 1 | ", torch.cuda.memory_allocated() / torch.cuda.max_memory_allocated())
 
         chosen_logps = all_logps[:len_chosen]
         rejected_logps = all_logps[len_chosen:]
@@ -932,8 +933,8 @@ class DPOTrainer(Trainer):
         """
         metrics = {}
 
-        print("Inside get_batch_loss_metrics")
-        print("Mem 2 | ", torch.cuda.memory_allocated() / torch.cuda.max_memory_allocated())
+        # print("Inside get_batch_loss_metrics")
+        # print("Mem 2 | ", torch.cuda.memory_allocated() / torch.cuda.max_memory_allocated())
         (
             policy_chosen_logps,
             policy_rejected_logps,
@@ -943,7 +944,7 @@ class DPOTrainer(Trainer):
             rejected_labels,
         ) = self.concatenated_forward(model, batch)
 
-        print("Mem 3 | ", torch.cuda.memory_allocated() / torch.cuda.max_memory_allocated())
+        # print("Mem 3 | ", torch.cuda.memory_allocated() / torch.cuda.max_memory_allocated())
 
         # if reference_chosen_logps and reference_rejected_logps in batch use them, otherwise use the reference model
         if "reference_chosen_logps" in batch and "reference_rejected_logps" in batch:
@@ -953,23 +954,23 @@ class DPOTrainer(Trainer):
             with torch.no_grad():
                 if self.ref_model is None:
                     with self.null_ref_context():
-                        print("Mem 4 | ", torch.cuda.memory_allocated() / torch.cuda.max_memory_allocated())
+                        # print("Mem 4 | ", torch.cuda.memory_allocated() / torch.cuda.max_memory_allocated())
                         (
                             reference_chosen_logps,
                             reference_rejected_logps,
                         ) = self.concatenated_forward(
                             self.model, batch
                         )[:2]
-                        print("Mem 4 | ", torch.cuda.memory_allocated() / torch.cuda.max_memory_allocated())
+                        # print("Mem 4 | ", torch.cuda.memory_allocated() / torch.cuda.max_memory_allocated())
                 else:
-                    print("Mem 5 | ", torch.cuda.memory_allocated() / torch.cuda.max_memory_allocated())
+                    # print("Mem 5 | ", torch.cuda.memory_allocated() / torch.cuda.max_memory_allocated())
                     (
                         reference_chosen_logps,
                         reference_rejected_logps,
                     ) = self.concatenated_forward(
                         self.ref_model, batch
                     )[:2]
-                    print("Mem 6 | ", torch.cuda.memory_allocated() / torch.cuda.max_memory_allocated())
+                    # print("Mem 6 | ", torch.cuda.memory_allocated() / torch.cuda.max_memory_allocated())
 
         unscaled_dpo_losses, chosen_rewards, rejected_rewards = self.dpo_loss(
             policy_chosen_logps,
@@ -977,7 +978,7 @@ class DPOTrainer(Trainer):
             reference_chosen_logps,
             reference_rejected_logps,
         )
-        print("Mem 7 | ", torch.cuda.memory_allocated() / torch.cuda.max_memory_allocated())
+        # print("Mem 7 | ", torch.cuda.memory_allocated() / torch.cuda.max_memory_allocated())
         unscaled_dpo_losses = unscaled_dpo_losses.mean()
         dpo_losses = unscaled_dpo_losses * self.dpo_alpha
         unscaled_sft_loss = self.get_sft_loss(policy_chosen_logits, chosen_labels)
@@ -1025,6 +1026,13 @@ class DPOTrainer(Trainer):
         # reference logps
         metrics[f"{prefix}ref_logps/rejected"] = reference_rejected_logps.mean().cpu()
         metrics[f"{prefix}ref_logps/chosen"] = reference_chosen_logps.mean().cpu()
+
+                
+        del chosen_rewards, rejected_rewards, reward_accuracies, policy_chosen_logps, policy_rejected_logps, reference_chosen_logps, reference_rejected_logps
+        torch.cuda.empty_cache()
+        gc.collect()
+
+
 
         # metrics all pick .4 digits
         # for k in metrics:

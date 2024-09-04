@@ -146,6 +146,10 @@ class TrainingArguments(transformers.TrainingArguments):
         default=4096,
         metadata={"help": "Maximum sequence length. Sequences will be right padded (and possibly truncated)."},
     )
+    max_prompt_length: int = field(
+        default=2048,
+        metadata={"help": "Maximum prompt length. Sequences will be right padded (and possibly truncated)."},
+    )
     double_quant: bool = field(default=True, metadata={"help": "Compress the quantization statistics through double quantization."})
     quant_type: str = field(default="nf4", metadata={"help": "Quantization data type to use. Should be one of `fp4` or `nf4`."})
     bits: int = field(default=16, metadata={"help": "How many bits to use."})
@@ -1090,10 +1094,10 @@ class DPODataset(Dataset):
         suffix = None
         if "image" in sources[0]:
             image_file = self.list_data_dict[i]["image"]
-            if type(image_file) is list:
+            if type(image_file) is list:    # string : COCO_xyxw.jpg
                 image = [self.process_image(f) for f in image_file]
             else:
-                image = [self.process_image(image_file)]
+                image = [self.process_image(image_file)]    # Single image : processed as 5,3,336,336 !?
             # sources = preprocess_multimodal(copy.deepcopy([e["conversations"] for e in sources]), self.data_args)
 
         elif "video" in sources[0]:  # FIXME: This logic should be largely improved by Yuanhan. It's too messy now.
@@ -1123,6 +1127,7 @@ class DPODataset(Dataset):
                             frame_idx = uniform_sampled_frames.tolist()
                     video = vr.get_batch(frame_idx).asnumpy()
                     video = np.array(video)
+                    print("Inside DPODataset | video : ", video.shape)
                 else:
                     if "liangke" in video_file:
                         video_file = self.list_data_dict[i]["video"]
@@ -1182,6 +1187,7 @@ class DPODataset(Dataset):
                 (torch.zeros(1, 3, crop_size["height"], crop_size["width"]), (crop_size["width"], crop_size["height"]), "text"),
             ]
         # prompt exist in the data
+        print("Inside DPODataset | images : ", image[0][0].shape)   # 5,3,336,336
         data_dict["has_image"] = has_image
         return data_dict
 
@@ -1301,6 +1307,8 @@ class DPODataCollator(DPODataCollatorWithPadding):
             padded_batch["modalities"] = [im[2] for im_list in images for im in im_list]
             images = [im[0] for im_list in images for im in im_list]
             # import pdb;pdb.set_trace()
+            print("Inside DPOCollator __call__ | images : ")
+            print(images[0].shape)  #5,3,336,336
 
             padded_batch["images"] = images
             # padded_batch["images"] =[padded_batch["modalities"], images]
@@ -1799,6 +1807,7 @@ def train(attn_implementation=None):
         data_collator=data_collator,
         tokenizer=tokenizer,
         max_length=training_args.model_max_length,
+        max_prompt_length=training_args.max_prompt_length,
         generate_during_eval=False,  # training_args.generate_during_eval,
         precompute_ref_log_probs=training_args.precompute_ref_log_probs,
     )
