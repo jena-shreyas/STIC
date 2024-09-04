@@ -183,7 +183,7 @@ class LlavaMetaForCausalLM(ABC):
         return image_feature
 
     def encode_images(self, images):
-        image_features = self.get_model().get_vision_tower()(images)
+        image_features = self.get_model().get_vision_tower()(images)    # 120,3,336,336 (Inputs to CLIP)
         # image_features = self.get_model().vision_resampler(image_features, images=images)
         # print("MM Projector device : ", self.get_model().mm_projector.device)
         print("Image features device : ", image_features.device)
@@ -224,7 +224,7 @@ class LlavaMetaForCausalLM(ABC):
                 else:
                     images_list.append(image.unsqueeze(0))
 
-            concat_images = torch.cat([image for image in images_list], dim=0)
+            concat_images = torch.cat([image for image in images_list], dim=0)  # 120 imgs in images_list ??
             split_sizes = [image.shape[0] for image in images_list]
             encoded_image_features = self.encode_images(concat_images)
 

@@ -13,6 +13,7 @@ logs/sft/
 # Editor
 .idea
 *.swp
+.vscode/
 
 # Other
 .DS_Store
@@ -43,3 +44,6 @@ results/eval/NExT-QA/*
 sample_images/
 tmp.py
 kill_proc.sh
+.wandb_api_key
+training_args.bin
+scripts/args.txt
