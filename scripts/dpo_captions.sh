@@ -26,7 +26,7 @@ VISION_MODEL_VERSION="openai/clip-vit-large-patch14-336"
 
 LR=1e-7
 BATCH_SIZE=1
-GRAD_ACCUM=128
+GRAD_ACCUM=4
 NUM_EPOCHS=1
 NUM_NODES=1
 NUM_GPUS=1
@@ -47,7 +47,7 @@ wandb online
 #torchrun --nproc_per_node="${ARNOLD_WORKER_GPU}" --nnodes="${ARNOLD_WORKER_NUM}" --node_rank="${ARNOLD_ID}" --master_addr="${METIS_WORKER_0_HOST}" --master_port="${port_in_cmd}" \
 ACCELERATE_CPU_AFFINITY=1 CUDA_VISIBLE_DEVICES=0 torchrun --nproc_per_node ${NUM_GPUS} --nnodes ${NUM_NODES} --master_port ${MASTER_PORT} \
     LLaVA-NeXT/llava/train/train_dpo.py \
-    --lora_enable True --lora_r 128 --lora_alpha 256 \
+    --lora_enable True --lora_r 128 --lora_alpha 256 --mm_projector_lr 2e-5 \
     --deepspeed scripts/zero2.json \
     --model_name_or_path $MODEL_NAME \
     --version $PROMPT_VERSION \
@@ -74,7 +74,7 @@ ACCELERATE_CPU_AFFINITY=1 CUDA_VISIBLE_DEVICES=0 torchrun --nproc_per_node ${NUM
     --output_dir "checkpoints/${MID_RUN_NAME}" \
     --num_train_epochs $NUM_EPOCHS \
     --per_device_train_batch_size $BATCH_SIZE \
-    --per_device_eval_batch_size 4 \
+    --per_device_eval_batch_size 2 \
     --gradient_accumulation_steps $GRAD_ACCUM \
     --evaluation_strategy "no" \
     --save_strategy "steps" \
@@ -82,7 +82,7 @@ ACCELERATE_CPU_AFFINITY=1 CUDA_VISIBLE_DEVICES=0 torchrun --nproc_per_node ${NUM
     --save_total_limit 1 \
     --learning_rate $LR \
     --weight_decay 0. \
-    --warmup_ratio 0.1 \
+    --warmup_ratio 0.03 \
     --lr_scheduler_type "linear" \
     --logging_steps 1 \
     --verbose_logging True \
