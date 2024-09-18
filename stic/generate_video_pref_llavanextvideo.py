@@ -5,6 +5,7 @@ import argparse
 import json
 import av
 import torch
+import pyarrow.parquet as pq
 from transformers import LlavaNextVideoProcessor, LlavaNextVideoForConditionalGeneration
 from tqdm import tqdm
 from video_perturbations import perturb_video
@@ -18,7 +19,7 @@ def parse_args():
 
     # Define the command-line arguments
     parser.add_argument('--model_path', help='', required=True, default='LanguageBind/Video-LLaVA-7B')
-    parser.add_argument('--video_dir', help='Directory containing video files.', required=True)
+    parser.add_argument('--parquet_dir', help='Directory containing parquet files.', required=True)
     parser.add_argument('--corrupt_dir', help='Directory containing corrupted video files.', required=True)
     parser.add_argument('--output_dir', help='Directory to save the model results JSON.', required=True)
     parser.add_argument('--output_name', help='Name of the file for storing results JSON.', required=True)
@@ -29,15 +30,16 @@ def parse_args():
 
     return parser.parse_args()
 
-def read_video_pyav(container, indices):
+def read_video_pyav(video_bytes, indices):
     '''
     Decode the video with PyAV decoder.
     Args:
-        container (`av.container.input.InputContainer`): PyAV container.
+        video_bytes (bytes): Byte stream of the video.
         indices (`List[int]`): List of frame indices to decode.
     Returns:
         result (np.ndarray): np array of decoded frames of shape (num_frames, height, width, 3).
     '''
+    container = av.open(video_bytes)
     frames = []
     container.seek(0)
     start_index = indices[0]
@@ -50,7 +52,7 @@ def read_video_pyav(container, indices):
     return np.stack([x.to_ndarray(format="rgb24") for x in frames])
 
 
-def get_model_output(model, processor, video_path, qs, video_corruption=False):
+def get_model_output(model, processor, video_bytes, qs, video_corruption=False):
     # define a chat histiry and use `apply_chat_template` to get correctly formatted prompt
     # Each value in "content" has to be a list of dicts with types ("text", "image", "video") 
     conversation = [
@@ -66,13 +68,13 @@ def get_model_output(model, processor, video_path, qs, video_corruption=False):
 
     processed_prompt = processor.apply_chat_template(conversation, add_generation_prompt=True)
 
-    container = av.open(video_path)
+    container = av.open(video_bytes)
 
     # sample uniformly 16 frames from the video, can sample more for longer videos
     total_frames = container.streams.video[0].frames
     num_frames = 16
     indices = np.arange(0, total_frames, total_frames / num_frames).astype(int)
-    clip = read_video_pyav(container, indices)
+    clip = read_video_pyav(video_bytes, indices)
     inputs_video = processor(text=processed_prompt, videos=clip, padding=True, return_tensors="pt").to(model.device)
 
     output = model.generate(**inputs_video, max_length=1024)
@@ -131,19 +133,10 @@ def generate_pref(args):
     if not os.path.exists(args.output_dir):
         os.makedirs(args.output_dir)
     
-    video_filenames = os.listdir(args.video_dir)
+    used_parquet_files = set()
+    parquet_files = [os.path.join(args.parquet_dir, f) for f in os.listdir(args.parquet_dir) if f.endswith('.parquet')]
+    selected_parquet_files = random.sample(parquet_files, 468)
 
-    with open("/home/shreyasjena/BTP/datasets/WebVid/inf_left_vids.txt", 'r') as f:
-        video_filenames = f.readlines()
-        video_filenames = [vid.strip() + ".mp4" for vid in video_filenames]
-
-    print("Total number of videos: ", len(video_filenames))
-    
-    # # Split the video files between the two GPUs
-    # device_id = int(args.device_id)
-    # num_videos = len(video_filenames) // 2
-    # video_filenames = video_filenames[:num_videos] if device_id == 0 else video_filenames[num_videos:]
-    
     video_corruptions = [
         "frame_noise",
         "frame_jitter"
@@ -152,56 +145,62 @@ def generate_pref(args):
     video_pert_prob = args.video_pert_prob
     print("Video Perturbation Probability: ", video_pert_prob)
 
-    for filename in tqdm(video_filenames):
-        video_path = os.path.join(args.video_dir, filename)
-        video_name = filename.split(".")[0]
-        video_corruption = False
+    for parquet_file in tqdm(selected_parquet_files):
+        if parquet_file in used_parquet_files:
+            continue
+        used_parquet_files.add(parquet_file)
         
-        hallu_prompt = ""
-        sample_corruption = ""
-        prompt = random.choice(prompt_list)
-
-        args.query = full_prompt
-        try: 
-            preferred_output = get_model_output(model, processor, video_path, args.query, video_corruption)
-
-            # random sample a number between 0 and 1
-            if random.random() > video_pert_prob:
-                hallu_prompt = random.choice(hallu_prompt_list)
-                args.query = hallu_prompt
+        table = pq.read_table(parquet_file)
+        data = table.to_pandas().to_dict(orient='list')
+        
+        for video_batch in data['mp4']:
+            for video_bytes in video_batch:
                 video_corruption = False
-                corrupted_output = get_model_output(model, processor, video_path, args.query, video_corruption)
-            else:
-                video_corruption = True
-                sample_corruption = random.choice(video_corruptions)
+                hallu_prompt = ""
+                sample_corruption = ""
+                prompt = random.choice(prompt_list)
 
-                # color jitter needs a separate prompt to force model to mention the changed color in the perturbed video
-                if sample_corruption == "frame_jitter":
-                    args.query = jitter_prompt
-                elif sample_corruption == "frame_noise":
-                    args.query = prompt + noise_extra_prompt
-                # elif sample_corruption == "frame_noise":
-                #     prompt = random.choice(prompt_list)
-                
-                video_corruption_dir = args.corrupt_dir
-                corrupted_video_path = perturb_video(sample_corruption, video_path, video_corruption_dir)
-                corrupted_output = get_model_output(model, processor, corrupted_video_path, args.query, video_corruption)
+                args.query = full_prompt
+                try: 
+                    preferred_output = get_model_output(model, processor, video_bytes, args.query, video_corruption)
 
-            d = {"video": video_name, 
-                "video_corruption": video_corruption,
-                "corruption_type": sample_corruption,
-                "hallu_prompt": hallu_prompt,
-                "chosen": [{"role":"user","content":prompt},{"role":"assistant","content":preferred_output}],
-                "rejected": [{"role":"user","content":prompt},{"role":"assistant","content":corrupted_output}]}
-            
-            answers_file = os.path.join(args.output_dir, f"{args.output_name}.json")
-            
-            with open(answers_file, "a") as f:
-                f.write(json.dumps(d))
-                f.write(",\n")
+                    # random sample a number between 0 and 1
+                    if random.random() > video_pert_prob:
+                        hallu_prompt = random.choice(hallu_prompt_list)
+                        args.query = hallu_prompt
+                        video_corruption = False
+                        corrupted_output = get_model_output(model, processor, video_bytes, args.query, video_corruption)
+                    else:
+                        video_corruption = True
+                        sample_corruption = random.choice(video_corruptions)
 
-        except Exception as e:
-            print(f"Error with video {video_path}: {e}")
+                        # color jitter needs a separate prompt to force model to mention the changed color in the perturbed video
+                        if sample_corruption == "frame_jitter":
+                            args.query = jitter_prompt
+                        elif sample_corruption == "frame_noise":
+                            args.query = prompt + noise_extra_prompt
+                        # elif sample_corruption == "frame_noise":
+                        #     prompt = random.choice(prompt_list)
+                        
+                        video_corruption_dir = args.corrupt_dir
+                        corrupted_video_path = perturb_video(sample_corruption, video_bytes, video_corruption_dir)
+                        corrupted_output = get_model_output(model, processor, corrupted_video_path, args.query, video_corruption)
+
+                    d = {"video": parquet_file, 
+                        "video_corruption": video_corruption,
+                        "corruption_type": sample_corruption,
+                        "hallu_prompt": hallu_prompt,
+                        "chosen": [{"role":"user","content":prompt},{"role":"assistant","content":preferred_output}],
+                        "rejected": [{"role":"user","content":prompt},{"role":"assistant","content":corrupted_output}]}
+                    
+                    answers_file = os.path.join(args.output_dir, f"{args.output_name}.json")
+                    
+                    with open(answers_file, "a") as f:
+                        f.write(json.dumps(d))
+                        f.write(",\n")
+
+                except Exception as e:
+                    print(f"Error with video in {parquet_file}: {e}")
 
 
 if __name__ == "__main__":
