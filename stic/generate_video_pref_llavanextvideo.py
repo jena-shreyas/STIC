@@ -8,8 +8,8 @@ import torch
 import pyarrow.parquet as pq
 from transformers import LlavaNextVideoProcessor, LlavaNextVideoForConditionalGeneration
 from tqdm import tqdm
-from video_perturbations import perturb_video
-
+from .video_perturbations import perturb_video
+import io
 
 def parse_args():
     """
@@ -39,7 +39,8 @@ def read_video_pyav(video_bytes, indices):
     Returns:
         result (np.ndarray): np array of decoded frames of shape (num_frames, height, width, 3).
     '''
-    container = av.open(video_bytes)
+    video_buffer = io.BytesIO(video_bytes)
+    container = av.open(video_buffer)
     frames = []
     container.seek(0)
     start_index = indices[0]
@@ -68,7 +69,8 @@ def get_model_output(model, processor, video_bytes, qs, video_corruption=False):
 
     processed_prompt = processor.apply_chat_template(conversation, add_generation_prompt=True)
 
-    container = av.open(video_bytes)
+    video_buffer = io.BytesIO(video_bytes)
+    container = av.open(video_buffer)
 
     # sample uniformly 16 frames from the video, can sample more for longer videos
     total_frames = container.streams.video[0].frames
@@ -78,7 +80,7 @@ def get_model_output(model, processor, video_bytes, qs, video_corruption=False):
     inputs_video = processor(text=processed_prompt, videos=clip, padding=True, return_tensors="pt").to(model.device)
 
     output = model.generate(**inputs_video, max_length=1024)
-    output_conv = processor.batch_decode(output, skip_special_tokens=True, clean_up_tokenization_spaces=True)
+    output_conv = processor.batch_decode(output, skip_special_tokens=True, clean_up_tokenization_spaces=True)[0]
     # parse output_conv so that the text after "ASSISTANT:" is returned
     return output_conv.split("ASSISTANT:")[1].strip()
 
@@ -106,12 +108,13 @@ def generate_pref(args):
     jitter_prompt = "Describe the video by mentioning the colors of various consituent objects and characters in the scene, exactly as they appear. Do not instead report the expected colors of the objects or characters if they seem to be contrary to the expected real-life colors for those objects."
     noise_extra_prompt = " However, do not mention the presence of any noise or distortion in the video."
     
-    full_prompt = """Please provide a detailed description of the video, focusing on the following. 
-    Identify the main subjects (people, animals, objects) in the video and describe what they are doing.
-    Describe the setting of the video. Is it indoors or outdoors? What kind of environment or location does it depict? 
-    If applicable, are there any specific elements (such as lighting, weather, expressions) that contribute to the atmosphere depicted in the video? 
-    Describe the dominant colors, including the colors of the objects present, and the overall composition. How do these elements affect the video's impact?
-    If applicable, provide interpretations of what the video might represent or communicate."""
+    full_prompt =   """
+                        Please provide a detailed description of the entire video, considering both spatial and temporal elements as they evolve over time. Focus on the following:
+                        Identify the main subjects (people, animals, objects) throughout the video and describe their actions as they unfold over different moments. How do their movements and interactions change from the beginning to the end of the video?
+                        Based on the evolving sequence of events and visuals, what might the video represent or communicate as a whole? Consider how the video's progression contributes to its meaning, rather than focusing solely on a static frame.
+                        What are the various events in the video and their resulting consequences in the video?
+                        If applicable, specifically locate movements of objects as they evolve over time and how they interact in the video?
+                    """
     
     hallu_prompt_list = [
                          "Modify the description by replacing objects or characters in the video with hypothetical objects or characters that could be part of the scene.",
@@ -150,57 +153,57 @@ def generate_pref(args):
             continue
         used_parquet_files.add(parquet_file)
         
-        table = pq.read_table(parquet_file)
-        data = table.to_pandas().to_dict(orient='list')
+        data = pq.read_table(parquet_file).to_pandas().to_dict()
         
         for video_batch in data['mp4']:
-            for video_bytes in video_batch:
+            video_bytes = data['mp4'][video_batch]
+            video_corruption = False
+            hallu_prompt = ""
+            sample_corruption = ""
+            prompt = random.choice(prompt_list)
+
+            args.query = full_prompt
+            preferred_output = get_model_output(model, processor, video_bytes, args.query, video_corruption)
+            
+            temp = "/scratch/svani/d"parquet_file.split('/')[-1].split('.parquet')[0] + "_" + str(video_batch)
+            output_video_filename = parquet_file.split('.parquet')[0] + "_" + str(video_batch) + ".mp4"
+
+            # random sample a number between 0 and 1
+            if random.random() > video_pert_prob:
+                hallu_prompt = random.choice(hallu_prompt_list)
+                args.query = hallu_prompt
                 video_corruption = False
-                hallu_prompt = ""
-                sample_corruption = ""
-                prompt = random.choice(prompt_list)
+                corrupted_output = get_model_output(model, processor, video_bytes, args.query, video_corruption)
+                print(corrupted_output)
+            else:
+                video_corruption = True
+                sample_corruption = random.choice(video_corruptions)
 
-                args.query = full_prompt
-                try: 
-                    preferred_output = get_model_output(model, processor, video_bytes, args.query, video_corruption)
-
-                    # random sample a number between 0 and 1
-                    if random.random() > video_pert_prob:
-                        hallu_prompt = random.choice(hallu_prompt_list)
-                        args.query = hallu_prompt
-                        video_corruption = False
-                        corrupted_output = get_model_output(model, processor, video_bytes, args.query, video_corruption)
-                    else:
-                        video_corruption = True
-                        sample_corruption = random.choice(video_corruptions)
-
-                        # color jitter needs a separate prompt to force model to mention the changed color in the perturbed video
-                        if sample_corruption == "frame_jitter":
-                            args.query = jitter_prompt
-                        elif sample_corruption == "frame_noise":
-                            args.query = prompt + noise_extra_prompt
-                        # elif sample_corruption == "frame_noise":
-                        #     prompt = random.choice(prompt_list)
-                        
-                        video_corruption_dir = args.corrupt_dir
-                        corrupted_video_path = perturb_video(sample_corruption, video_bytes, video_corruption_dir)
-                        corrupted_output = get_model_output(model, processor, corrupted_video_path, args.query, video_corruption)
-
-                    d = {"video": parquet_file, 
-                        "video_corruption": video_corruption,
-                        "corruption_type": sample_corruption,
-                        "hallu_prompt": hallu_prompt,
-                        "chosen": [{"role":"user","content":prompt},{"role":"assistant","content":preferred_output}],
-                        "rejected": [{"role":"user","content":prompt},{"role":"assistant","content":corrupted_output}]}
-                    
-                    answers_file = os.path.join(args.output_dir, f"{args.output_name}.json")
-                    
-                    with open(answers_file, "a") as f:
-                        f.write(json.dumps(d))
-                        f.write(",\n")
-
-                except Exception as e:
-                    print(f"Error with video in {parquet_file}: {e}")
+                # color jitter needs a separate prompt to force model to mention the changed color in the perturbed video
+                if sample_corruption == "frame_jitter":
+                    args.query = jitter_prompt
+                elif sample_corruption == "frame_noise":
+                    args.query = prompt + noise_extra_prompt
+                # elif sample_corruption == "frame_noise":
+                #     prompt = random.choice(prompt_list)
+                
+                video_corruption_dir = args.corrupt_dir
+                corrupted_video_path = perturb_video(sample_corruption, video_bytes, args.corrupt_dir, video_corruption_dir, output_video_filename)
+                corrupted_output = get_model_output(model, processor, corrupted_video_path, args.query, video_corruption)
+                print(corrupted_output)
+                
+            d = {"video": parquet_file, 
+                "video_corruption": video_corruption,
+                "corruption_type": sample_corruption,
+                "hallu_prompt": hallu_prompt,
+                "chosen": [{"role":"user","content":prompt},{"role":"assistant","content":preferred_output}],
+                "rejected": [{"role":"user","content":prompt},{"role":"assistant","content":corrupted_output}]}
+            
+            answers_file = os.path.join(args.output_dir, f"{args.output_name}.json")
+            
+            with open(answers_file, "a") as f:
+                f.write(json.dumps(d))
+                f.write(",\n")
 
 
 if __name__ == "__main__":

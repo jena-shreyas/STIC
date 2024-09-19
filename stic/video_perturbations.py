@@ -5,7 +5,7 @@ import skimage
 from PIL import Image
 import numpy as np
 from torchvision.transforms.functional import adjust_hue
-
+import io
 
 def noise(frame_pil, amount=0.4):
     # frame_rgb = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB)
@@ -25,13 +25,9 @@ video_perturbations = {
     "frame_jitter": jitter
 }
     
-def perturb_video(sample_perturbation, video_path, video_corruption_dir):
+def perturb_video(sample_perturbation, video_bytes, out_path, video_corruption_dir, filename):
 
     # load the video
-    out_dir = f'{video_corruption_dir}/{sample_perturbation}'
-    os.makedirs(out_dir, exist_ok=True)
-    video_filename = video_path.split("/")[-1]
-    out_path = f'{out_dir}/{video_filename}' 
     fps = 30
 
     hue_factor = 0.
@@ -51,9 +47,10 @@ def perturb_video(sample_perturbation, video_path, video_corruption_dir):
         # amount = 0.6
         print("Noise : ", amount)
 
-    container = av.open(video_path)
+    video_buffer = io.BytesIO(video_bytes)
+    container = av.open(video_buffer)
 
-    out_container = av.open(out_path, mode="w")
+    out_container = av.open(os.path.join(out_path, filename), mode="w")
     out_stream = out_container.add_stream("mpeg4", rate=fps)
 
     for i, frame in enumerate(container.decode(video=0)):

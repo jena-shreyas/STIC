@@ -6,7 +6,7 @@ SCRATCH=/scratch/svani/data
 
 python stic/generate_video_pref_llavanextvideo.py \
     --model_path $MODEL_ID \
-    --video_dir $SCRATCH/$DATASET/$VIDEO_DIR \
+    --parquet_dir $SCRATCH/$DATASET/$VIDEO_DIR \
     --corrupt_dir $SCRATCH/$DATASET/perturbed_videos \
     --output_dir  $SCRATCH/$DATASET/ \
     --output_name "data_pref_${DATASET}" \
