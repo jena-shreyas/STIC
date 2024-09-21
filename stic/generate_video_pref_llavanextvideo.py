@@ -109,11 +109,12 @@ def generate_pref(args):
     noise_extra_prompt = " However, do not mention the presence of any noise or distortion in the video."
     
     full_prompt =   """
-                        Please provide a detailed description of the entire video, considering both spatial and temporal elements as they evolve over time. Focus on the following:
-                        Identify the main subjects (people, animals, objects) throughout the video and describe their actions as they unfold over different moments. How do their movements and interactions change from the beginning to the end of the video?
-                        Based on the evolving sequence of events and visuals, what might the video represent or communicate as a whole? Consider how the video's progression contributes to its meaning, rather than focusing solely on a static frame.
-                        What are the various events in the video and their resulting consequences in the video?
-                        If applicable, specifically locate movements of objects as they evolve over time and how they interact in the video?
+                        Please provide a comprehensive description of the entire video, focusing on spatial and temporal dynamics as they unfold. Address the following:
+                        Describe each event in the order that they occur.
+                        Track the key subjects (people, animals, objects) across the video, describing how their positions, movements, and interactions evolve over time.
+                        Identify the major events in the video and explain how they are temporally sequenced and connected, including any cause-and-effect relationships.
+                        Highlight any significant changes in the environment or context that affect the video’s narrative, and how they impact the subjects' actions.
+                        For each action or movement, specify its location within the frame and how it progresses spatially and temporally, considering both immediate and long-term effects.
                     """
     
     hallu_prompt_list = [
@@ -165,8 +166,8 @@ def generate_pref(args):
             args.query = full_prompt
             preferred_output = get_model_output(model, processor, video_bytes, args.query, video_corruption)
             
-            temp = "/scratch/svani/d"parquet_file.split('/')[-1].split('.parquet')[0] + "_" + str(video_batch)
-            output_video_filename = parquet_file.split('.parquet')[0] + "_" + str(video_batch) + ".mp4"
+            temp = "/scratch/svani/data/finevideo/new_video/" + parquet_file.split('/')[-1].split('.parquet')[0] + "_" + str(video_batch)
+            output_video_filename = "/scratch/svani/data/finevideo/new_videos/" + parquet_file.split('/')[-1].split('.parquet')[0] + "_" + str(video_batch) + ".mp4"
 
             # random sample a number between 0 and 1
             if random.random() > video_pert_prob:
