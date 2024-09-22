@@ -1098,7 +1098,9 @@ class DPODataset(Dataset):
             if type(image_file) is list:    # string : COCO_xyxw.jpg
                 image = [self.process_image(f) for f in image_file]
             else:
+                print(image_file)
                 image = [self.process_image(image_file)]    # Single image : processed as 5,3,336,336 !?
+                print("_get_item | Image shape : ", image[0][0].shape)
             # sources = preprocess_multimodal(copy.deepcopy([e["conversations"] for e in sources]), self.data_args)
 
         elif "video" in sources[0]:  # FIXME: This logic should be largely improved by Yuanhan. It's too messy now.
