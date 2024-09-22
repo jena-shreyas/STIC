@@ -2,10 +2,15 @@ import json
 import random
 
 with open("outputs/COCO/data_pref_COCO_p1.jsonl", 'r') as f:
-    img_data = [json.loads(line) for line in f]
+    img_data1 = [json.loads(line) for line in f]
+
+with open("outputs/COCO/data_pref_COCO_p2.jsonl", 'r') as f:
+    img_data2 = [json.loads(line) for line in f]
 
 with open("outputs/WebVid/data_pref_WebVid_p1.jsonl", 'r') as f:
     vid_data = [json.loads(line) for line in f]
+
+img_data = img_data1 + img_data2
 
 # Add file extensions, if absent
 for d in img_data:

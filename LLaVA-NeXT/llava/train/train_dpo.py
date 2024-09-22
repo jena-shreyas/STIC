@@ -173,6 +173,7 @@ class TrainingArguments(transformers.TrainingArguments):
     gamma: float = field(default=1.0)
     generate_during_eval: bool = field(default=False)
     precompute_ref_log_probs: bool = field(default=False)
+    save_full_model: bool = field(default=False)    # Use this parameter to save full model; allows resume training for LoRA
 
 
 def maybe_zero_3(param, ignore_status=False, name=None):
@@ -1127,7 +1128,7 @@ class DPODataset(Dataset):
                             frame_idx = uniform_sampled_frames.tolist()
                     video = vr.get_batch(frame_idx).asnumpy()
                     video = np.array(video)
-                    print("Inside DPODataset | video : ", video.shape)
+                    # print("Inside DPODataset | video : ", video.shape)
                 else:
                     if "liangke" in video_file:
                         video_file = self.list_data_dict[i]["video"]
@@ -1187,7 +1188,7 @@ class DPODataset(Dataset):
                 (torch.zeros(1, 3, crop_size["height"], crop_size["width"]), (crop_size["width"], crop_size["height"]), "text"),
             ]
         # prompt exist in the data
-        print("Inside DPODataset | images : ", image[0][0].shape)   # 5,3,336,336
+        # print("Inside DPODataset | images : ", image[0][0].shape)   # 5,3,336,336
         data_dict["has_image"] = has_image
         return data_dict
 
@@ -1307,7 +1308,7 @@ class DPODataCollator(DPODataCollatorWithPadding):
             padded_batch["modalities"] = [im[2] for im_list in images for im in im_list]
             images = [im[0] for im_list in images for im in im_list]
             # import pdb;pdb.set_trace()
-            print("Inside DPOCollator __call__ | images : ")
+            # print("Inside DPOCollator __call__ | images : ")
             print(images[0].shape)  #5,3,336,336
 
             padded_batch["images"] = images
@@ -1795,6 +1796,8 @@ def train(attn_implementation=None):
         tokenizer=tokenizer
     )
 
+    print("SAVE FULL MODEL !!!! : ", training_args.save_full_model)     # True
+
     trainer = LLaVADPOTrainer(
         model,
         ref_model,
@@ -1809,7 +1812,7 @@ def train(attn_implementation=None):
         max_length=training_args.model_max_length,
         max_prompt_length=training_args.max_prompt_length,
         generate_during_eval=False,  # training_args.generate_during_eval,
-        precompute_ref_log_probs=training_args.precompute_ref_log_probs,
+        precompute_ref_log_probs=training_args.precompute_ref_log_probs
     )
 
     if list(pathlib.Path(training_args.output_dir).glob("checkpoint-*")):

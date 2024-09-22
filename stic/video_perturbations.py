@@ -24,6 +24,61 @@ video_perturbations = {
     "frame_noise": noise,
     "frame_jitter": jitter
 }
+
+def noise_video(sample_perturbation, video_path, video_corruption_dir, num_sample_frames=30):
+    out_dir = f'{video_corruption_dir}/{sample_perturbation}'
+    os.makedirs(out_dir, exist_ok=True)
+    video_filename = video_path.split("/")[-1]
+    out_path = f'{out_dir}/{video_filename}' 
+    fps = 30
+
+    amount = np.random.uniform(0.4, 0.6)    # Strong noise needed since videos are high-quality and model is good at handling noise
+    print("Noise : ", amount)
+    container = av.open(video_path)
+    total_frames = container.streams.video[0].frames
+
+    out_container = av.open(out_path, mode="w")
+    out_stream = out_container.add_stream("mpeg4", rate=fps)
+
+    noise_frame_idxs = []
+
+    if sample_perturbation == "noise_uniform":
+        noise_frame_idxs = np.arange(0, total_frames, total_frames // num_sample_frames)
+    elif sample_perturbation == "noise_keyframe":
+        pass
+        # noise_frame_idxs = get_keyframes(video_path, num_sample_frames)
+    elif sample_perturbation == "noise_nonkeyframe":
+        pass
+        # noise_frame_idxs = [i for i in range(total_frames) if i not in get_keyframes(video_path, num_sample_frames)]
+
+    for i, frame in enumerate(container.decode(video=0)):
+        # Convert the frame to an image (numpy array)
+        img = frame.to_image().convert('RGB')       # PIL image
+        width, height = img.size
+
+        if i==0:
+            out_stream.width = width
+            out_stream.height = height
+
+        pert_frame = img
+
+        if sample_perturbation in ["noise_uniform", "noise_keyframe", "noise_nonkeyframe"] and \
+          i not in noise_frame_idxs:
+            pert_frame = np.array(pert_frame)
+        else:
+            pert_frame = video_perturbations["frame_noise"](img, amount)        # np.array
+
+        pert_frame = av.VideoFrame.from_ndarray(pert_frame, format="rgb24")
+
+        for packet in out_stream.encode(pert_frame):
+            out_container.mux(packet)
+
+    # Flush output stream
+    for packet in out_stream.encode():
+        out_container.mux(packet)
+
+    out_container.close()
+
     
 def perturb_video(sample_perturbation, video_path, video_corruption_dir):
 
@@ -103,9 +158,16 @@ def perturb_video(sample_perturbation, video_path, video_corruption_dir):
         
 
 if __name__ == "__main__":
-    video_path = "/home/shreyasjena/BTP/datasets/WebVid/videos/stock-footage-a-cute-dog-lies-on-grass-and-dozes.mp4"
+    video_path = "/home/shreyasj/BTP/datasets/WebVid/videos/stock-footage-a-cute-dog-lies-on-grass-and-dozes.mp4"
     video_filename = video_path.split("/")[-1]
-    video_corruption_dir = "/home/shreyasjena/BTP/models/STIC/pert_vids"
-    sample_perturbation = random.choice(list(video_perturbations.keys()))
+    video_corruption_dir = "/home/shreyasj/BTP/models/STIC/pert_vids"
+    
     sample_perturbation = "frame_noise"
     corrupted_video_path = perturb_video(sample_perturbation, video_path, video_corruption_dir)
+
+    # sample_perturbation = "noise_full"
+    # corrupted_video_path = noise_video(sample_perturbation, video_path, video_corruption_dir)
+
+    # sample_perturbation = "noise_uniform"
+    # num_frames = 30
+    # corrupted_video_path = noise_video(sample_perturbation, video_path, video_corruption_dir, num_sample_frames=num_frames)

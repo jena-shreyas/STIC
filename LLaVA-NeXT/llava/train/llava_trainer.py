@@ -12,6 +12,7 @@ from trl.trainer.utils import DPODataCollatorWithPadding
 
 from transformers import Trainer
 from transformers.trainer import is_sagemaker_mp_enabled, get_parameter_names, has_length, ALL_LAYERNORM_LAYERS, logger, is_accelerate_available, is_datasets_available, GradientAccumulationPlugin
+from transformers.trainer import TRAINER_STATE_NAME
 from transformers.trainer_utils import seed_worker
 from transformers.trainer_pt_utils import get_length_grouped_indices as get_length_grouped_indices_hf
 from transformers.trainer_pt_utils import AcceleratorConfig
@@ -40,6 +41,39 @@ def maybe_zero_3(param, ignore_status=False, name=None):
     else:
         param = param.detach().cpu().clone()
     return param
+
+# Borrowed from peft.utils.get_peft_model_state_dict
+def get_peft_state_maybe_zero_3(named_params, bias):
+    if bias == "none":
+        to_return = {k: t for k, t in named_params if "lora_" in k}
+    elif bias == "all":
+        to_return = {k: t for k, t in named_params if "lora_" in k or "bias" in k}
+    elif bias == "lora_only":
+        to_return = {}
+        maybe_lora_bias = {}
+        lora_bias_names = set()
+        for k, t in named_params:
+            if "lora_" in k:
+                to_return[k] = t
+                bias_name = k.split("lora_")[0] + "bias"
+                lora_bias_names.add(bias_name)
+            elif "bias" in k:
+                maybe_lora_bias[k] = t
+        for k, t in maybe_lora_bias:
+            if bias_name in lora_bias_names:
+                to_return[bias_name] = t
+    else:
+        raise NotImplementedError
+    to_return = {k: maybe_zero_3(v, ignore_status=True) for k, v in to_return.items()}
+    return to_return
+
+
+def get_peft_state_non_lora_maybe_zero_3(named_params, require_grad_only=True):
+    to_return = {k: t for k, t in named_params if "lora_" not in k}
+    if require_grad_only:
+        to_return = {k: t for k, t in to_return.items() if t.requires_grad}
+    to_return = {k: maybe_zero_3(v, ignore_status=True).cpu() for k, v in to_return.items()}
+    return to_return
 
 
 def get_mm_adapter_state_maybe_zero_3(named_params, keys_to_match):
@@ -433,6 +467,10 @@ class LLaVATrainer(Trainer):
         return self.optimizer
 
     def _save_checkpoint(self, model, trial, metrics=None):
+        # removed this from else block since the checkpoint wasn't saving trainer_state.json
+        # This directly calls the parent class's save_checkpoint method
+        # Refer to https://github.com/haotian-liu/LLaVA/issues/1164#issuecomment-2308613150
+        super(LLaVATrainer, self)._save_checkpoint(model, trial, metrics)
         if getattr(self.args, "tune_mm_mlp_adapter", False) or (
             hasattr(self.args, "mm_tunable_parts") and (len(self.args.mm_tunable_parts.split(",")) == 1 and ("mm_mlp_adapter" in self.args.mm_tunable_parts or "mm_vision_resampler" in self.args.mm_tunable_parts))
         ):
@@ -454,7 +492,7 @@ class LLaVATrainer(Trainer):
                 self.model.config.save_pretrained(output_dir)
                 torch.save(weight_to_save, os.path.join(output_dir, f"mm_projector.bin"))
         else:
-            super(LLaVATrainer, self)._save_checkpoint(model, trial, metrics)
+            pass
 
     def _save(self, output_dir: Optional[str] = None, state_dict=None):
         if getattr(self.args, "tune_mm_mlp_adapter", False):
@@ -479,8 +517,25 @@ class LLaVADPOTrainer(DPOTrainer):
             )
         else:
             return super()._get_train_sampler()
+        
+    def save_my_lora_ckpt(self, output_dir, args, model):
+        print("Inside LLaVADPOTrainer | save_my_lora_ckpt")
+        state_dict = get_peft_state_maybe_zero_3(
+            model.named_parameters(), args.lora_bias
+        )
+        non_lora_state_dict = get_peft_state_non_lora_maybe_zero_3(
+            model.named_parameters()
+        )
+        if args.local_rank == 0 or args.local_rank == -1:
+            model.config.save_pretrained(output_dir)
+            model.save_pretrained(output_dir, state_dict=state_dict)
+            torch.save(non_lora_state_dict, os.path.join(output_dir, 'non_lora_trainables.bin'))
+            print("Saving trainer_state.json ...")
+            self.state.save_to_json(os.path.join(output_dir, TRAINER_STATE_NAME))
 
     def _save_checkpoint(self, model, trial, metrics=None):
+        print("Inside LLaVADPOTrainer | _save_checkpoint")
+        # super(LLaVADPOTrainer, self)._save_checkpoint(model, trial, metrics)
         if getattr(self.args, "tune_mm_mlp_adapter", False) or (
             hasattr(self.args, "mm_tunable_parts") and (len(self.args.mm_tunable_parts.split(",")) == 1 and ("mm_mlp_adapter" in self.args.mm_tunable_parts or "mm_vision_resampler" in self.args.mm_tunable_parts))
         ):
@@ -508,6 +563,7 @@ class LLaVADPOTrainer(DPOTrainer):
             # print(type(unwrap_model(model)))
             # print(unwrap_model(model).config)
             if self.args.lora_enable:
+                print("Lora enabled")
                 from transformers.trainer_utils import PREFIX_CHECKPOINT_DIR
 
                 checkpoint_folder = f"{PREFIX_CHECKPOINT_DIR}-{self.state.global_step}"
@@ -516,8 +572,11 @@ class LLaVADPOTrainer(DPOTrainer):
                 from transformers.modeling_utils import unwrap_model
 
                 unwrapped_model = unwrap_model(model)
-                self.save_my_lora_ckpt(output_dir, self.args, unwrapped_model)
-            else:
+                if self.args.save_full_model:
+                    print("Saving full model")
+                    super(LLaVADPOTrainer, self)._save_checkpoint(model, trial, metrics)
+                self.save_my_lora_ckpt(output_dir, self.args, unwrapped_model) # save LoRA trainables
+            else:               
                 super(LLaVADPOTrainer, self)._save_checkpoint(model, trial, metrics)
 
     def _save(self, output_dir: Optional[str] = None, state_dict=None):

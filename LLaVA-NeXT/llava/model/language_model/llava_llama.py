@@ -88,7 +88,7 @@ class LlavaLlamaForCausalLM(LlamaForCausalLM, LlavaMetaForCausalLM):
         if inputs_embeds is None:
             (input_ids, position_ids, attention_mask, past_key_values, inputs_embeds, labels) = self.prepare_inputs_labels_for_multimodal(input_ids, position_ids, attention_mask, past_key_values, labels, images, modalities, image_sizes)
 
-        print("inputs_embeds dtype", inputs_embeds.dtype)
+        # print("inputs_embeds dtype", inputs_embeds.dtype)
         with torch.autocast(device_type='cuda', dtype=inputs_embeds.dtype):
             if dpo_forward:
                 outputs = self.model(

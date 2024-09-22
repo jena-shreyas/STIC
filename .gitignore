@@ -47,3 +47,4 @@ kill_proc.sh
 .wandb_api_key
 training_args.bin
 scripts/args.txt
+data_prep/FineVideo/*.mp4

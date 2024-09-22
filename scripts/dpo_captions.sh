@@ -9,7 +9,7 @@ export NCCL_DEBUG=INFO
 
 # data args
 
-SCRATCH="/home/shreyasjena/BTP"
+SCRATCH="/home/shreyasj/BTP"
 TEAM_NAME="Video-LMs"
 PROJECT_NAME="LLaVA-NeXT-Video"
 DATA_PATH="data/data_pref_merged.jsonl"
@@ -24,9 +24,9 @@ VISION_MODEL_VERSION="openai/clip-vit-large-patch14-336"
 
 # training args
 
-LR=1e-7
+LR=5e-6
 BATCH_SIZE=1
-GRAD_ACCUM=128
+GRAD_ACCUM=32        # change this
 NUM_EPOCHS=1
 NUM_NODES=1
 NUM_GPUS=1
@@ -39,13 +39,14 @@ wandb login $WANDB_API_KEY
 export WANDB_NAME=$PROJECT_NAME--$MODEL_NAME
 export WANDB_ENTITY=$TEAM_NAME
 export WANDB_PROJECT=$PROJECT_NAME
+export WANDB_LOG_MODEL="checkpoint"     # to log the model every save_steps steps
 export WANDB_MODE=online
 MID_RUN_NAME="llavanextvideo7b_dpo_finetune_mixed"
 wandb online
 
 
 #torchrun --nproc_per_node="${ARNOLD_WORKER_GPU}" --nnodes="${ARNOLD_WORKER_NUM}" --node_rank="${ARNOLD_ID}" --master_addr="${METIS_WORKER_0_HOST}" --master_port="${port_in_cmd}" \
-ACCELERATE_CPU_AFFINITY=1 CUDA_VISIBLE_DEVICES=0 torchrun --nproc_per_node ${NUM_GPUS} --nnodes ${NUM_NODES} --master_port ${MASTER_PORT} \
+ACCELERATE_CPU_AFFINITY=1 CUDA_VISIBLE_DEVICES=1 torchrun --nproc_per_node ${NUM_GPUS} --nnodes ${NUM_NODES} --master_port ${MASTER_PORT} \
     LLaVA-NeXT/llava/train/train_dpo.py \
     --lora_enable True --lora_r 128 --lora_alpha 256 \
     --deepspeed scripts/zero2.json \
@@ -76,15 +77,16 @@ ACCELERATE_CPU_AFFINITY=1 CUDA_VISIBLE_DEVICES=0 torchrun --nproc_per_node ${NUM
     --per_device_train_batch_size $BATCH_SIZE \
     --per_device_eval_batch_size 4 \
     --gradient_accumulation_steps $GRAD_ACCUM \
+    --save_full_model True \
     --evaluation_strategy "no" \
     --save_strategy "steps" \
-    --save_steps 3000 \
-    --save_total_limit 1 \
+    --save_steps 20 \
+    --save_total_limit 2 \
     --learning_rate $LR \
     --weight_decay 0. \
     --warmup_ratio 0.1 \
     --lr_scheduler_type "linear" \
-    --logging_steps 1 \
+    --logging_steps 10 \
     --verbose_logging True \
     --tf32 True \
     --model_max_length 32768 \

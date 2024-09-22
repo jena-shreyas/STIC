@@ -186,7 +186,7 @@ class LlavaMetaForCausalLM(ABC):
         image_features = self.get_model().get_vision_tower()(images)    # 120,3,336,336 (Inputs to CLIP)
         # image_features = self.get_model().vision_resampler(image_features, images=images)
         # print("MM Projector device : ", self.get_model().mm_projector.device)
-        print("Image features device : ", image_features.device)
+        # print("Image features device : ", image_features.device)
         image_features = self.get_model().mm_projector(image_features)
         return image_features
     
