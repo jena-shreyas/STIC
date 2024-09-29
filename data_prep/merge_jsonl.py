@@ -16,5 +16,9 @@ f = open(os.path.join(dir_path, output_filename), "w")
 for d in data:
     f.write(json.dumps(d) + "\n")
 
+f = open(os.path.join(dir_path, output_filename), "w")
+for d in data:
+    f.write(json.dumps(d) + "\n")
+
 f.close()
 

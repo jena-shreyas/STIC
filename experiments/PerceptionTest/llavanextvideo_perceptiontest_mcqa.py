@@ -1,6 +1,6 @@
 import os
 import sys
-from os.path import join as osj
+from os.path import join as osj, dirname as osndir
 import pandas as pd
 import json
 import shutil
@@ -16,9 +16,11 @@ from tqdm import tqdm
 
 # SAMPLES_PER_DATASET = 200
 
-ROOT="/home/shreyasjena/BTP/datasets/PerceptionTest"
+ROOT=osndir(osndir(os.getcwd()))
+ROOT=osj(ROOT,"datasets/PerceptionTest")
 PART_IDX=int(sys.argv[1])
 DEVICE_MAP=sys.argv[2]
+CKPT_PATH=sys.argv[3]
 
 def create_random_string(length: int = 3):
     return ''.join(random.choices('abcdefghijklmnopqrstuvwxyz', k=length))
@@ -46,13 +48,20 @@ def read_video_pyav(container, indices):
 
 # model loading
 # Load the model in half-precision
-model = LlavaNextVideoForConditionalGeneration.from_pretrained("llava-hf/LLaVA-NeXT-Video-7B-hf", 
+MODEL_PATH="llava-hf/LLaVA-NeXT-Video-7B-hf"
+model = LlavaNextVideoForConditionalGeneration.from_pretrained(MODEL_PATH, 
                                                                torch_dtype=torch.float16,       # 
                                                                attn_implementation="flash_attention_2",
                                                                device_map=DEVICE_MAP
                                                                )
-processor = LlavaNextVideoProcessor.from_pretrained("llava-hf/LLaVA-NeXT-Video-7B-hf")
+processor = LlavaNextVideoProcessor.from_pretrained(MODEL_PATH)
+print("Model loaded successfully")
 
+# Load the finetuned adapter
+model.load_adapter(CKPT_PATH)
+print("Adapter loaded successfully")
+
+model.eval()
 
 # ACQUIRED eval
 
@@ -60,7 +69,7 @@ VID_DIR="videos"
 DATA_DIR="data"
 SPLIT="validation"
 
-with open(osj(ROOT,DATA_DIR,f"all_valid_p{PART_IDX}.json")) as f:
+with open(osj(ROOT,DATA_DIR,f"all_valid_p{PART_IDX}.json"), 'r') as f:
     data = json.load(f)
 
 # print("ACQUIRED | Total test samples : ", len(acq_data))
@@ -72,7 +81,7 @@ total_qns = 0
 
 OUTPUT_DIR='results/inference/PerceptionTest'
 os.makedirs(OUTPUT_DIR, exist_ok=True)
-output_path = osj(OUTPUT_DIR, f"perceptiontest_mcqa_llavanextvideo_responses_p{PART_IDX}.jsonl")
+output_path = osj(OUTPUT_DIR, f"perceptiontest_mcqa_llavanextvideo_responses_ft_p{PART_IDX}.jsonl")
 
 completed_vids = set()
 total_vids = list(data.keys())

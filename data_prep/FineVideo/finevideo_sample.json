@@ -1,1 +1,559 @@
-{"content_fine_category": "Engineering Projects", "content_metadata": {"characterList": [{"characterId": "1", "description": "A young woman with long blonde hair, wearing a grey shirt and an orange safety vest. She is a participant in the heavy equipment operators course.", "name": "Sara Paynton"}, {"characterId": "2", "description": "A man with a beard and glasses, wearing an orange polo shirt. He works at WorkBC as a Quality Assurance Training Coordinator.", "name": "Paulo Fulgencio"}, {"characterId": "3", "description": "A man with short brown hair, wearing a light blue shirt. He is the COO of the Southern Interior Construction Association.", "name": "Bill Everitt"}, {"characterId": "4", "description": "A man with short grey hair and glasses, wearing a black jacket. He is a Civil Manager at Construction Services Southern Interior.", "name": "Charlie Kopola"}, {"characterId": "5", "description": "A man with long black hair, wearing a black jacket. He is a SICA/Velocity client and a BC Hydro Labourer.", "name": "Adam Christian"}], "description": "A video highlighting the Heavy Equipment Operators course, focusing on its benefits, collaboration between institutions, and testimonials from clients and coordinators.", "fps": 23.976024615513296, "qAndA": [{"answer": "He emphasizes the amount of time clients get to spend operating the equipment, which is crucial for their success in the field.", "question": "What specific benefit does Paulo Fulgencio highlight about the heavy equipment operators course?"}, {"answer": "He is responsible for civil construction projects across the Southern Interior region.", "question": "What type of construction projects does Charlie Kopola oversee?"}, {"answer": "He obtained further training in equipment operating, specifically focusing on skills like excavating.", "question": "What specific training did Adam Christian attain during his time away from BC Hydro?"}, {"answer": "He appreciated the fact that Velocity brings their training to the clients, eliminating the need for clients to travel to access the program.", "question": "What aspect of Velocity's training did Adam Christian find particularly beneficial?"}, {"answer": "The video states that the employment rate is around 70%, signifying the program's effectiveness in helping participants find jobs.", "question": "What is the approximate employment rate for participants who complete the heavy equipment operators course?"}], "scenes": [{"activities": [{"description": "Sara stands in front of a 'Heavy Equipment Operator Training Centre' sign and talks about the course.", "timestamp": {"end_timestamp": "00:00:09.009", "start_timestamp": "00:00:00.000"}}, {"description": "Sara explains her prior exposure to heavy equipment.", "timestamp": {"end_timestamp": "00:00:18.018", "start_timestamp": "00:00:09.009"}}, {"description": "Sara describes the course structure, mentioning classroom time and equipment practice.", "timestamp": {"end_timestamp": "00:00:28.779", "start_timestamp": "00:00:18.018"}}], "audioVisualCorrelation": 0.8, "cast": ["Sara Paynton"], "characterInteraction": [], "contextualRelevance": "The visuals of heavy equipment in action create a sense of excitement and potential for those interested in this field.", "dynamismScore": 0.7, "mood": {"description": "Excited", "keyMoments": []}, "narrativeProgression": [{"description": "Introduction to the training center and Sara's presence.", "timestamp": "00:00:00.000"}, {"description": "Sara's personal connection to heavy equipment.", "timestamp": "00:00:09.009"}, {"description": "Structure of the course and initial experiences.", "timestamp": "00:00:18.018"}], "props": [{"name": "'Heavy Equipment Operator Training Centre' sign, construction site in the background.", "timestamp": {"end_timestamp": "00:00:09.009", "start_timestamp": "00:00:00.000"}}, {"name": "Construction site in the background.", "timestamp": {"end_timestamp": "00:00:18.018", "start_timestamp": "00:00:09.009"}}, {"name": "Construction site in the background with excavator, dump truck, and bulldozer.", "timestamp": {"end_timestamp": "00:00:28.779", "start_timestamp": "00:00:18.018"}}], "sceneId": 1, "thematicElements": "Importance of training, career opportunities, personal growth.", "timestamps": {"end_timestamp": "00:00:28.779", "start_timestamp": "00:00:00.000"}, "title": "Introductory Scenes", "videoEditingDetails": [{"description": "Fade in from black, slow zoom into the sign.", "timestamps": {"end_timestamp": "00:00:09.009", "start_timestamp": "00:00:00.000"}}, {"description": "Cut to Sara talking, excavator working in the background.", "timestamps": {"end_timestamp": "00:00:18.018", "start_timestamp": "00:00:09.009"}}, {"description": "Cut to a wider shot of the construction site, dump truck driving by.", "timestamps": {"end_timestamp": "00:00:28.779", "start_timestamp": "00:00:18.018"}}]}, {"activities": [{"description": "Paulo speaks about the benefits of the course for clients, highlighting the amount of time spent on equipment.", "timestamp": {"end_timestamp": "00:00:51.009", "start_timestamp": "00:00:28.987"}}, {"description": "Paulo discusses the collaboration between institutions, employers, and education providers in creating the project.", "timestamp": {"end_timestamp": "00:01:15.993", "start_timestamp": "00:00:51.009"}}], "audioVisualCorrelation": 0.7, "cast": ["Paulo Fulgencio"], "characterInteraction": [], "contextualRelevance": "The visuals of people going to work and heavy machinery in action underscore the practical and relevant nature of the program.", "dynamismScore": 0.6, "mood": {"description": "Positive", "keyMoments": []}, "narrativeProgression": [{"description": "Emphasis on the practical experience gained by clients.", "timestamp": "00:00:28.987"}, {"description": "Explanation of the collaborative effort to design the project.", "timestamp": "00:00:51.009"}], "props": [{"name": "WorkBC Employment Services Centre building.", "timestamp": {"end_timestamp": "00:00:51.009", "start_timestamp": "00:00:28.987"}}, {"name": "Construction site with bulldozer and dump truck, person entering a building carrying a red hard hat.", "timestamp": {"end_timestamp": "00:01:15.993", "start_timestamp": "00:00:51.009"}}], "sceneId": 2, "thematicElements": "Collaboration, community needs, skill development, employment opportunities.", "timestamps": {"end_timestamp": "00:01:16.034", "start_timestamp": "00:00:28.820"}, "title": "Benefits & Collaboration", "videoEditingDetails": [{"description": "Cut to the exterior of the WorkBC building, slow zoom out.", "timestamps": {"end_timestamp": "00:00:51.009", "start_timestamp": "00:00:28.987"}}, {"description": "Cut to construction site with bulldozer, then cut to person entering a building.", "timestamps": {"end_timestamp": "00:01:15.993", "start_timestamp": "00:00:51.009"}}]}, {"activities": [{"description": "Bill explains the role of the Southern Interior Construction Association in funding the project and its need to address the shortage of skilled workers.", "timestamp": {"end_timestamp": "00:01:37.014", "start_timestamp": "00:01:16.076"}}, {"description": "Bill highlights the importance of Velocity's training program in providing skilled workers for the construction community.", "timestamp": {"end_timestamp": "00:01:45.981", "start_timestamp": "00:01:37.014"}}], "audioVisualCorrelation": 0.6, "cast": ["Bill Everitt"], "characterInteraction": [], "contextualRelevance": "The emphasis on the high employment rate (70%) signifies the effectiveness of the program in achieving its objective.", "dynamismScore": 0.5, "mood": {"description": "Proud", "keyMoments": []}, "narrativeProgression": [{"description": "Explanation of the Association's funding and its motivation.", "timestamp": "00:01:16.076"}, {"description": "Appreciation for Velocity's contribution to filling the skill gap.", "timestamp": "00:01:37.014"}], "props": [{"name": "Bill sits in an office chair.", "timestamp": {"end_timestamp": "00:01:37.014", "start_timestamp": "00:01:16.076"}}, {"name": "'Active Construction Site' sign, woman putting on a red hard hat.", "timestamp": {"end_timestamp": "00:01:45.981", "start_timestamp": "00:01:37.014"}}], "sceneId": 3, "thematicElements": "Industry partnerships, workforce development, community impact.", "timestamps": {"end_timestamp": "00:01:46.064", "start_timestamp": "00:01:16.076"}, "title": "Association's Perspective", "videoEditingDetails": [{"description": "Cut to Bill talking in an office.", "timestamps": {"end_timestamp": "00:01:37.014", "start_timestamp": "00:01:16.076"}}, {"description": "Cut to 'Active Construction Site' sign, then to a woman putting on a hard hat.", "timestamps": {"end_timestamp": "00:01:45.981", "start_timestamp": "00:01:37.014"}}]}, {"activities": [{"description": "Charlie speaks about his hiring of various contractors, including Adam Christian, who benefited from the training program. Adam shares his experience with Velocity's training program, highlighting the accessibility and quality of instruction.", "timestamp": {"end_timestamp": "00:02:18.638", "start_timestamp": "00:01:46.106"}}], "audioVisualCorrelation": 0.7, "cast": ["Charlie Kopola", "Adam Christian"], "characterInteraction": [{"characters": ["Charlie Kopola", "Adam Christian"], "description": "Charlie and Adam's narratives are connected, showcasing the positive impact of the program on both employers and employees."}], "contextualRelevance": "The focus on Adam's journey from training to employment demonstrates the tangible results of the program and its impact on individual lives.", "dynamismScore": 0.6, "mood": {"description": "Grateful", "keyMoments": []}, "narrativeProgression": [{"description": "Charlie's experience hiring contractors, including Adam, who had training.", "timestamp": "00:01:46.106"}, {"description": "Adam's experience with Velocity's program and its benefits.", "timestamp": "00:02:10.005"}], "props": [{"name": "BC Hydro sign, photos of construction work, excavator, bulldozer.", "timestamp": {"end_timestamp": "00:02:18.638", "start_timestamp": "00:01:46.106"}}], "sceneId": 4, "thematicElements": "Skill development, employability, community benefits, Aboriginal businesses.", "timestamps": {"end_timestamp": "00:02:18.638", "start_timestamp": "00:01:46.106"}, "title": "Contractors' Experience", "videoEditingDetails": [{"description": "Cut to Charlie talking, then cut to Adam, then back to construction site.", "timestamps": {"end_timestamp": "00:02:18.638", "start_timestamp": "00:01:46.106"}}]}, {"activities": [{"description": "Adam elaborates on the benefits of Velocity's training, mentioning on-site training and the quality of instruction.", "timestamp": {"end_timestamp": "00:02:33.987", "start_timestamp": "00:02:19.014"}}, {"description": "Bill speaks about the high success and employment rates of the program and the broad range of skills learned by participants.", "timestamp": {"end_timestamp": "00:02:56.009", "start_timestamp": "00:02:33.987"}}, {"description": "Paulo encourages individuals with employment questions to reach out to WorkBC for assistance and guidance.", "timestamp": {"end_timestamp": "00:03:16.988", "start_timestamp": "00:02:56.009"}}], "audioVisualCorrelation": 0.7, "cast": ["Adam Christian", "Bill Everitt", "Paulo Fulgencio"], "characterInteraction": [{"characters": ["Adam Christian", "Bill Everitt", "Paulo Fulgencio"], "description": "All three characters contribute to the narrative, reinforcing the program's positive aspects and its importance for the community."}], "contextualRelevance": "The scene concludes with a call to action, encouraging viewers to visit WorkBC for more information, bringing the video full circle.", "dynamismScore": 0.5, "mood": {"description": "Happy", "keyMoments": []}, "narrativeProgression": [{"description": "Adam's continued appreciation for Velocity's training.", "timestamp": "00:02:19.014"}, {"description": "Bill's summary of the program's success and comprehensive skill development.", "timestamp": "00:02:33.987"}, {"description": "Paulo's encouragement for individuals to seek assistance from WorkBC.", "timestamp": "00:02:56.009"}], "props": [{"name": "Construction site with excavator, bulldozer, and dump truck.", "timestamp": {"end_timestamp": "00:02:33.987", "start_timestamp": "00:02:19.014"}}, {"name": "Office setting, woman putting on a hard hat.", "timestamp": {"end_timestamp": "00:02:56.009", "start_timestamp": "00:02:33.987"}}, {"name": "No specific props.", "timestamp": {"end_timestamp": "00:03:16.988", "start_timestamp": "00:02:56.009"}}], "sceneId": 5, "thematicElements": "Empowerment, skill acquisition, career opportunities, community support.", "timestamps": {"end_timestamp": "00:03:28.291", "start_timestamp": "00:02:18.680"}, "title": "Program Outcomes", "videoEditingDetails": [{"description": "Cut back to Adam talking.", "timestamps": {"end_timestamp": "00:02:33.987", "start_timestamp": "00:02:19.014"}}, {"description": "Cut to Bill talking, then to a woman putting on a hard hat.", "timestamps": {"end_timestamp": "00:02:56.009", "start_timestamp": "00:02:33.987"}}, {"description": "Cut to Paulo talking.", "timestamps": {"end_timestamp": "00:03:16.988", "start_timestamp": "00:02:56.009"}}]}], "storylines": {"climax": {"description": "High success and employment rates emphasized by Bill Everitt.", "timestamp": "00:01:45.981"}, "description": "Stories surrounding the Heavy Equipment Operators Course, featuring its success, training benefits, and client experiences.", "scenes": [1, 2, 3, 4, 5]}, "title": "Heavy Equipment Operators Course Promo", "trimmingSuggestions": [{"description": "The shot of the WorkBC building could be shortened or replaced with more dynamic visuals like interviews with participants or scenes from the training site.", "timestamps": {"end_timestamp": "00:02:18.680", "start_timestamp": "00:02:18.680"}}, {"description": "Bill's talking head could be trimmed or intercut with footage of the training program or interviews with participants.", "timestamps": {"end_timestamp": "00:02:18.680", "start_timestamp": "00:02:18.680"}}]}, "content_parent_category": "Education", "duration_seconds": 208, "original_json_filename": "d6b4OmUFt7I.json", "original_video_filename": "d6b4OmUFt7I.mp4", "resolution": "640x360", "text_to_speech": "we're in West Bank BC in the heart of the reserve and I'm part of this heavy equipment operators course and yeah I'm loving it with the email Anderson for about a year but my whole life growing up I was exposed to it a lot my dad always show me all the equipment we get our class time go through all that and then after we get to go on the equipment for a couple hours and get used to it when you leave here at the end of the day you know you're more familiar with the machines and the basic understanding of how they work and what they do I think it's amazing for the fact that clients actually get a lot of hours on the equipment so usually when they go for training in this field they get a couple of hours but not necessarily everything they need to be successful so it's more than just an education they're getting the hours and employers are looking for when they make their hiring decisions give them a huge leg up compared to everybody else the cool thing about these projects is it's based on what the community needs so it actually comes from the partnerships between the institutions employers and education providers so they actually create the project and presented to us to see if there's a need to fill it so it's extremely flexible completely customizable for what employers need and what the issues they're facing as an association were funded by construction companies who will join our association and so what that provides us with is an opportunity to actually bring an employer to the table so we very clearly understand what their needs are they've communicated a need for skilled workers and this provided us an opportunity to fill that void it deals with the losses capability to do the training on the ground and to essentially provide skilled workers for our construction community that needs those workers I'm responsible for civil construction for various projects throughout the southern interior I hire many different contractors including Aboriginal businesses Adam Christian worked with us number of years ago Adam approached us to see if you get back on in his absence he had attained some further training equipment operating and brought that back with them for us and we've been able to utilize that and make them more employable with us and and just add more resources for us that way velocity offered from other safety training different tickets on top of the operating stuff yet they bring their training to you instead of you having to go to them which was big their instructors are confident and they good leadership in that nice atmosphere the success rate is high I think we're seeing something like 80 percent passing rate a really of greater importance we're seeing something like a high 70 percent employment rate so not only are they completing the course they're getting these skill training they're learning how to operate mobile equipment at the same time learning how to maintain the equipment how to work around it safely it provides them with a broad range of skills I think the biggest thing is that if anyone has any questions around employment to come and talk to us you know a lot of employers aren't sure what can be a good fit or what is something that would actually work and what we found especially in the employment program is there's so many things that we can do that's hard for us to describe it one soundbite so if they come and have that conversation we can really see how we can work together you", "text_to_speech_word_count": 622, "youtube_age_limit": 0, "youtube_categories": ["News & Politics"], "youtube_channel": "GovernmentofBC", "youtube_channel_follower_count": 34800, "youtube_comment_count": 0, "youtube_description": "WorkBC has developed a Heavy Equipment Operator training course with the Southern Interior Construction Association to provide skills training opportunities in the Okanagan.\n\nRead more: https://news.gov.bc.ca/releases/2016SDSI0016-000673", "youtube_like_count": 555, "youtube_tags": ["Province of BC", "British Columbia", "Heavy equipment", "construction", "bulldozer", "excavator", "front loader", "skills training", "skills upgrade", "skills"], "youtube_title": "Training Heavy Equipment Operators", "youtube_upload_date": "20160511", "youtube_view_count": 89462}
+{
+    "content_fine_category": "Engineering Projects",
+    "content_metadata": {
+        "characterList": [
+            {
+                "characterId": "1",
+                "description": "A young woman with long blonde hair, wearing a grey shirt and an orange safety vest. She is a participant in the heavy equipment operators course.",
+                "name": "Sara Paynton"
+            },
+            {
+                "characterId": "2",
+                "description": "A man with a beard and glasses, wearing an orange polo shirt. He works at WorkBC as a Quality Assurance Training Coordinator.",
+                "name": "Paulo Fulgencio"
+            },
+            {
+                "characterId": "3",
+                "description": "A man with short brown hair, wearing a light blue shirt. He is the COO of the Southern Interior Construction Association.",
+                "name": "Bill Everitt"
+            },
+            {
+                "characterId": "4",
+                "description": "A man with short grey hair and glasses, wearing a black jacket. He is a Civil Manager at Construction Services Southern Interior.",
+                "name": "Charlie Kopola"
+            },
+            {
+                "characterId": "5",
+                "description": "A man with long black hair, wearing a black jacket. He is a SICA/Velocity client and a BC Hydro Labourer.",
+                "name": "Adam Christian"
+            }
+        ],
+        "description": "A video highlighting the Heavy Equipment Operators course, focusing on its benefits, collaboration between institutions, and testimonials from clients and coordinators.",
+        "fps": 23.976024615513296,
+        "qAndA": [
+            {
+                "answer": "He emphasizes the amount of time clients get to spend operating the equipment, which is crucial for their success in the field.",
+                "question": "What specific benefit does Paulo Fulgencio highlight about the heavy equipment operators course?"
+            },
+            {
+                "answer": "He is responsible for civil construction projects across the Southern Interior region.",
+                "question": "What type of construction projects does Charlie Kopola oversee?"
+            },
+            {
+                "answer": "He obtained further training in equipment operating, specifically focusing on skills like excavating.",
+                "question": "What specific training did Adam Christian attain during his time away from BC Hydro?"
+            },
+            {
+                "answer": "He appreciated the fact that Velocity brings their training to the clients, eliminating the need for clients to travel to access the program.",
+                "question": "What aspect of Velocity's training did Adam Christian find particularly beneficial?"
+            },
+            {
+                "answer": "The video states that the employment rate is around 70%, signifying the program's effectiveness in helping participants find jobs.",
+                "question": "What is the approximate employment rate for participants who complete the heavy equipment operators course?"
+            }
+        ],
+        "scenes": [
+            {
+                "activities": [
+                    {
+                        "description": "Sara stands in front of a 'Heavy Equipment Operator Training Centre' sign and talks about the course.",
+                        "timestamp": {
+                            "end_timestamp": "00:00:09.009",
+                            "start_timestamp": "00:00:00.000"
+                        }
+                    },
+                    {
+                        "description": "Sara explains her prior exposure to heavy equipment.",
+                        "timestamp": {
+                            "end_timestamp": "00:00:18.018",
+                            "start_timestamp": "00:00:09.009"
+                        }
+                    },
+                    {
+                        "description": "Sara describes the course structure, mentioning classroom time and equipment practice.",
+                        "timestamp": {
+                            "end_timestamp": "00:00:28.779",
+                            "start_timestamp": "00:00:18.018"
+                        }
+                    }
+                ],
+                "audioVisualCorrelation": 0.8,
+                "cast": [
+                    "Sara Paynton"
+                ],
+                "characterInteraction": [],
+                "contextualRelevance": "The visuals of heavy equipment in action create a sense of excitement and potential for those interested in this field.",
+                "dynamismScore": 0.7,
+                "mood": {
+                    "description": "Excited",
+                    "keyMoments": []
+                },
+                "narrativeProgression": [
+                    {
+                        "description": "Introduction to the training center and Sara's presence.",
+                        "timestamp": "00:00:00.000"
+                    },
+                    {
+                        "description": "Sara's personal connection to heavy equipment.",
+                        "timestamp": "00:00:09.009"
+                    },
+                    {
+                        "description": "Structure of the course and initial experiences.",
+                        "timestamp": "00:00:18.018"
+                    }
+                ],
+                "props": [
+                    {
+                        "name": "'Heavy Equipment Operator Training Centre' sign, construction site in the background.",
+                        "timestamp": {
+                            "end_timestamp": "00:00:09.009",
+                            "start_timestamp": "00:00:00.000"
+                        }
+                    },
+                    {
+                        "name": "Construction site in the background.",
+                        "timestamp": {
+                            "end_timestamp": "00:00:18.018",
+                            "start_timestamp": "00:00:09.009"
+                        }
+                    },
+                    {
+                        "name": "Construction site in the background with excavator, dump truck, and bulldozer.",
+                        "timestamp": {
+                            "end_timestamp": "00:00:28.779",
+                            "start_timestamp": "00:00:18.018"
+                        }
+                    }
+                ],
+                "sceneId": 1,
+                "thematicElements": "Importance of training, career opportunities, personal growth.",
+                "timestamps": {
+                    "end_timestamp": "00:00:28.779",
+                    "start_timestamp": "00:00:00.000"
+                },
+                "title": "Introductory Scenes",
+                "videoEditingDetails": [
+                    {
+                        "description": "Fade in from black, slow zoom into the sign.",
+                        "timestamps": {
+                            "end_timestamp": "00:00:09.009",
+                            "start_timestamp": "00:00:00.000"
+                        }
+                    },
+                    {
+                        "description": "Cut to Sara talking, excavator working in the background.",
+                        "timestamps": {
+                            "end_timestamp": "00:00:18.018",
+                            "start_timestamp": "00:00:09.009"
+                        }
+                    },
+                    {
+                        "description": "Cut to a wider shot of the construction site, dump truck driving by.",
+                        "timestamps": {
+                            "end_timestamp": "00:00:28.779",
+                            "start_timestamp": "00:00:18.018"
+                        }
+                    }
+                ]
+            },
+            {
+                "activities": [
+                    {
+                        "description": "Paulo speaks about the benefits of the course for clients, highlighting the amount of time spent on equipment.",
+                        "timestamp": {
+                            "end_timestamp": "00:00:51.009",
+                            "start_timestamp": "00:00:28.987"
+                        }
+                    },
+                    {
+                        "description": "Paulo discusses the collaboration between institutions, employers, and education providers in creating the project.",
+                        "timestamp": {
+                            "end_timestamp": "00:01:15.993",
+                            "start_timestamp": "00:00:51.009"
+                        }
+                    }
+                ],
+                "audioVisualCorrelation": 0.7,
+                "cast": [
+                    "Paulo Fulgencio"
+                ],
+                "characterInteraction": [],
+                "contextualRelevance": "The visuals of people going to work and heavy machinery in action underscore the practical and relevant nature of the program.",
+                "dynamismScore": 0.6,
+                "mood": {
+                    "description": "Positive",
+                    "keyMoments": []
+                },
+                "narrativeProgression": [
+                    {
+                        "description": "Emphasis on the practical experience gained by clients.",
+                        "timestamp": "00:00:28.987"
+                    },
+                    {
+                        "description": "Explanation of the collaborative effort to design the project.",
+                        "timestamp": "00:00:51.009"
+                    }
+                ],
+                "props": [
+                    {
+                        "name": "WorkBC Employment Services Centre building.",
+                        "timestamp": {
+                            "end_timestamp": "00:00:51.009",
+                            "start_timestamp": "00:00:28.987"
+                        }
+                    },
+                    {
+                        "name": "Construction site with bulldozer and dump truck, person entering a building carrying a red hard hat.",
+                        "timestamp": {
+                            "end_timestamp": "00:01:15.993",
+                            "start_timestamp": "00:00:51.009"
+                        }
+                    }
+                ],
+                "sceneId": 2,
+                "thematicElements": "Collaboration, community needs, skill development, employment opportunities.",
+                "timestamps": {
+                    "end_timestamp": "00:01:16.034",
+                    "start_timestamp": "00:00:28.820"
+                },
+                "title": "Benefits & Collaboration",
+                "videoEditingDetails": [
+                    {
+                        "description": "Cut to the exterior of the WorkBC building, slow zoom out.",
+                        "timestamps": {
+                            "end_timestamp": "00:00:51.009",
+                            "start_timestamp": "00:00:28.987"
+                        }
+                    },
+                    {
+                        "description": "Cut to construction site with bulldozer, then cut to person entering a building.",
+                        "timestamps": {
+                            "end_timestamp": "00:01:15.993",
+                            "start_timestamp": "00:00:51.009"
+                        }
+                    }
+                ]
+            },
+            {
+                "activities": [
+                    {
+                        "description": "Bill explains the role of the Southern Interior Construction Association in funding the project and its need to address the shortage of skilled workers.",
+                        "timestamp": {
+                            "end_timestamp": "00:01:37.014",
+                            "start_timestamp": "00:01:16.076"
+                        }
+                    },
+                    {
+                        "description": "Bill highlights the importance of Velocity's training program in providing skilled workers for the construction community.",
+                        "timestamp": {
+                            "end_timestamp": "00:01:45.981",
+                            "start_timestamp": "00:01:37.014"
+                        }
+                    }
+                ],
+                "audioVisualCorrelation": 0.6,
+                "cast": [
+                    "Bill Everitt"
+                ],
+                "characterInteraction": [],
+                "contextualRelevance": "The emphasis on the high employment rate (70%) signifies the effectiveness of the program in achieving its objective.",
+                "dynamismScore": 0.5,
+                "mood": {
+                    "description": "Proud",
+                    "keyMoments": []
+                },
+                "narrativeProgression": [
+                    {
+                        "description": "Explanation of the Association's funding and its motivation.",
+                        "timestamp": "00:01:16.076"
+                    },
+                    {
+                        "description": "Appreciation for Velocity's contribution to filling the skill gap.",
+                        "timestamp": "00:01:37.014"
+                    }
+                ],
+                "props": [
+                    {
+                        "name": "Bill sits in an office chair.",
+                        "timestamp": {
+                            "end_timestamp": "00:01:37.014",
+                            "start_timestamp": "00:01:16.076"
+                        }
+                    },
+                    {
+                        "name": "'Active Construction Site' sign, woman putting on a red hard hat.",
+                        "timestamp": {
+                            "end_timestamp": "00:01:45.981",
+                            "start_timestamp": "00:01:37.014"
+                        }
+                    }
+                ],
+                "sceneId": 3,
+                "thematicElements": "Industry partnerships, workforce development, community impact.",
+                "timestamps": {
+                    "end_timestamp": "00:01:46.064",
+                    "start_timestamp": "00:01:16.076"
+                },
+                "title": "Association's Perspective",
+                "videoEditingDetails": [
+                    {
+                        "description": "Cut to Bill talking in an office.",
+                        "timestamps": {
+                            "end_timestamp": "00:01:37.014",
+                            "start_timestamp": "00:01:16.076"
+                        }
+                    },
+                    {
+                        "description": "Cut to 'Active Construction Site' sign, then to a woman putting on a hard hat.",
+                        "timestamps": {
+                            "end_timestamp": "00:01:45.981",
+                            "start_timestamp": "00:01:37.014"
+                        }
+                    }
+                ]
+            },
+            {
+                "activities": [
+                    {
+                        "description": "Charlie speaks about his hiring of various contractors, including Adam Christian, who benefited from the training program. Adam shares his experience with Velocity's training program, highlighting the accessibility and quality of instruction.",
+                        "timestamp": {
+                            "end_timestamp": "00:02:18.638",
+                            "start_timestamp": "00:01:46.106"
+                        }
+                    }
+                ],
+                "audioVisualCorrelation": 0.7,
+                "cast": [
+                    "Charlie Kopola",
+                    "Adam Christian"
+                ],
+                "characterInteraction": [
+                    {
+                        "characters": [
+                            "Charlie Kopola",
+                            "Adam Christian"
+                        ],
+                        "description": "Charlie and Adam's narratives are connected, showcasing the positive impact of the program on both employers and employees."
+                    }
+                ],
+                "contextualRelevance": "The focus on Adam's journey from training to employment demonstrates the tangible results of the program and its impact on individual lives.",
+                "dynamismScore": 0.6,
+                "mood": {
+                    "description": "Grateful",
+                    "keyMoments": []
+                },
+                "narrativeProgression": [
+                    {
+                        "description": "Charlie's experience hiring contractors, including Adam, who had training.",
+                        "timestamp": "00:01:46.106"
+                    },
+                    {
+                        "description": "Adam's experience with Velocity's program and its benefits.",
+                        "timestamp": "00:02:10.005"
+                    }
+                ],
+                "props": [
+                    {
+                        "name": "BC Hydro sign, photos of construction work, excavator, bulldozer.",
+                        "timestamp": {
+                            "end_timestamp": "00:02:18.638",
+                            "start_timestamp": "00:01:46.106"
+                        }
+                    }
+                ],
+                "sceneId": 4,
+                "thematicElements": "Skill development, employability, community benefits, Aboriginal businesses.",
+                "timestamps": {
+                    "end_timestamp": "00:02:18.638",
+                    "start_timestamp": "00:01:46.106"
+                },
+                "title": "Contractors' Experience",
+                "videoEditingDetails": [
+                    {
+                        "description": "Cut to Charlie talking, then cut to Adam, then back to construction site.",
+                        "timestamps": {
+                            "end_timestamp": "00:02:18.638",
+                            "start_timestamp": "00:01:46.106"
+                        }
+                    }
+                ]
+            },
+            {
+                "activities": [
+                    {
+                        "description": "Adam elaborates on the benefits of Velocity's training, mentioning on-site training and the quality of instruction.",
+                        "timestamp": {
+                            "end_timestamp": "00:02:33.987",
+                            "start_timestamp": "00:02:19.014"
+                        }
+                    },
+                    {
+                        "description": "Bill speaks about the high success and employment rates of the program and the broad range of skills learned by participants.",
+                        "timestamp": {
+                            "end_timestamp": "00:02:56.009",
+                            "start_timestamp": "00:02:33.987"
+                        }
+                    },
+                    {
+                        "description": "Paulo encourages individuals with employment questions to reach out to WorkBC for assistance and guidance.",
+                        "timestamp": {
+                            "end_timestamp": "00:03:16.988",
+                            "start_timestamp": "00:02:56.009"
+                        }
+                    }
+                ],
+                "audioVisualCorrelation": 0.7,
+                "cast": [
+                    "Adam Christian",
+                    "Bill Everitt",
+                    "Paulo Fulgencio"
+                ],
+                "characterInteraction": [
+                    {
+                        "characters": [
+                            "Adam Christian",
+                            "Bill Everitt",
+                            "Paulo Fulgencio"
+                        ],
+                        "description": "All three characters contribute to the narrative, reinforcing the program's positive aspects and its importance for the community."
+                    }
+                ],
+                "contextualRelevance": "The scene concludes with a call to action, encouraging viewers to visit WorkBC for more information, bringing the video full circle.",
+                "dynamismScore": 0.5,
+                "mood": {
+                    "description": "Happy",
+                    "keyMoments": []
+                },
+                "narrativeProgression": [
+                    {
+                        "description": "Adam's continued appreciation for Velocity's training.",
+                        "timestamp": "00:02:19.014"
+                    },
+                    {
+                        "description": "Bill's summary of the program's success and comprehensive skill development.",
+                        "timestamp": "00:02:33.987"
+                    },
+                    {
+                        "description": "Paulo's encouragement for individuals to seek assistance from WorkBC.",
+                        "timestamp": "00:02:56.009"
+                    }
+                ],
+                "props": [
+                    {
+                        "name": "Construction site with excavator, bulldozer, and dump truck.",
+                        "timestamp": {
+                            "end_timestamp": "00:02:33.987",
+                            "start_timestamp": "00:02:19.014"
+                        }
+                    },
+                    {
+                        "name": "Office setting, woman putting on a hard hat.",
+                        "timestamp": {
+                            "end_timestamp": "00:02:56.009",
+                            "start_timestamp": "00:02:33.987"
+                        }
+                    },
+                    {
+                        "name": "No specific props.",
+                        "timestamp": {
+                            "end_timestamp": "00:03:16.988",
+                            "start_timestamp": "00:02:56.009"
+                        }
+                    }
+                ],
+                "sceneId": 5,
+                "thematicElements": "Empowerment, skill acquisition, career opportunities, community support.",
+                "timestamps": {
+                    "end_timestamp": "00:03:28.291",
+                    "start_timestamp": "00:02:18.680"
+                },
+                "title": "Program Outcomes",
+                "videoEditingDetails": [
+                    {
+                        "description": "Cut back to Adam talking.",
+                        "timestamps": {
+                            "end_timestamp": "00:02:33.987",
+                            "start_timestamp": "00:02:19.014"
+                        }
+                    },
+                    {
+                        "description": "Cut to Bill talking, then to a woman putting on a hard hat.",
+                        "timestamps": {
+                            "end_timestamp": "00:02:56.009",
+                            "start_timestamp": "00:02:33.987"
+                        }
+                    },
+                    {
+                        "description": "Cut to Paulo talking.",
+                        "timestamps": {
+                            "end_timestamp": "00:03:16.988",
+                            "start_timestamp": "00:02:56.009"
+                        }
+                    }
+                ]
+            }
+        ],
+        "storylines": {
+            "climax": {
+                "description": "High success and employment rates emphasized by Bill Everitt.",
+                "timestamp": "00:01:45.981"
+            },
+            "description": "Stories surrounding the Heavy Equipment Operators Course, featuring its success, training benefits, and client experiences.",
+            "scenes": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ]
+        },
+        "title": "Heavy Equipment Operators Course Promo",
+        "trimmingSuggestions": [
+            {
+                "description": "The shot of the WorkBC building could be shortened or replaced with more dynamic visuals like interviews with participants or scenes from the training site.",
+                "timestamps": {
+                    "end_timestamp": "00:02:18.680",
+                    "start_timestamp": "00:02:18.680"
+                }
+            },
+            {
+                "description": "Bill's talking head could be trimmed or intercut with footage of the training program or interviews with participants.",
+                "timestamps": {
+                    "end_timestamp": "00:02:18.680",
+                    "start_timestamp": "00:02:18.680"
+                }
+            }
+        ]
+    },
+    "content_parent_category": "Education",
+    "duration_seconds": 208,
+    "original_json_filename": "d6b4OmUFt7I.json",
+    "original_video_filename": "d6b4OmUFt7I.mp4",
+    "resolution": "640x360",
+    "text_to_speech": "we're in West Bank BC in the heart of the reserve and I'm part of this heavy equipment operators course and yeah I'm loving it with the email Anderson for about a year but my whole life growing up I was exposed to it a lot my dad always show me all the equipment we get our class time go through all that and then after we get to go on the equipment for a couple hours and get used to it when you leave here at the end of the day you know you're more familiar with the machines and the basic understanding of how they work and what they do I think it's amazing for the fact that clients actually get a lot of hours on the equipment so usually when they go for training in this field they get a couple of hours but not necessarily everything they need to be successful so it's more than just an education they're getting the hours and employers are looking for when they make their hiring decisions give them a huge leg up compared to everybody else the cool thing about these projects is it's based on what the community needs so it actually comes from the partnerships between the institutions employers and education providers so they actually create the project and presented to us to see if there's a need to fill it so it's extremely flexible completely customizable for what employers need and what the issues they're facing as an association were funded by construction companies who will join our association and so what that provides us with is an opportunity to actually bring an employer to the table so we very clearly understand what their needs are they've communicated a need for skilled workers and this provided us an opportunity to fill that void it deals with the losses capability to do the training on the ground and to essentially provide skilled workers for our construction community that needs those workers I'm responsible for civil construction for various projects throughout the southern interior I hire many different contractors including Aboriginal businesses Adam Christian worked with us number of years ago Adam approached us to see if you get back on in his absence he had attained some further training equipment operating and brought that back with them for us and we've been able to utilize that and make them more employable with us and and just add more resources for us that way velocity offered from other safety training different tickets on top of the operating stuff yet they bring their training to you instead of you having to go to them which was big their instructors are confident and they good leadership in that nice atmosphere the success rate is high I think we're seeing something like 80 percent passing rate a really of greater importance we're seeing something like a high 70 percent employment rate so not only are they completing the course they're getting these skill training they're learning how to operate mobile equipment at the same time learning how to maintain the equipment how to work around it safely it provides them with a broad range of skills I think the biggest thing is that if anyone has any questions around employment to come and talk to us you know a lot of employers aren't sure what can be a good fit or what is something that would actually work and what we found especially in the employment program is there's so many things that we can do that's hard for us to describe it one soundbite so if they come and have that conversation we can really see how we can work together you",
+    "text_to_speech_word_count": 622,
+    "youtube_age_limit": 0,
+    "youtube_categories": [
+        "News & Politics"
+    ],
+    "youtube_channel": "GovernmentofBC",
+    "youtube_channel_follower_count": 34800,
+    "youtube_comment_count": 0,
+    "youtube_description": "WorkBC has developed a Heavy Equipment Operator training course with the Southern Interior Construction Association to provide skills training opportunities in the Okanagan.\n\nRead more: https://news.gov.bc.ca/releases/2016SDSI0016-000673",
+    "youtube_like_count": 555,
+    "youtube_tags": [
+        "Province of BC",
+        "British Columbia",
+        "Heavy equipment",
+        "construction",
+        "bulldozer",
+        "excavator",
+        "front loader",
+        "skills training",
+        "skills upgrade",
+        "skills"
+    ],
+    "youtube_title": "Training Heavy Equipment Operators",
+    "youtube_upload_date": "20160511",
+    "youtube_view_count": 89462
+}
