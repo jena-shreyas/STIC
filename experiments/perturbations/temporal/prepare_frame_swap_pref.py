@@ -92,11 +92,12 @@ LIST OF EVENTS
 
 NUM_SUBTASK1_REJS = 2
 NUM_SUBTASK2_REJS = 2
-NUM_PREV_SAMPLE_SCENES = 3
-MAX_SCENES = 6
+NUM_PREV_SAMPLE_SCENES = 2
+MAX_SCENES = 4
+NUM_ORDER_QUERIES_PER_SAMPLE = 4        # Number of queries per sample which ask the model if the given order of two scenes is correct
 
 output_dir = "outputs/FineVideo"
-output_filename = os.path.join(output_dir, "frame_swapping_pref.jsonl")
+output_filename = os.path.join(output_dir, "frame_swapping_pref_new.jsonl")
 
 if os.path.exists(output_filename):
     os.remove(output_filename)
@@ -247,60 +248,22 @@ for sample in tqdm(dataset, total=NUM_SAMPLES):
 
     for i in range(NUM_SUBTASK1_REJS):
         data_dict = dict()
-        data_dict['video_id'] = data['original_video_filename'].split('.')[0]
+        data_dict['video'] = data['original_video_filename']
         data_dict['type'] = 'subtask1'
         data_dict['prompt'] = task1Prompt
-        data_dict['chosen'] = [
-            {
-                "role": "user",
-                "content": task1Prompt
-            },
-            {
-                "role": "assistant",
-                "content": task1Pref
-            }
-        ]
-
-        data_dict['rejected'] = [
-            {
-                "role": "user",
-                "content": task1Prompt
-            },
-            {
-                "role": "assistant",
-                "content": task1Rejs[i]
-            }
-        ]
+        data_dict['chosen'] = task1Pref
+        data_dict['rejected'] = task1Rejs[i]
 
         f.write(json.dumps(data_dict))
         f.write("\n")
 
     for i in range(NUM_SUBTASK2_REJS):
         data_dict = dict()
-        data_dict['video_id'] = data['original_video_filename'].split('.')[0]
+        data_dict['video'] = data['original_video_filename']
         data_dict['type'] = 'subtask2'
         data_dict['prompt'] = task2Prompt
-        data_dict['chosen'] = [
-            {
-                "role": "user",
-                "content": task2Prompt
-            },
-            {
-                "role": "assistant",
-                "content": task2Pref
-            }
-        ]
-
-        data_dict['rejected'] = [
-            {
-                "role": "user",
-                "content": task2Prompt
-            },
-            {
-                "role": "assistant",
-                "content": task2Rejs[i]
-            }
-        ]
+        data_dict['chosen'] = task2Pref
+        data_dict['rejected'] = task2Rejs[i]
 
         f.write(json.dumps(data_dict))
         f.write("\n")

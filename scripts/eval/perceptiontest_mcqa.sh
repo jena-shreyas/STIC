@@ -1,11 +1,11 @@
-SCRATCH="/home/shreyasjena/BTP"
+SCRATCH="/home/shreyasj/BTP"
 DATASET="PerceptionTest"
 MODEL="LLaVA-NExT-Video"
 TYPE="mcqa"
 
 output_dir="${SCRATCH}/models/STIC/results/eval/${DATASET}/${MODEL}"
-pred_path="${SCRATCH}/models/STIC/results/inference/${DATASET}/perceptiontest_${TYPE}_llavanextvideo_responses.jsonl"
-output_json="${SCRATCH}/models/STIC/results/eval/results_perceptiontest_${TYPE}_llavanextvideo.json"
+pred_path="${SCRATCH}/models/STIC/results/inference/${DATASET}/perceptiontest_${TYPE}_llavanextvideo_responses_webvid_coco_ft.jsonl"
+output_json="${SCRATCH}/models/STIC/results/eval/results_perceptiontest_${TYPE}_llavanextvideo_webvid_coco_ft.json"
 
 api_type="azure"
 api_base="https://gpt35newdec23.openai.azure.com/"
